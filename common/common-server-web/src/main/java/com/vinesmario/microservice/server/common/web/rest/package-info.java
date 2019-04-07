@@ -1,0 +1,1 @@
+package com.vinesmario.microservice.server.common.web.rest;

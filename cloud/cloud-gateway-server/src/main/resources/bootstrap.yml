@@ -1,0 +1,17 @@
+spring:
+    application:
+        name: @project.name@
+    profiles:
+        active: dev
+    cloud:
+        config:
+            label: master
+            profile: ${spring.profiles.active}
+#            方案一：先连接到配置中心，再通过配置中心获取注册中心地址
+#            uri: http://localhost:10001/
+#            方案二：先注册到注册中心，再通过注册中心找到配置中心地址（推荐）
+            discovery:
+                enabled: true
+                serviceId: config-service
+
+

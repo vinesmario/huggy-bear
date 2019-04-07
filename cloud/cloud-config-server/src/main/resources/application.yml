@@ -1,0 +1,31 @@
+spring:
+    application:
+        name: @project.name@
+    profiles:
+        active: dev,native # 使用native配置时，native需要保留。git为默认值
+    cloud:
+        config:
+            server:
+#                git:
+#                     uri: https://git.oschina.net/eztcncom/server-config.git
+#                     searchPaths: /
+#                     username: dev@eztcn.com
+#                     password: Ezt20170301
+#                    uri: http://192.168.56.201:10080/vinesmario/spring-cloud-1.0.git
+#                    searchPaths: /config-repo/{application}/{profile}
+#                    username: vinesmario
+#                    password: 12345678
+                native:
+                    # 本地配置需要写本地文件目录的全路径，否则获取不到配置信息
+                    # 其他服务读取本地文件信息时，源码的label处理未考虑到此种情况，因此不建议使用native配置
+                    search-locations: file:D:\project\huggy-bear\cloud\cloud-config-server\config-repo\{application}
+
+#    rabbitmq:
+#        host: 192.168.56.202
+#        port: 5672
+#        username: guest
+#        password: guest
+
+management:
+    security:
+        enabled: false

@@ -1,0 +1,9 @@
+server:
+    port: 11011
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/,http://localhost:10003/eureka/
+
+
