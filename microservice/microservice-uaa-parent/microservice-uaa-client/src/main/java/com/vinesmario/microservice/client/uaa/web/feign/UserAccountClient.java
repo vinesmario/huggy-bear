@@ -3,8 +3,8 @@ package com.vinesmario.microservice.client.uaa.web.feign;
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
+import com.vinesmario.microservice.client.uaa.web.hystrix.UserAccountFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "uaa-service", path = "/api/v1/user_account")
+@FeignClient(name = "uaa-service", path = "/api/v1/user_account", fallbackFactory = UserAccountFallbackFactory.class)
 public interface UserAccountClient extends CrudClient<UserAccountDto, UserAccountConditionDto, Long> {
 
     @GetMapping("")

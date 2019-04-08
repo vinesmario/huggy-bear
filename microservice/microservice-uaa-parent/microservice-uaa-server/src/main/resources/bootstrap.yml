@@ -21,3 +21,42 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+ribbon:
+    ReadTimeout: 10000
+    ConnectTimeout: 10000
+    eureka:
+        enabled: true
+    httpclient:
+        enabled: false
+    okhttp:
+        enabled: true
+
+feign:
+    client:
+        config:
+            default:
+                connectTimeout: 5000
+                readTimeout: 5000
+    okhttp:
+        enable: true
+    hystrix:
+        enabled: true #Hystrix支持，如果为true，hystrix库必须在classpath中
+    compression:
+        request:
+            enabled: true #请求和响应GZIP压缩支持
+            mime-types: text/xml,application/xml,application/json #支持压缩的mime types
+            min-request-size: 2048
+        response:
+            enabled: true
+
+hystrix:
+    command:
+        default:
+            execution:
+                timeout:
+#                    enabled: false
+                isolation:
+                    strategy: SEMAPHORE
+                    thread:
+                        timeoutInMilliseconds: 10000

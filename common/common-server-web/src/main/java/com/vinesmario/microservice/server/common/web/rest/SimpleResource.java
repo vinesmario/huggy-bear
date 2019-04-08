@@ -54,7 +54,7 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
         if (!ObjectUtils.isEmpty(directionParameter)) {
             sort = parseParameterIntoSort(directionParameter, DEFAULT_PROPERTY_DELIMITER);
         }
-
+        int a = 1 / 0;
         if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
                 || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
             // 分页参数不全
