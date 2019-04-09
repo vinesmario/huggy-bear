@@ -1,10 +1,10 @@
 zuul:
     sensitive-headers:
     routes:
-        uaa-service:
+        microservice-uaa-server:
             path: /uaa/**
             sensitive-headers:
-        base-service:
+        microservice-base-server:
             path: /base/**
             sensitive-headers:
 #        product-service:

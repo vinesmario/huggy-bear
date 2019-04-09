@@ -23,7 +23,7 @@ public class CloudGatewayServerApplication {
         SpringApplication.run(CloudGatewayServerApplication.class, args);
     }
 
-    //@Bean
+    @Bean
     public AccessFilter accessFilter() {
         return new AccessFilter();
     }

@@ -12,6 +12,6 @@ spring:
 #            方案二：先注册到注册中心，再通过注册中心找到配置中心地址（推荐）
             discovery:
                 enabled: true
-                serviceId: config-service
+                serviceId: cloud-config-server
 
 
