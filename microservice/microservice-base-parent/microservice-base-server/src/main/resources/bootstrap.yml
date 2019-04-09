@@ -61,6 +61,7 @@ feign:
 #                    thread:
 #                        timeoutInMilliseconds: 10000
 
+# 在Hystrix Dashboard中监控单个应用的地址 http://uaa-hostname:port/actuator/hystrix.stream
 management:
     endpoints:
         web:
