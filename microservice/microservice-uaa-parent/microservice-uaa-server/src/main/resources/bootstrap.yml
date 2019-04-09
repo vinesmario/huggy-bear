@@ -50,13 +50,19 @@ feign:
         response:
             enabled: true
 
-hystrix:
-    command:
-        default:
-            execution:
-                timeout:
+#hystrix:
+#    command:
+#        default:
+#            execution:
+#                timeout:
 #                    enabled: false
-                isolation:
-                    strategy: SEMAPHORE
-                    thread:
-                        timeoutInMilliseconds: 10000
+#                isolation:
+#                    strategy: SEMAPHORE
+#                    thread:
+#                        timeoutInMilliseconds: 10000
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: hystrix.stream,info,health #开启断路器监控面板访问
