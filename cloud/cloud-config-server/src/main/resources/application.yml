@@ -1,6 +1,6 @@
 spring:
     application:
-        name: @project.name@
+        name: @project.artifactId@
     profiles:
         active: dev,native # 使用native配置时，native需要保留。git为默认值
     cloud:

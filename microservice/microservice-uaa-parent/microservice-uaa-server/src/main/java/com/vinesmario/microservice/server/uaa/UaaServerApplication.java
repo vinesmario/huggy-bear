@@ -11,10 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 @ComponentScan("com.vinesmario.microservice")
 @MapperScan("com.vinesmario.microservice.server")
-public class UaaServiceApplication {
+public class UaaServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UaaServiceApplication.class, args);
+        SpringApplication.run(UaaServerApplication.class, args);
     }
 
 }

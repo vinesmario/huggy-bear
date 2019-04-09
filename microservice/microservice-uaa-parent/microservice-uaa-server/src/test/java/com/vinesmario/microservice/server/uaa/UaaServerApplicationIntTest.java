@@ -6,10 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @MapperScan("com.vinesmario.microservice.server")
 @ComponentScan("com.vinesmario.microservice")
-public class UaaServiceApplicationIntTest {
+public class UaaServerApplicationIntTest {
 
     public static void main(String[] args) {
-        SpringApplication.run(UaaServiceApplicationIntTest.class, args);
+        SpringApplication.run(UaaServerApplicationIntTest.class, args);
     }
 
 }

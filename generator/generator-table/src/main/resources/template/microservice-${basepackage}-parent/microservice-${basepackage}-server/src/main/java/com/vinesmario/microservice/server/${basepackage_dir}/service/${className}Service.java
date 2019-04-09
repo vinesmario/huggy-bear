@@ -4,13 +4,14 @@
 package ${basepackage}.service;
 
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
+import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.BaseService;
-import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
-{basepackage}.dto.condition.${className}ConditionDto;
-{basepackage}.entity.${className};
+import com.vinesmario.microservice.server.${basepackage}.entity.${className};
 import com.vinesmario.microservice.server.${basepackage}.mapper.${className}Mapper;
-{basepackage}.mapstruct.${className}MapStruct;
+import com.vinesmario.microservice.server.${basepackage}.mapstruct.${className}MapStruct;
+
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

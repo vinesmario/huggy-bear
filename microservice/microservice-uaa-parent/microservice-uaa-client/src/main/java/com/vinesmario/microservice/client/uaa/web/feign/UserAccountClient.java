@@ -17,7 +17,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "uaa-service", path = "/api/v1/user_account", fallbackFactory = UserAccountFallbackFactory.class)
+@FeignClient(name = "microservice-uaa-server", path = "/api/v1/user_account", fallbackFactory = UserAccountFallbackFactory.class)
 public interface UserAccountClient extends CrudClient<UserAccountDto, UserAccountConditionDto, Long> {
 
     @GetMapping("")

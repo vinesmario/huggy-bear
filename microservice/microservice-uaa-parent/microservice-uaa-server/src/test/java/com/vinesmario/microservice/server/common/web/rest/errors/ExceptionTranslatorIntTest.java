@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.common.web.rest.errors;
 
-import com.vinesmario.microservice.server.uaa.UaaServiceApplication;
+import com.vinesmario.microservice.server.uaa.UaaServerApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ExceptionTranslator
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {UaaServiceApplication.class})
+@SpringBootTest(classes = {UaaServerApplication.class})
 public class ExceptionTranslatorIntTest {
 
     @Autowired

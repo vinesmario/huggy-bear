@@ -4,7 +4,7 @@ import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.web.rest.TestUtil;
 import com.vinesmario.microservice.server.common.web.rest.errors.ExceptionTranslator;
-import com.vinesmario.microservice.server.uaa.UaaServiceApplicationIntTest;
+import com.vinesmario.microservice.server.uaa.UaaServerApplicationIntTest;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
 import com.vinesmario.microservice.server.uaa.mapstruct.UserAccountMapStructImpl;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see UserAccountResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = UaaServiceApplicationIntTest.class)
+@SpringBootTest(classes = UaaServerApplicationIntTest.class)
 public class UserAccountResourceIntTest {
 
     private static final Long DEFAULT_ID = 1L;

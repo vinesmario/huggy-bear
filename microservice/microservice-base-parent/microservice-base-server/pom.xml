@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>microservice-base-server</artifactId>
-    <name>base-service</name>
     <description>基础服务</description>
 
     <dependencies>

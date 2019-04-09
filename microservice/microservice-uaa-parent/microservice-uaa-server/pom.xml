@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>microservice-uaa-server</artifactId>
-    <name>uaa-service</name>
     <description>UAA服务</description>
 
     <dependencies>
