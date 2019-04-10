@@ -2,8 +2,7 @@ package com.vinesmario.cloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
-import org.springframework.cloud.netflix.turbine.EnableTurbine;
+import org.springframework.cloud.netflix.turbine.stream.EnableTurbineStream;
 
 /**
  * @RefreshScope 当application.yml配置文件发生变化的时候，
@@ -12,11 +11,11 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
  */
 
 @SpringCloudApplication
-@EnableHystrixDashboard
-public class CloudHystrixDashboardApplication {
+@EnableTurbineStream
+public class CloudTurbineStreamApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CloudHystrixDashboardApplication.class, args);
+        SpringApplication.run(CloudTurbineStreamApplication.class, args);
     }
 
 

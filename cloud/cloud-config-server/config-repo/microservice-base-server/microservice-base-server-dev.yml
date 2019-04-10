@@ -1,3 +1,7 @@
+logging:
+    level:
+        root: debug
+
 spring:
     #设置服务名，不配置时默认使用spring.application.name
 #    service:
@@ -41,6 +45,3 @@ spring:
         filters: stat,wall,log4j
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
-logging:
-    level:
-        root: debug
