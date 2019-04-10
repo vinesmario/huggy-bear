@@ -2,5 +2,12 @@ logging:
     level:
         root: debug
 
+#turbine:
+#    stream:
+        # The destination of the stream. Destination as defined by Spring Cloud Stream.
+        # Defaults to springCloudHystrixStream
+        # 队列名，kafka或rabbitmq中创建，与被监控服务的hystrix.stream.queue配置同
+#        destination: springCloudHystrixStream
+
 # kafka参数配置
 

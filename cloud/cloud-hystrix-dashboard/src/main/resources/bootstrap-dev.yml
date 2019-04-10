@@ -1,5 +1,6 @@
 server:
     port: 10301
+# 主页访问地址http://localhost:10301/hystrix
 
 eureka:
     client:

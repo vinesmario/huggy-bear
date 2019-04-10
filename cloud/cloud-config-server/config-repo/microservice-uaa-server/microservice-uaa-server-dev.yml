@@ -44,3 +44,15 @@ spring:
         maxPoolPreparedStatementPerConnectionSize: 20
         filters: stat,wall,log4j
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+#hystrix:
+#    stream:
+#        queue:
+            # The destination of the stream. Destination as defined by Spring Cloud Stream.
+            # Defaults to springCloudHystrixStream
+            # 队列名，kafka或rabbitmq中创建
+#            destination: springCloudHystrixStream
+            # How often (in ms) to send messages to the stream. Defaults to 500.
+#            sendRate: 500
+
+# kafka参数配置

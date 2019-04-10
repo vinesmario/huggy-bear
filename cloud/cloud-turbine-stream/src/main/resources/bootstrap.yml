@@ -15,6 +15,7 @@ spring:
                 serviceId: cloud-config-server
 
 # 在 Hystrix Dashboard 中监控集群应用，即 Turbine 所在应用的地址http://turbine-hostname:port/turbine.stream
+# 此处配置对是turbine-stream否有必要，待确认
 turbine:
     app-config: MICROSERVICE-UAA-SERVER,MICROSERVICE-BASE-SERVER #配置Eureka中的serviceId列表，表明监控哪些服务
     aggregator:
