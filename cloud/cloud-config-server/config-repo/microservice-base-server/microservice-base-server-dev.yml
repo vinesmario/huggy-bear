@@ -1,4 +1,8 @@
 spring:
+    zipkin:
+        base-url: http://localhost:9411
+
+spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
 #        type: com.zaxxer.hikari.HikariDataSource  HikariCP
@@ -22,3 +26,7 @@ spring:
         maxPoolPreparedStatementPerConnectionSize: 20
         filters: stat,wall,log4j
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+logging:
+    level:
+        root: debug

@@ -14,7 +14,9 @@ spring:
                 enabled: true
                 serviceId: cloud-config-server
 
-# 在Hystrix Dashboard中监控集群应用，即本turbine应用的地址http://turbine-hostname:port/turbine.stream
+# Hystrix Dashboard 与 Turbine 可分开使用并部署
+# Hystrix Dashboard 可独立使用
+# 在 Hystrix Dashboard 中监控集群应用，即 Turbine 所在应用的地址http://turbine-hostname:port/turbine.stream
 turbine:
     app-config: MICROSERVICE-UAA-SERVER,MICROSERVICE-BASE-SERVER #配置Eureka中的serviceId列表，表明监控哪些服务
     aggregator:
