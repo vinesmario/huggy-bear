@@ -23,6 +23,11 @@ pagehelper:
     params: count=countSql
 
 ribbon:
+    # Ribbon是懒加载的，在首次请求时，才会开始初始化相关类
+    # 会导致第一次请求失败的问题
+    # 此处配置饥饿加载
+    eager-load:
+        enabled: true
     ReadTimeout: 10000
     ConnectTimeout: 10000
     eureka:
@@ -59,11 +64,11 @@ feign:
 #                isolation:
 #                    strategy: SEMAPHORE
 #                    thread:
-#                        timeoutInMilliseconds: 10000
+#                        timeoutInMilliseconds: 5000
 
-# 在Hystrix Dashboard中监控单个应用的地址 http://uaa-hostname:port/actuator/hystrix.stream
+# 在Hystrix Dashboard中监控单个应用的地址 http://base-hostname:port/actuator/hystrix.stream
 management:
     endpoints:
         web:
             exposure:
-                include: hystrix.stream,info,health #开启断路器监控面板访问
+                include: hystrix.stream,health,info #对外暴露监控接口

@@ -1,9 +1,8 @@
 package com.vinesmario.cloud;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
-import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
 /**
  * @RefreshScope 当application.yml配置文件发生变化的时候，
@@ -11,7 +10,7 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
  * 正在访问的客户并不影响还是使用旧的配置文件，后来的用户会使用新的配置文件。
  */
 
-@SpringCloudApplication
+@SpringBootApplication
 @EnableHystrixDashboard
 public class CloudHystrixDashboardApplication {
 

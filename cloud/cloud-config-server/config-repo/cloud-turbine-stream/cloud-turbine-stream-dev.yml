@@ -2,6 +2,7 @@ logging:
     level:
         root: debug
 
+# see org.springframework.cloud.netflix.turbine.stream.TurbineStreamProperties.class
 #turbine:
 #    stream:
         # The destination of the stream. Destination as defined by Spring Cloud Stream.

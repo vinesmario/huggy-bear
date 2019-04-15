@@ -23,3 +23,9 @@ turbine:
     cluster-name-expression: new String("default")
     combine-host-port: true #通过主机名与端口号的组合来进行区分
 
+# 在Hystrix Dashboard中监控单个应用的地址 http://hostname:port/actuator/hystrix.stream
+management:
+    endpoints:
+        web:
+            exposure:
+                include: hystrix.stream,health,info #对外暴露监控接口

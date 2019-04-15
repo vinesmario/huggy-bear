@@ -20,12 +20,8 @@ spring:
                     # 其他服务读取本地文件信息时，源码的label处理未考虑到此种情况，因此不建议使用native配置
                     search-locations: file:D:\project\huggy-bear\cloud\cloud-config-server\config-repo\{application}
 
-#    rabbitmq:
-#        host: 192.168.56.202
-#        port: 5672
-#        username: guest
-#        password: guest
-
 management:
-    security:
-        enabled: false
+    endpoints:
+        web:
+            exposure:
+                include: health,info #对外暴露监控接口

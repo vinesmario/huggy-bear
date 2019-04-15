@@ -52,3 +52,9 @@ feign:
 #                    strategy: SEMAPHORE
 #                    thread:
 #                        timeoutInMilliseconds: 10000
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info #对外暴露监控接口

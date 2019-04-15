@@ -32,9 +32,8 @@
         </dependency>
         <!--<dependency>-->
             <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-bus-amqp</artifactId>-->
+            <!--<artifactId>spring-cloud-starter-bus-kafka</artifactId>-->
         <!--</dependency>-->
-
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
