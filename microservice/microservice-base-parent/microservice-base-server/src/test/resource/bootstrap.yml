@@ -1,10 +1,16 @@
 server:
-    port: 11001
+    port: 11011
 
 eureka:
     client:
         register-with-eureka: false #表示是否将自己注册到Eureka Server上，默认为true
         fetch-registry: false       #表示是否从Eureka Server上获取注册信息，默认为true
+
+spring:
+    cloud:
+        config:
+            discovery:
+                enabled: false
 
 mybatis:
     mapper-locations: classpath*:mapper/*.xml
@@ -19,7 +25,7 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
 #        type: com.zaxxer.hikari.HikariDataSource  HikariCP
         ## 使用localhost，mysql 中 GRANT 命令单独配置
-        url: jdbc:mysql://127.0.0.1/uaa?autoReconnect=true&useSSL=false&characterEncoding=utf-8
+        url: jdbc:mysql://127.0.0.1/base?autoReconnect=true&useSSL=false&characterEncoding=utf-8
         username: root
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
