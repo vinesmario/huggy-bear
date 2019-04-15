@@ -1,0 +1,6 @@
+server:
+    port: 10301
+
+logging:
+    level:
+        root: debug

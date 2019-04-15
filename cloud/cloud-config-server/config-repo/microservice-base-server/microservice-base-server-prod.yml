@@ -1,3 +1,6 @@
+server:
+    port: 11011
+
 logging:
     level:
         root: info

@@ -1,0 +1,62 @@
+server:
+    port: 11002
+
+logging:
+    level:
+        root: debug
+
+spring:
+    #设置服务名，不配置时默认使用spring.application.name
+#    service:
+#        name: microservice-uaa-server
+    zipkin:
+        # 使用http请求收集
+        base-url: http://localhost:9411
+        # 使用kafka收集
+#        sender:
+#            type: kafka
+            #kafka主题，不配置时默认使用zipkin
+#        kafka:
+#            topic: zipkin
+        # kafka参数另行配置
+    sleuth:
+        sampler:
+          # 采样率，模式0.1，也就是10%，为了便于观察效果，改为1.0，也就是100%。生产环境建议保持默认。
+          probability: 1.0
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        # HikariCP
+#        type: com.zaxxer.hikari.HikariDataSource
+        ## 使用localhost，mysql 中 GRANT 命令单独配置
+        url: jdbc:mysql://127.0.0.1/uaa?autoReconnect=true&useSSL=false&characterEncoding=utf-8
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.jdbc.Driver
+        ##连接池属性配置
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,wall,log4j
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+# see org.springframework.cloud.netflix.hystrix.stream.HystrixStreamProperties.class
+#hystrix:
+#    stream:
+#        queue:
+            # The destination of the stream. Destination as defined by Spring Cloud Stream.
+            # Defaults to springCloudHystrixStream
+            # 队列名，kafka或rabbitmq中创建
+#            destination: springCloudHystrixStream
+            # How often (in ms) to send messages to the stream. Defaults to 500.
+#            sendRate: 500
+
+# kafka参数配置

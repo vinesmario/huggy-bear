@@ -12,12 +12,13 @@
     <artifactId>cloud</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>cloud-config-server</module>
-        <module>cloud-gateway-server</module>
         <module>cloud-registry-server</module>
+        <module>cloud-config-server</module>
+        <module>cloud-admin-server</module>
         <module>cloud-hystrix-dashboard</module>
         <module>cloud-turbine</module>
         <module>cloud-turbine-stream</module>
+        <module>cloud-gateway-server</module>
     </modules>
 
     <dependencies>

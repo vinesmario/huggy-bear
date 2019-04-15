@@ -1,6 +1,3 @@
-server:
-    port: 10401
-
 eureka:
     instance:
         prefer-ip-address: true

@@ -1,0 +1,6 @@
+server:
+    port: 10502
+
+logging:
+    level:
+        root: debug

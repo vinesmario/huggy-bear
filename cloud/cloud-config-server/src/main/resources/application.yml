@@ -24,4 +24,4 @@ management:
     endpoints:
         web:
             exposure:
-                include: health,info #对外暴露监控接口
+                include: "*" #对外暴露监控接口

@@ -1,6 +1,3 @@
-server:
-    port: 11003
-
 eureka:
     client:
         service-url:

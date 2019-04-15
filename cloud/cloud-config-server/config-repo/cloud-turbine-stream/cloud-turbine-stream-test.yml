@@ -1,3 +1,10 @@
+server:
+    port: 10401
+
+logging:
+    level:
+        root: info
+
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource

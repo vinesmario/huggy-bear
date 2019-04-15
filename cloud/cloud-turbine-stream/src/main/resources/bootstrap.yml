@@ -28,4 +28,4 @@ management:
     endpoints:
         web:
             exposure:
-                include: hystrix.stream,health,info #对外暴露监控接口
+                include: "*" #对外暴露监控接口
