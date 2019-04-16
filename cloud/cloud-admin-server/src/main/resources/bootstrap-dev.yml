@@ -2,8 +2,8 @@ spring:
     security:
         user:
             #如不设置这段内容，账号默认是user，密码是一个随机值，该值会在启动时打印出来。
-            name: user
-            password: password
+            name: admin_username
+            password: admin_password
 #    boot:
 #        admin:
 #            notify:
@@ -33,4 +33,4 @@ eureka:
                 password: ${spring.security.user.password} #can access the protected client endpoints
     client:
         service-url:
-            defaultZone: http://localhost:10001/eureka/
+            defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/

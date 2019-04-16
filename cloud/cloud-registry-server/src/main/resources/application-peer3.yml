@@ -6,4 +6,11 @@ eureka:
         hostname: localhost
     client:
         service-url:
-            defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/
+            defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/,http://eureka_username:eureka_password@localhost:10002/eureka/
+
+spring:
+    security:
+        user:
+            #如不设置这段内容，账号默认是user，密码是一个随机值，该值会在启动时打印出来。
+            name: eureka_username
+            password: eureka_password

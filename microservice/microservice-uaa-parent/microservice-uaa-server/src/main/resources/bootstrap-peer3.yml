@@ -3,5 +3,5 @@ eureka:
         prefer-ip-address: true
     client:
         service-url:
-            defaultZone: http://localhost:10001/eureka/
+            defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/
 

@@ -43,6 +43,8 @@ feign:
             default:
                 connectTimeout: 5000
                 readTimeout: 5000
+    # see org.springframework.cloud.netflix.feign.FeignAutoConfiguration
+    # see org.springframework.cloud.netflix.feign.ribbon.HttpClientFeignLoadBalancedConfiguration
     okhttp:
         enable: true
     hystrix:
