@@ -61,4 +61,19 @@ public class UserAccountService extends BaseService<UserAccountDto, UserAccount,
     public Optional<UserAccountDto> getByEmail(String email) {
         return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByEmail(email)));
     }
+
+    @Transactional(readOnly = true)
+    public Optional<UserAccountDto> getWithAuthoritiesByUsername(String username) {
+        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByUsername(username)));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserAccountDto> getWithAuthoritiesByMobile(String mobile) {
+        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByMobile(mobile)));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserAccountDto> getWithAuthoritiesByEmail(String email) {
+        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByEmail(email)));
+    }
 }
