@@ -4,19 +4,15 @@ import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -32,23 +28,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
-
-        if (new EmailValidator().isValid(login, null)) {
-            Optional<UserAccountDto> userByEmailFromDatabase = userAccountService.getWithAuthoritiesByEmail(login);
-            return userByEmailFromDatabase.map(userAccountDto -> createSpringSecurityUser(login, userAccountDto))
-                    .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
-        }
-
+        UserDetails userDetails = User.withDefaultPasswordEncoder()
+                .username("username")
+                .password("password")// 明文
+                .roles("ADMIN")
+                .build();
+        return userDetails;
+//        if (new EmailValidator().isValid(login, null)) {
+//            Optional<UserAccountDto> userByEmailFromDatabase = userAccountService.getWithAuthoritiesByEmail(login);
+//            return userByEmailFromDatabase.map(userAccountDto -> createSpringSecurityUser(login, userAccountDto))
+//                    .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
+//        }
+//
 //        if (new MobileValidator().isValid(login, null)) {
 //            Optional<UserAccountDto> userByEmailFromDatabase = userAccountService.getWithAuthoritiesByMobile(login);
 //            return userByEmailFromDatabase.map(userAccountDto -> createSpringSecurityUser(login, userAccountDto))
 //                    .orElseThrow(() -> new UsernameNotFoundException("User with mobile " + login + " was not found in the database"));
 //        }
-
-        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-        Optional<UserAccountDto> userByLoginFromDatabase = userAccountService.getWithAuthoritiesByUsername(lowercaseLogin);
-        return userByLoginFromDatabase.map(user -> createSpringSecurityUser(lowercaseLogin, user))
-                .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
+//
+//        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
+//        Optional<UserAccountDto> userByLoginFromDatabase = userAccountService.getWithAuthoritiesByUsername(lowercaseLogin);
+//        return userByLoginFromDatabase.map(user -> createSpringSecurityUser(lowercaseLogin, user))
+//                .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
 
     }
 
@@ -68,7 +69,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(roleDto -> new SimpleGrantedAuthority(roleDto.getEnName()))
                 .collect(Collectors.toList());
         return new User(userAccountDto.getUsername(),
-                userAccountDto.getPassword(),
+                "{bcrypt}" + userAccountDto.getPassword(),// bcrypt加密后的密文
                 grantedAuthorities);
     }
 }

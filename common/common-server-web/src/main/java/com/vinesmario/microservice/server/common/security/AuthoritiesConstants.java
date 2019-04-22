@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.uaa.security;
+package com.vinesmario.microservice.server.common.security;
 
 /**
  * Constants for Spring Security authorities.

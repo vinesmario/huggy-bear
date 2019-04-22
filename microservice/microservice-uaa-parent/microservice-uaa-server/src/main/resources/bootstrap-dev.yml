@@ -5,34 +5,27 @@ eureka:
         service-url:
             defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/
 
-# 自定义属性
-oauth2:
-    # 程序启动时加载到内存中，最好用数据库+缓存的方式处理
-    client-details-store:
-        internal:
+# https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/
+# org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.class
+security:
+    oauth2:
+        # see org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties.class
+        authorization:
+            check-token-access: permitAll()
+            token-key-access: isAuthenticated()
+            realm: realm_name
+        # org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.BaseClientDetailsConfiguration.class
+        # org.springframework.security.oauth2.provider.client.BaseClientDetails.class
+        # 此处不支持集合属性配置
+        client:
             client-id: internal
             client-secret: internal
+            id: uaa
+            resource-ids: resource-uaa
             scope: web-app
-            authorized-grant-types: client_credentials
             # Access Token is valid for 5 mins
             access-token-validity-seconds: 300
             # Refresh Token is valid for 7 days
             refresh-token-validity-seconds: 604800
-        web_app:
-            # browser & app
-            client-id: web_app
-            client-secret: changeit
-            scope: openid
-            authorized-grant-types: implicit,refresh_token,password,authorization_code
-            # Access Token is valid for 5 mins
-            access-token-validity-seconds: 300
-            # Refresh Token is valid for 7 days
-            refresh-token-validity-seconds: 604800
-    jwt:
-        # 非对称加密
-        signing-key: signingKey
-        # 对称加密
-#        key-store:
-#            name: keystore.jks
-#            password: password
-#            alias: selfsigned
+
+

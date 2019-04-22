@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.uaa.config;
+package com.vinesmario.microservice.server.uaa.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
