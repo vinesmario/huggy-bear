@@ -7,9 +7,8 @@ import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample
 import com.vinesmario.microservice.server.common.service.mybatis.BaseService;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
 import com.vinesmario.microservice.server.uaa.mapper.UserAccountMapper;
-import com.vinesmario.microservice.server.uaa.mapstruct.UserAccountMapStructImpl;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vinesmario.microservice.server.uaa.mapstruct.UserAccountMapStruct;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -21,14 +20,19 @@ import java.util.Optional;
  * @author maodipu
  * @date 2018-01-18
  */
-@Data
 @Service
 public class UserAccountService extends BaseService<UserAccountDto, UserAccount, Long> {
 
-    @Autowired
-    private UserAccountMapper mapper;
-    @Autowired
-    private UserAccountMapStructImpl mapStruct;
+    private final UserAccountMapper mapper;
+
+    private final UserAccountMapStruct mapStruct;
+
+    public UserAccountService(UserAccountMapper mapper,
+                              @Qualifier("userAccountMapStructImpl") UserAccountMapStruct mapStruct) {
+        super(mapper, mapStruct);
+        this.mapper = mapper;
+        this.mapStruct = mapStruct;
+    }
 
     public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
         BaseExample example = new BaseExample();
@@ -49,31 +53,31 @@ public class UserAccountService extends BaseService<UserAccountDto, UserAccount,
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getByUsername(String username) {
-        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByUsername(username)));
+        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByUsername(username)));
     }
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getByMobile(String mobile) {
-        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByMobile(mobile)));
+        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByMobile(mobile)));
     }
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getByEmail(String email) {
-        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByEmail(email)));
+        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByEmail(email)));
     }
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getWithAuthoritiesByUsername(String username) {
-        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByUsername(username)));
+        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByUsername(username)));
     }
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getWithAuthoritiesByMobile(String mobile) {
-        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByMobile(mobile)));
+        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByMobile(mobile)));
     }
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getWithAuthoritiesByEmail(String email) {
-        return Optional.ofNullable(getMapStruct().fromEntity2Dto(getMapper().selectByEmail(email)));
+        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByEmail(email)));
     }
 }

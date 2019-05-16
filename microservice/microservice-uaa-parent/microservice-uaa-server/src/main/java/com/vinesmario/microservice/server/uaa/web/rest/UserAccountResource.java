@@ -14,8 +14,6 @@ import com.vinesmario.microservice.server.uaa.web.rest.errors.UsernameAlreadyUse
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
@@ -29,16 +27,18 @@ import java.util.Optional;
  */
 
 @Api(description = "UserAccountCRUD", tags = "UserAccountController", basePath = "/userAccounts")
-@Data
 @RestController
 @RequestMapping("/api/v1/user_account")
 public class UserAccountResource extends BaseResource<UserAccountDto, UserAccountConditionDto, Long>
         implements UserAccountClient {
 
-    private String entityName = "UserAccount";
+    private final UserAccountService service;
 
-    @Autowired
-    private UserAccountService service;
+    public UserAccountResource(UserAccountService service) {
+        super(service);
+        this.service = service;
+        this.entityName = "UserAccount";
+    }
 
     @Override
     public void preConditionDto(UserAccountConditionDto queryDto) {
@@ -52,18 +52,18 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @Override
     public ResponseEntity<UserAccountDto> create(@RequestBody UserAccountDto dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
-            throw new BadRequestAlertException("A new " + getEntityName() + " cannot already have an ID",
-                    getEntityName(), "idexists");
-        } else if (getService().getByUsername(dto.getUsername()).isPresent()) {
+            throw new BadRequestAlertException("A new " + this.entityName + " cannot already have an ID",
+                    this.entityName, "idexists");
+        } else if (this.service.getByUsername(dto.getUsername()).isPresent()) {
             throw new UsernameAlreadyUsedException();
-        } else if (getService().getByMobile(dto.getMobile()).isPresent()) {
+        } else if (this.service.getByMobile(dto.getMobile()).isPresent()) {
             throw new MobileAlreadyUsedException();
-        } else if (getService().getByEmail(dto.getEmail()).isPresent()) {
+        } else if (this.service.getByEmail(dto.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
         } else {
-            getService().create(dto);
+            this.service.create(dto);
             return ResponseEntity.ok()
-                    .headers(HeaderUtil.createEntityCreationAlert(getEntityName(), dto.getId().toString()))
+                    .headers(HeaderUtil.createEntityCreationAlert(this.entityName, dto.getId().toString()))
                     .body(dto);
         }
     }
@@ -74,23 +74,23 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @ResponseBody
     public ResponseEntity<UserAccountDto> modify(@PathVariable("id") Long id,
                                                  @RequestBody UserAccountDto dto) {
-        Optional<UserAccountDto> optional = getService().getByUsername(dto.getUsername());
+        Optional<UserAccountDto> optional = this.service.getByUsername(dto.getUsername());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
             throw new UsernameAlreadyUsedException();
         }
-        optional = getService().getByMobile(dto.getMobile());
+        optional = this.service.getByMobile(dto.getMobile());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
             throw new MobileAlreadyUsedException();
         }
-        optional = getService().getByEmail(dto.getEmail());
+        optional = this.service.getByEmail(dto.getEmail());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
             throw new EmailAlreadyUsedException();
         }
         dto.setId(id);
         dto.setDeleted(DictConstant.BYTE_YES_NO_N);
-        getService().modify(dto);
+        this.service.modify(dto);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(getEntityName(), dto.getId().toString()))
+                .headers(HeaderUtil.createEntityUpdateAlert(this.entityName, dto.getId().toString()))
                 .body(dto);
     }
 }

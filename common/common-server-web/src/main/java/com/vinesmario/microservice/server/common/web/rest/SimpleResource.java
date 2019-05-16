@@ -28,12 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Data
 public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends ConditionDto, PK extends Serializable>
         implements RetrieveClient<DTO, CONDITION, PK> {
 
     private static final String DEFAULT_PROPERTY_DELIMITER = ",";
-    private RetrieveService<DTO, PK> service;
+    private final RetrieveService<DTO, PK> service;
+
+    public SimpleResource(RetrieveService<DTO, PK> service) {
+        this.service = service;
+    }
 
     /**
      * 预处理查询条件
@@ -58,11 +61,11 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
         if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
                 || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
             // 分页参数不全
-            List<DTO> list = getService().list(conditionDto, sort);
+            List<DTO> list = this.service.list(conditionDto, sort);
             return ResponseEntity.ok().body(list);
         } else {
             Pageable pageable = PageRequest.of(conditionDto.getPageNumber(), conditionDto.getPageSize(), sort);
-            Page<DTO> page = getService().page(conditionDto, pageable);
+            Page<DTO> page = this.service.page(conditionDto, pageable);
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
@@ -73,7 +76,7 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<DTO> get(@PathVariable("id") PK id) {
-        Optional<DTO> dto = getService().get(id);
+        Optional<DTO> dto = this.service.get(id);
         return ResponseUtil.wrapOrNotFound(dto);
     }
 

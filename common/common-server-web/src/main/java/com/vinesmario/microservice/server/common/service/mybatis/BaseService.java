@@ -8,13 +8,11 @@ import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.CrudMapper;
 import com.vinesmario.microservice.server.common.service.CrudService;
-import lombok.Data;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
 @Transactional
 public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
         extends SimpleService<DTO, T, PK>
@@ -23,61 +21,67 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
     public final static byte YES_NO_Y = 1;
     public final static byte YES_NO_N = 0;
 
-    private CrudMapper<T, PK> mapper;
+    private final CrudMapper<T, PK> mapper;
 
-    private BaseMapStruct<T, DTO> mapStruct;
+    private final BaseMapStruct<T, DTO> mapStruct;
+
+    public BaseService(CrudMapper<T, PK> mapper, BaseMapStruct<T, DTO> mapStruct) {
+        super(mapper, mapStruct);
+        this.mapper = mapper;
+        this.mapStruct = mapStruct;
+    }
 
     public abstract BaseExample fromConditionDto2Example(ConditionDto conditionDto);
 
     public void create(DTO dto) {
-        T entity = getMapStruct().fromDto2Entity(dto);
+        T entity = mapStruct.fromDto2Entity(dto);
         entity.setCreatedDate(LocalDateTime.now())
                 .setLastModifiedDate(LocalDateTime.now())
                 .setDeleted(DictConstant.BYTE_YES_NO_N);
-        getMapper().insert(entity);
+        this.mapper.insert(entity);
         dto.setId(entity.getId());
     }
 
     public void delete(PK primaryKey) {
-        getMapper().deleteByPrimaryKey(primaryKey);
+        this.mapper.deleteByPrimaryKey(primaryKey);
     }
 
     public void modify(DTO dto) {
-        T entity = getMapStruct().fromDto2Entity(dto);
+        T entity = mapStruct.fromDto2Entity(dto);
         entity.setLastModifiedDate(LocalDateTime.now());
-        getMapper().updateByPrimaryKey(entity);
+        this.mapper.updateByPrimaryKey(entity);
     }
 
     public void insertSelective(DTO dto) {
-        T entity = getMapStruct().fromDto2Entity(dto);
+        T entity = mapStruct.fromDto2Entity(dto);
         entity.setCreatedDate(LocalDateTime.now())
                 .setLastModifiedDate(LocalDateTime.now());
-        getMapper().insertSelective(entity);
+        this.mapper.insertSelective(entity);
     }
 
     public void deleteByExample(ConditionDto conditionDto) {
         BaseExample example = fromConditionDto2Example(conditionDto);
-        getMapper().deleteByExample(example);
+        this.mapper.deleteByExample(example);
     }
 
     public void updateByPrimaryKeySelective(DTO dto) {
-        T entity = getMapStruct().fromDto2Entity(dto);
+        T entity = mapStruct.fromDto2Entity(dto);
         entity.setLastModifiedDate(LocalDateTime.now());
-        getMapper().updateByPrimaryKeySelective(entity);
+        this.mapper.updateByPrimaryKeySelective(entity);
     }
 
     public void updateByExample(DTO dto, ConditionDto conditionDto) {
         BaseExample example = fromConditionDto2Example(conditionDto);
-        T entity = getMapStruct().fromDto2Entity(dto);
+        T entity = mapStruct.fromDto2Entity(dto);
         entity.setLastModifiedDate(LocalDateTime.now());
-        getMapper().updateByExample(entity, example);
+        this.mapper.updateByExample(entity, example);
     }
 
     public void updateByExampleSelective(DTO dto, ConditionDto conditionDto) {
         BaseExample example = fromConditionDto2Example(conditionDto);
-        T entity = getMapStruct().fromDto2Entity(dto);
+        T entity = mapStruct.fromDto2Entity(dto);
         entity.setLastModifiedDate(LocalDateTime.now());
-        getMapper().updateByExampleSelective(entity, example);
+        this.mapper.updateByExampleSelective(entity, example);
     }
 
 }
