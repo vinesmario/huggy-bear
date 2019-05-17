@@ -4,7 +4,7 @@ public interface CrudService<T, PK> extends RetrieveService<T, PK> {
 
     void create(T t);
 
-    void delete(PK primaryKey);
+    void delete(T t);
 
     void modify(T t);
 

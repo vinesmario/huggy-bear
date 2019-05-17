@@ -3,6 +3,7 @@ package com.vinesmario.microservice.server.uaa.service;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
+import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.BaseService;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
@@ -37,7 +38,7 @@ public class UserAccountService extends BaseService<UserAccountDto, UserAccount,
     public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
         BaseExample example = new BaseExample();
         BaseExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(YES_NO_N);
+        criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
         if (!ObjectUtils.isEmpty(conditionDto)) {
             UserAccountConditionDto userAccountConditionDto = (UserAccountConditionDto) conditionDto;

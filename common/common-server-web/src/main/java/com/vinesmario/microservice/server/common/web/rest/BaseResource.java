@@ -65,8 +65,7 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     public ResponseEntity<Void> delete(@PathVariable("id") PK id) {
         Optional<DTO> optional = this.service.get(id);
         if (optional.isPresent()) {
-            optional.get().setDeleted(DictConstant.BYTE_YES_NO_Y);
-            this.service.modify(optional.get());
+            this.service.delete(optional.get());
         }
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionAlert(this.entityName, id.toString()))

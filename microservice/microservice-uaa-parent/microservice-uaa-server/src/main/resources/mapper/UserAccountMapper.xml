@@ -8,9 +8,9 @@
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="activated" jdbcType="TINYINT" property="activated"/>
-        <result column="created_by" jdbcType="INTEGER" property="createdBy"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
-        <result column="last_modified_by" jdbcType="INTEGER" property="lastModifiedBy"/>
+        <result column="last_modified_by" jdbcType="BIGINT" property="lastModifiedBy"/>
         <result column="last_modified_date" jdbcType="TIMESTAMP" property="lastModifiedDate"/>
         <result column="memo" jdbcType="VARCHAR" property="memo"/>
         <result column="deleted" jdbcType="TINYINT" property="deleted"/>
@@ -136,13 +136,11 @@
             parameterType="com.vinesmario.microservice.server.uaa.entity.UserAccount">
         insert into user_account (id, username, password,
         mobile, email, activated,
-        created_by, created_date, last_modified_by,
-        last_modified_date, memo, deleted
+        created_by, last_modified_by, memo
         )
         values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
         #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{activated,jdbcType=TINYINT},
-        #{createdBy,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=INTEGER},
-        #{lastModifiedDate,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT}
+        #{createdBy,jdbcType=BIGINT}, #{lastModifiedBy,jdbcType=BIGINT}, #{memo,jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.vinesmario.microservice.server.uaa.entity.UserAccount">
@@ -169,20 +167,11 @@
             <if test="createdBy != null">
                 created_by,
             </if>
-            <if test="createdDate != null">
-                created_date,
-            </if>
             <if test="lastModifiedBy != null">
                 last_modified_by,
             </if>
-            <if test="lastModifiedDate != null">
-                last_modified_date,
-            </if>
             <if test="memo != null">
                 memo,
-            </if>
-            <if test="deleted != null">
-                deleted,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -205,22 +194,13 @@
                 #{activated,jdbcType=TINYINT},
             </if>
             <if test="createdBy != null">
-                #{createdBy,jdbcType=INTEGER},
-            </if>
-            <if test="createdDate != null">
-                #{createdDate,jdbcType=TIMESTAMP},
+                #{createdBy,jdbcType=BIGINT},
             </if>
             <if test="lastModifiedBy != null">
-                #{lastModifiedBy,jdbcType=INTEGER},
-            </if>
-            <if test="lastModifiedDate != null">
-                #{lastModifiedDate,jdbcType=TIMESTAMP},
+                #{lastModifiedBy,jdbcType=BIGINT},
             </if>
             <if test="memo != null">
                 #{memo,jdbcType=VARCHAR},
-            </if>
-            <if test="deleted != null">
-                #{deleted,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -234,9 +214,6 @@
     <update id="updateByExampleSelective" parameterType="map">
         update user_account
         <set>
-            <if test="record.id != null">
-                id = #{record.id,jdbcType=BIGINT},
-            </if>
             <if test="record.username != null">
                 username = #{record.username,jdbcType=VARCHAR},
             </if>
@@ -252,17 +229,8 @@
             <if test="record.activated != null">
                 activated = #{record.activated,jdbcType=TINYINT},
             </if>
-            <if test="record.createdBy != null">
-                created_by = #{record.createdBy,jdbcType=INTEGER},
-            </if>
-            <if test="record.createdDate != null">
-                created_date = #{record.createdDate,jdbcType=TIMESTAMP},
-            </if>
             <if test="record.lastModifiedBy != null">
-                last_modified_by = #{record.lastModifiedBy,jdbcType=INTEGER},
-            </if>
-            <if test="record.lastModifiedDate != null">
-                last_modified_date = #{record.lastModifiedDate,jdbcType=TIMESTAMP},
+                last_modified_by = #{record.lastModifiedBy,jdbcType=BIGINT},
             </if>
             <if test="record.memo != null">
                 memo = #{record.memo,jdbcType=VARCHAR},
@@ -277,18 +245,13 @@
     </update>
     <update id="updateByExample" parameterType="map">
         update user_account
-        set id = #{record.id,jdbcType=BIGINT},
-        username = #{record.username,jdbcType=VARCHAR},
+        set username = #{record.username,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=VARCHAR},
         mobile = #{record.mobile,jdbcType=VARCHAR},
         email = #{record.email,jdbcType=VARCHAR},
         activated = #{record.activated,jdbcType=TINYINT},
-        created_by = #{record.createdBy,jdbcType=INTEGER},
-        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
-        last_modified_by = #{record.lastModifiedBy,jdbcType=INTEGER},
-        last_modified_date = #{record.lastModifiedDate,jdbcType=TIMESTAMP},
-        memo = #{record.memo,jdbcType=VARCHAR},
-        deleted = #{record.deleted,jdbcType=TINYINT}
+        last_modified_by = #{record.lastModifiedBy,jdbcType=BIGINT},
+        memo = #{record.memo,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -311,17 +274,8 @@
             <if test="activated != null">
                 activated = #{activated,jdbcType=TINYINT},
             </if>
-            <if test="createdBy != null">
-                created_by = #{createdBy,jdbcType=INTEGER},
-            </if>
-            <if test="createdDate != null">
-                created_date = #{createdDate,jdbcType=TIMESTAMP},
-            </if>
             <if test="lastModifiedBy != null">
-                last_modified_by = #{lastModifiedBy,jdbcType=INTEGER},
-            </if>
-            <if test="lastModifiedDate != null">
-                last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+                last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},
             </if>
             <if test="memo != null">
                 memo = #{memo,jdbcType=VARCHAR},
@@ -339,12 +293,8 @@
         mobile = #{mobile,jdbcType=VARCHAR},
         email = #{email,jdbcType=VARCHAR},
         activated = #{activated,jdbcType=TINYINT},
-        created_by = #{createdBy,jdbcType=INTEGER},
-        created_date = #{createdDate,jdbcType=TIMESTAMP},
-        last_modified_by = #{lastModifiedBy,jdbcType=INTEGER},
-        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
-        memo = #{memo,jdbcType=VARCHAR},
-        deleted = #{deleted,jdbcType=TINYINT}
+        last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},
+        memo = #{memo,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

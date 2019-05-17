@@ -11,15 +11,11 @@ import com.vinesmario.microservice.server.common.service.CrudService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Transactional
 public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
         extends SimpleService<DTO, T, PK>
         implements CrudService<DTO, PK> {
-
-    public final static byte YES_NO_Y = 1;
-    public final static byte YES_NO_N = 0;
 
     private final CrudMapper<T, PK> mapper;
 
@@ -35,28 +31,38 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
 
     public void create(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
-        entity.setCreatedDate(LocalDateTime.now())
-                .setLastModifiedDate(LocalDateTime.now())
-                .setDeleted(DictConstant.BYTE_YES_NO_N);
         this.mapper.insert(entity);
         dto.setId(entity.getId());
     }
 
-    public void delete(PK primaryKey) {
-        this.mapper.deleteByPrimaryKey(primaryKey);
+    /**
+     * 逻辑删除
+     *
+     * @param dto
+     */
+    public void delete(DTO dto) {
+        T entity = mapStruct.fromDto2Entity(dto);
+        entity.setDeleted(DictConstant.BYTE_YES_NO_Y);
+        this.mapper.updateByPrimaryKeySelective(entity);
     }
 
     public void modify(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
-        entity.setLastModifiedDate(LocalDateTime.now());
         this.mapper.updateByPrimaryKey(entity);
+    }
+
+    public void insert(DTO dto) {
+        T entity = mapStruct.fromDto2Entity(dto);
+        this.mapper.insert(entity);
     }
 
     public void insertSelective(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
-        entity.setCreatedDate(LocalDateTime.now())
-                .setLastModifiedDate(LocalDateTime.now());
         this.mapper.insertSelective(entity);
+    }
+
+    public void deleteByPrimaryKey(PK primaryKey) {
+        this.mapper.deleteByPrimaryKey(primaryKey);
     }
 
     public void deleteByExample(ConditionDto conditionDto) {
@@ -64,23 +70,25 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
         this.mapper.deleteByExample(example);
     }
 
+    public void updateByPrimaryKey(DTO dto) {
+        T entity = mapStruct.fromDto2Entity(dto);
+        this.mapper.updateByPrimaryKey(entity);
+    }
+
     public void updateByPrimaryKeySelective(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
-        entity.setLastModifiedDate(LocalDateTime.now());
         this.mapper.updateByPrimaryKeySelective(entity);
     }
 
     public void updateByExample(DTO dto, ConditionDto conditionDto) {
-        BaseExample example = fromConditionDto2Example(conditionDto);
         T entity = mapStruct.fromDto2Entity(dto);
-        entity.setLastModifiedDate(LocalDateTime.now());
+        BaseExample example = fromConditionDto2Example(conditionDto);
         this.mapper.updateByExample(entity, example);
     }
 
     public void updateByExampleSelective(DTO dto, ConditionDto conditionDto) {
-        BaseExample example = fromConditionDto2Example(conditionDto);
         T entity = mapStruct.fromDto2Entity(dto);
-        entity.setLastModifiedDate(LocalDateTime.now());
+        BaseExample example = fromConditionDto2Example(conditionDto);
         this.mapper.updateByExampleSelective(entity, example);
     }
 

@@ -26,7 +26,7 @@ import java.util.Optional;
  * @date
  */
 
-@Api(description = "UserAccountCRUD", tags = "UserAccountController", basePath = "/userAccounts")
+@Api(description = "UserAccountCRUD", tags = "UserAccountController", basePath = "/user_account")
 @RestController
 @RequestMapping("/api/v1/user_account")
 public class UserAccountResource extends BaseResource<UserAccountDto, UserAccountConditionDto, Long>
