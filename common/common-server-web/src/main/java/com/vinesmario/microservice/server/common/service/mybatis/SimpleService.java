@@ -9,8 +9,8 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import com.vinesmario.microservice.server.common.kit.StringKit;
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
-import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.RetrieveMapper;
-import com.vinesmario.microservice.server.common.service.RetrieveService;
+import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.ReadOnlyMapper;
+import com.vinesmario.microservice.server.common.service.ReadOnlyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,13 +27,13 @@ import java.util.Optional;
 
 @Transactional
 public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
-        implements RetrieveService<DTO, PK> {
+        implements ReadOnlyService<DTO, PK> {
 
-    private final RetrieveMapper<T, PK> mapper;
+    private final ReadOnlyMapper<T, PK> mapper;
 
     private final BaseMapStruct<T, DTO> mapStruct;
 
-    public SimpleService(RetrieveMapper<T, PK> mapper, BaseMapStruct<T, DTO> mapStruct) {
+    public SimpleService(ReadOnlyMapper<T, PK> mapper, BaseMapStruct<T, DTO> mapStruct) {
         this.mapper = mapper;
         this.mapStruct = mapStruct;
     }

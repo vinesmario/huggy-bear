@@ -16,7 +16,7 @@ import java.util.List;
  * @param <C>
  * @param <PK>
  */
-public interface RetrieveClient<DTO extends BaseDto, C extends ConditionDto, PK extends Serializable> {
+public interface ReadOnlyClient<DTO extends BaseDto, C extends ConditionDto, PK extends Serializable> {
 
     ResponseEntity<List<DTO>> search(C conditionDto);
 

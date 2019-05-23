@@ -2,8 +2,8 @@ package com.vinesmario.microservice.server.common.web.rest;
 
 import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.common.web.feign.RetrieveClient;
-import com.vinesmario.microservice.server.common.service.RetrieveService;
+import com.vinesmario.microservice.client.common.web.feign.ReadOnlyClient;
+import com.vinesmario.microservice.server.common.service.ReadOnlyService;
 import com.vinesmario.microservice.server.common.web.rest.util.PaginationUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
@@ -29,12 +29,12 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends ConditionDto, PK extends Serializable>
-        implements RetrieveClient<DTO, CONDITION, PK> {
+        implements ReadOnlyClient<DTO, CONDITION, PK> {
 
     private static final String DEFAULT_PROPERTY_DELIMITER = ",";
-    private final RetrieveService<DTO, PK> service;
+    private final ReadOnlyService<DTO, PK> service;
 
-    public SimpleResource(RetrieveService<DTO, PK> service) {
+    public SimpleResource(ReadOnlyService<DTO, PK> service) {
         this.service = service;
     }
 

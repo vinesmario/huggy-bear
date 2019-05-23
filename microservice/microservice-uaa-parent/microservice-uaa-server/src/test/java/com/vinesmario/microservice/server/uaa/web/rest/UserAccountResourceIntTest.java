@@ -8,6 +8,7 @@ import com.vinesmario.microservice.server.uaa.UaaServerApplicationIntTest;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
 import com.vinesmario.microservice.server.uaa.mapstruct.UserAccountMapStructImpl;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
+import com.vinesmario.microservice.server.uaa.web.rest.v1.UserAccountResource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;

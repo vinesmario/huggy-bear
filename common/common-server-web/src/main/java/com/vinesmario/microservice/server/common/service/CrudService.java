@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.common.service;
 
-public interface CrudService<T, PK> extends RetrieveService<T, PK> {
+public interface CrudService<T, PK> extends ReadOnlyService<T, PK> {
 
     void create(T t);
 

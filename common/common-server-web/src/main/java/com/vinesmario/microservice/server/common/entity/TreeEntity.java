@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Base abstract class for entities which will
  * Create new records
- * Retrieve existing records
+ * Read existing records
  * Update existing records
  * Delete existing records.
  */

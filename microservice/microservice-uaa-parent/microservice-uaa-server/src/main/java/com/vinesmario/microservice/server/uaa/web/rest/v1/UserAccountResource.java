@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.uaa.web.rest;
+package com.vinesmario.microservice.server.uaa.web.rest.v1;
 
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;

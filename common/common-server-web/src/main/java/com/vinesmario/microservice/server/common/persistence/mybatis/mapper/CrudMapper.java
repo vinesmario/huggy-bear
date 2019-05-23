@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.io.Serializable;
 
 public interface CrudMapper<T extends BaseEntity<PK>, PK extends Serializable>
-        extends RetrieveMapper<T, PK> {
+        extends ReadOnlyMapper<T, PK> {
 
     /**
      * xml中需要添加  useGeneratedKeys="true" keyProperty="id"
