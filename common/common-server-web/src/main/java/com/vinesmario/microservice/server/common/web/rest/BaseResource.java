@@ -36,7 +36,7 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     public ResponseEntity<DTO> create(@RequestBody DTO dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
             throw new BadRequestAlertException("A new " + this.entityName + " cannot already have an ID",
-                    this.entityName, "idexists");
+                    null, "id.exists", this.entityName);
         }
         this.service.create(dto);
         return ResponseEntity.ok()

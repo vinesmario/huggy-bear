@@ -13,15 +13,19 @@ public class BadRequestAlertException extends AbstractThrowableProblem {
 
     private final String entityName;
 
+    private final Integer errorCode;
+
     private final String errorKey;
 
-    public BadRequestAlertException(String defaultMessage, String entityName, String errorKey) {
-        this(ErrorConstants.DEFAULT_TYPE, defaultMessage, entityName, errorKey);
+    public BadRequestAlertException(String defaultMessage, Integer errorCode, String errorKey, String entityName) {
+        this(ErrorConstants.DEFAULT_TYPE, defaultMessage, errorCode, errorKey, entityName);
     }
 
-    public BadRequestAlertException(URI type, String defaultMessage, String entityName, String errorKey) {
-        super(type, defaultMessage, Status.BAD_REQUEST, null, null, null, getAlertParameters(entityName, errorKey));
+    public BadRequestAlertException(URI type, String defaultMessage, Integer errorCode, String errorKey, String entityName) {
+        super(type, defaultMessage, Status.BAD_REQUEST, null, null, null,
+                getAlertParameters(errorCode, errorKey, entityName));
         this.entityName = entityName;
+        this.errorCode = errorCode;
         this.errorKey = errorKey;
     }
 
@@ -29,12 +33,17 @@ public class BadRequestAlertException extends AbstractThrowableProblem {
         return entityName;
     }
 
+    public Integer getErrorCode() {
+        return errorCode;
+    }
+
     public String getErrorKey() {
         return errorKey;
     }
 
-    private static Map<String, Object> getAlertParameters(String entityName, String errorKey) {
+    private static Map<String, Object> getAlertParameters(Integer errorCode, String errorKey, String entityName) {
         Map<String, Object> parameters = new HashMap<>();
+        parameters.put("code", errorCode);
         parameters.put("message", "error." + errorKey);
         parameters.put("params", entityName);
         return parameters;

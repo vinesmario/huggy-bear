@@ -9,15 +9,15 @@ public class UsernameAlreadyUsedException extends BadRequestAlertException {
 
     private static final long serialVersionUID = 1L;
 
-    public UsernameAlreadyUsedException() {
-        super(ErrorConstants.USERNAME_ALREADY_USED_TYPE, "Username already used!", "UserAccount", "userexists");
+    public UsernameAlreadyUsedException(String entityName) {
+        super(ErrorConstants.USERNAME_ALREADY_USED_TYPE, "Username is already in use!", null, "username.used", entityName);
     }
 
-    public UsernameAlreadyUsedException(String defaultMessage, String entityName, String errorKey) {
-        super(defaultMessage, entityName, errorKey);
+    public UsernameAlreadyUsedException(String defaultMessage, Integer errorCode, String errorKey, String entityName) {
+        super(defaultMessage, errorCode, errorKey, entityName);
     }
 
-    public UsernameAlreadyUsedException(URI type, String defaultMessage, String entityName, String errorKey) {
-        super(type, defaultMessage, entityName, errorKey);
+    public UsernameAlreadyUsedException(URI type, String defaultMessage, Integer errorCode, String errorKey, String entityName) {
+        super(type, defaultMessage, errorCode, errorKey, entityName);
     }
 }

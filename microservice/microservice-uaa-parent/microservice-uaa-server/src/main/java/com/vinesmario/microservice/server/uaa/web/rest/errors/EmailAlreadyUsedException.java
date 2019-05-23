@@ -9,16 +9,16 @@ public class EmailAlreadyUsedException extends BadRequestAlertException {
 
     private static final long serialVersionUID = 1L;
 
-    public EmailAlreadyUsedException() {
-        super(ErrorConstants.EMAIL_ALREADY_USED_TYPE, "Email is already in use!", "UserAccount", "emailexists");
+    public EmailAlreadyUsedException(String entityName) {
+        super(ErrorConstants.EMAIL_ALREADY_USED_TYPE, "Email is already in use!", null, "email.exists", entityName);
     }
 
-    public EmailAlreadyUsedException(String defaultMessage, String entityName, String errorKey) {
-        super(defaultMessage, entityName, errorKey);
+    public EmailAlreadyUsedException(String defaultMessage, Integer errorCode, String errorKey, String entityName) {
+        super(defaultMessage, errorCode, errorKey, entityName);
     }
 
-    public EmailAlreadyUsedException(URI type, String defaultMessage, String entityName, String errorKey) {
-        super(type, defaultMessage, entityName, errorKey);
+    public EmailAlreadyUsedException(URI type, String defaultMessage, Integer errorCode, String errorKey, String entityName) {
+        super(type, defaultMessage, errorCode, errorKey, entityName);
     }
 
 }

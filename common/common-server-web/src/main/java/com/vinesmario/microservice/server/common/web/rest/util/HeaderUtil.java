@@ -11,7 +11,7 @@ public final class HeaderUtil {
 
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
-    private static final String APPLICATION_NAME = "microservice1App";
+    private static final String APPLICATION_NAME = "microserviceApp";
 
     private HeaderUtil() {
     }
@@ -35,9 +35,11 @@ public final class HeaderUtil {
         return createAlert(APPLICATION_NAME + "." + entityName + ".deleted", param);
     }
 
-    public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
+    public static HttpHeaders createFailureAlert(String defaultMessage, Integer errorCode, String errorKey, String entityName) {
         log.error("Entity processing failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
+        headers.add("errorCode", String.valueOf(errorCode));
+        headers.add("errorMessage", "error." + errorKey);
         headers.add("X-" + APPLICATION_NAME + "-error", "error." + errorKey);
         headers.add("X-" + APPLICATION_NAME + "-params", entityName);
         return headers;

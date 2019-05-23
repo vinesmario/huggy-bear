@@ -53,13 +53,13 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     public ResponseEntity<UserAccountDto> create(@RequestBody UserAccountDto dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
             throw new BadRequestAlertException("A new " + this.entityName + " cannot already have an ID",
-                    this.entityName, "idexists");
+                    null, "id.exists", this.entityName);
         } else if (this.service.getByUsername(dto.getUsername()).isPresent()) {
-            throw new UsernameAlreadyUsedException();
+            throw new UsernameAlreadyUsedException(this.entityName);
         } else if (this.service.getByMobile(dto.getMobile()).isPresent()) {
-            throw new MobileAlreadyUsedException();
+            throw new MobileAlreadyUsedException(this.entityName);
         } else if (this.service.getByEmail(dto.getEmail()).isPresent()) {
-            throw new EmailAlreadyUsedException();
+            throw new EmailAlreadyUsedException(this.entityName);
         } else {
             this.service.create(dto);
             return ResponseEntity.ok()
@@ -76,15 +76,15 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
                                                  @RequestBody UserAccountDto dto) {
         Optional<UserAccountDto> optional = this.service.getByUsername(dto.getUsername());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
-            throw new UsernameAlreadyUsedException();
+            throw new UsernameAlreadyUsedException(this.entityName);
         }
         optional = this.service.getByMobile(dto.getMobile());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
-            throw new MobileAlreadyUsedException();
+            throw new MobileAlreadyUsedException(this.entityName);
         }
         optional = this.service.getByEmail(dto.getEmail());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
-            throw new EmailAlreadyUsedException();
+            throw new EmailAlreadyUsedException(this.entityName);
         }
         dto.setId(id);
         dto.setDeleted(DictConstant.BYTE_YES_NO_N);
