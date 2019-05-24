@@ -1,8 +1,8 @@
-package com.vinesmario.cloud;
+package com.vinesmario.cloud.getway;
 
-import com.vinesmario.cloud.filter.AccessFilter;
-import com.vinesmario.cloud.filter.CustomErrorFilter;
-import com.vinesmario.cloud.filter.ResponseBodyFilter;
+import com.vinesmario.cloud.getway.filter.AccessFilter;
+import com.vinesmario.cloud.getway.filter.CustomErrorFilter;
+import com.vinesmario.cloud.getway.filter.ResponseBodyFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;

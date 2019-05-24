@@ -1,4 +1,4 @@
-package com.vinesmario.cloud.filter;
+package com.vinesmario.cloud.getway.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
