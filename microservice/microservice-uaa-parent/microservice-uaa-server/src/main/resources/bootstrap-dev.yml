@@ -17,10 +17,11 @@ security:
         # org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.BaseClientDetailsConfiguration.class
         # org.springframework.security.oauth2.provider.client.BaseClientDetails.class
         # 此处不支持集合属性配置
+        # 校验请求方的client属性时使用，可存入数据库
         client:
+            id: auto-increment
             client-id: internal
             client-secret: internal
-            id: uaa
             resource-ids: resource-uaa
             scope: web-app
             # Access Token is valid for 5 mins

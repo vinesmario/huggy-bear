@@ -16,6 +16,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +49,8 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
 
     @ApiOperation(value = "添加", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
+//    @Secured
+    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @Override

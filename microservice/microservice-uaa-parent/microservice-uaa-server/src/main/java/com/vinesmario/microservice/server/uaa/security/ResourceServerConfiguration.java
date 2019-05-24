@@ -7,17 +7,29 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * ResourceServerConfigurerAdapter用于保护oauth要开放的资源，
+ * 同时主要作用于client端以及token的认证(Bearer auth)
+ */
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private CorsFilter corsFilter;
+
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        // 源码中默认resourceId为oauth2-resource
+        // 在该服务的配置文件中配置security.oauth2.resource.id参数不起作用
+        resources.resourceId("resource-uaa");
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

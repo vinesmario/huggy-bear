@@ -1,16 +1,19 @@
 package com.vinesmario.microservice.server.uaa.security;
 
+import com.vinesmario.microservice.client.uaa.dto.RoleDto;
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.microservice.server.common.security.SecurityAuthority;
+import com.vinesmario.microservice.server.common.security.SecurityUser;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,15 +64,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * @param userAccountDto
      * @return
      */
-    private User createSpringSecurityUser(String lowercaseLogin, UserAccountDto userAccountDto) {
+    private SecurityUser createSpringSecurityUser(String lowercaseLogin, UserAccountDto userAccountDto) {
         if (DictConstant.BYTE_YES_NO_N == userAccountDto.getActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
-        List<GrantedAuthority> grantedAuthorities = userAccountDto.getRoleDtoList().stream()
-                .map(roleDto -> new SimpleGrantedAuthority(roleDto.getEnName()))
+        if (CollectionUtils.isEmpty(userAccountDto.getRoleList())) {
+            throw new UserNotAssignedRolesException("User " + lowercaseLogin + " was not assigned roles");
+        }
+        List<GrantedAuthority> grantedAuthorities = userAccountDto.getRoleList().stream()
+                .map(roleDto -> new SecurityAuthority(roleDto.getEnName(),
+                        roleDto.getResourceList().stream().map(resourceDto -> resourceDto.getPermission()).collect(Collectors.toList())))
                 .collect(Collectors.toList());
-        return new User(userAccountDto.getUsername(),
+        SecurityUser securityUser = new SecurityUser(userAccountDto.getUsername(),
                 "{bcrypt}" + userAccountDto.getPassword(),// bcrypt加密后的密文
                 grantedAuthorities);
+
+        RoleDto currentRole = userAccountDto.getRoleList().stream()
+                .filter(roleDto -> DictConstant.BYTE_YES_NO_Y == roleDto.getMajor())
+                .collect(Collectors.toList())
+                .get(0);
+        GrantedAuthority currentAuthority = new SecurityAuthority(currentRole.getEnName(),
+                currentRole.getResourceList().stream().map(resourceDto -> resourceDto.getPermission()).collect(Collectors.toList()));
+        securityUser.setCurrentAuthority(currentAuthority);
+        return securityUser;
     }
 }

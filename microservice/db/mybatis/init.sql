@@ -1,4 +1,4 @@
-CREATE TABLE `uaa`.`user_account` (
+CREATE TABLE `uaa`.`user_account`(
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `password` varchar(64) NOT NULL,
@@ -14,3 +14,11 @@ CREATE TABLE `uaa`.`user_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+select client_id, client_secret, resource_ids, scope, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove from oauth_client_details
+select code, authentication from oauth_code
+select token_id, token, authentication_id, user_name, client_id, authentication, refresh_token from oauth_access_token
+select token_id, token, authentication from oauth_refresh_token
+select token_id, token, authentication_id, user_name, client_id from oauth_client_token
+select expiresAt,status,lastModifiedAt,userId,clientId,scope from oauth_approvals
+
