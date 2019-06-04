@@ -15,7 +15,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
 //    private ClientService clientService;
 
     @Override
-    public ClientDetails loadClientByClientId(String s) throws ClientRegistrationException {
+    public ClientDetails loadClientByClientId(final String clientId) throws ClientRegistrationException {
         // TODO get ClientDetails from database
         return null;
     }

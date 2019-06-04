@@ -11,7 +11,8 @@ security:
     oauth2:
         # see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties.class
         resource:
-            id: resource-base
+#            id: resource-base
+            id: @project.artifactId@
             # client-id和client-secret可以不用配置，会从 security.oauth2.client中获取,
             # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
 #            client-id: internal

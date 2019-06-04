@@ -2,12 +2,17 @@ package com.vinesmario.microservice.server.uaa.security;
 
 import com.vinesmario.microservice.server.common.security.AuthoritiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
@@ -22,13 +27,39 @@ import javax.servlet.http.HttpServletResponse;
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Autowired
+    private ResourceServerProperties resourceServerProperties;
+    @Autowired
     private CorsFilter corsFilter;
+
+    /**
+     * Apply the token converter (and enhancer) for token store.
+     *
+     * @return the JwtTokenStore managing the tokens.
+     */
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
+    }
+
+    /**
+     * This bean generates an token enhancer, which manages the exchange between JWT acces tokens and Authentication
+     * in both directions.
+     *
+     * @return an access token converter configured with the authorization server's public/private keys
+     */
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
+        accessTokenConverter.setSigningKey(resourceServerProperties.getJwt().getKeyValue());
+        return accessTokenConverter;
+    }
+
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         // 源码中默认resourceId为oauth2-resource
         // 在该服务的配置文件中配置security.oauth2.resource.id参数不起作用
-        resources.resourceId("resource-uaa");
+        resources.resourceId("resource-uaa").tokenStore(tokenStore());
     }
 
     @Override

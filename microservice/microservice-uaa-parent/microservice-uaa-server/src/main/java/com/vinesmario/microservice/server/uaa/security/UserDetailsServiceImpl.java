@@ -1,6 +1,5 @@
 package com.vinesmario.microservice.server.uaa.security;
 
-import com.vinesmario.microservice.client.uaa.dto.RoleDto;
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.security.SecurityAuthority;
@@ -68,24 +67,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (DictConstant.BYTE_YES_NO_N == userAccountDto.getActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
-        if (CollectionUtils.isEmpty(userAccountDto.getRoleList())) {
+        if (CollectionUtils.isEmpty(userAccountDto.getAuthorityList())) {
             throw new UserNotAssignedRolesException("User " + lowercaseLogin + " was not assigned roles");
         }
-        List<GrantedAuthority> grantedAuthorities = userAccountDto.getRoleList().stream()
-                .map(roleDto -> new SecurityAuthority(roleDto.getEnName(),
-                        roleDto.getResourceList().stream().map(resourceDto -> resourceDto.getPermission()).collect(Collectors.toList())))
+        List<GrantedAuthority> grantedAuthorities = userAccountDto.getAuthorityList().stream()
+                .map(authorityDto -> new SecurityAuthority(authorityDto.getRole()))
                 .collect(Collectors.toList());
         SecurityUser securityUser = new SecurityUser(userAccountDto.getUsername(),
                 "{bcrypt}" + userAccountDto.getPassword(),// bcrypt加密后的密文
                 grantedAuthorities);
-
-        RoleDto currentRole = userAccountDto.getRoleList().stream()
-                .filter(roleDto -> DictConstant.BYTE_YES_NO_Y == roleDto.getMajor())
-                .collect(Collectors.toList())
-                .get(0);
-        GrantedAuthority currentAuthority = new SecurityAuthority(currentRole.getEnName(),
-                currentRole.getResourceList().stream().map(resourceDto -> resourceDto.getPermission()).collect(Collectors.toList()));
-        securityUser.setCurrentAuthority(currentAuthority);
         return securityUser;
     }
 }

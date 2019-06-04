@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +34,9 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
     private ClientDetailsServiceImpl clientDetailsService;
     @Autowired
     private ApplicationContext applicationContext;
+    // ResourceServerConfiguration中创建Bean
+    @Autowired
+    private TokenStore tokenStore;
 
     public AuthorizationServerConfiguration(BaseClientDetails details,
                                             AuthenticationConfiguration authenticationConfiguration,
@@ -67,14 +71,15 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         super.configure(endpoints);
-        //pick up all  TokenEnhancers incl. those defined in the application
+        //pick up all TokenEnhancers incl. those defined in the application
         //this avoids changes to this class if an application wants to add its own to the chain
         Collection<TokenEnhancer> tokenEnhancers = applicationContext.getBeansOfType(TokenEnhancer.class).values();
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(new ArrayList<>(tokenEnhancers));
         endpoints.userDetailsService(userDetailsService)
+                .tokenStore(tokenStore)
                 .tokenEnhancer(tokenEnhancerChain)
-                .reuseRefreshTokens(false);             //don't reuse or we will run into session inactivity timeouts
+                .reuseRefreshTokens(false);//don't reuse or we will run into session inactivity timeouts
     }
 
 }

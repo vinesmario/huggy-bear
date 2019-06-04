@@ -6,7 +6,13 @@ import lombok.Data;
 @Data
 public class ResourceDto extends TreeDto<ResourceDto> {
 
+    /**
+     * 类型
+     */
     private Integer type;
+    /**
+     * 权限
+     */
     private String permission;
 
 }

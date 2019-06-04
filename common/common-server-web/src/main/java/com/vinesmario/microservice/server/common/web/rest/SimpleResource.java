@@ -31,7 +31,7 @@ import java.util.Optional;
 public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends ConditionDto, PK extends Serializable>
         implements ReadOnlyClient<DTO, CONDITION, PK> {
 
-    private static final String DEFAULT_PROPERTY_DELIMITER = ",";
+    protected static final String DEFAULT_PROPERTY_DELIMITER = ",";
     private final ReadOnlyService<DTO, PK> service;
 
     public SimpleResource(ReadOnlyService<DTO, PK> service) {
@@ -86,7 +86,7 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
      * @return
      * @see org.springframework.data.web.SortHandlerMethodArgumentResolver parseParameterIntoSort
      */
-    private Sort parseParameterIntoSort(String[] source, String delimiter) {
+    protected Sort parseParameterIntoSort(String[] source, String delimiter) {
         List<Sort.Order> allOrders = new ArrayList();
         String[] var4 = source;
         int var5 = source.length;
@@ -117,7 +117,7 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
      * @return
      * @see org.springframework.data.web.SortHandlerMethodArgumentResolver toOrder
      */
-    private Optional<Sort.Order> toOrder(String property, Optional<Sort.Direction> direction) {
+    protected Optional<Sort.Order> toOrder(String property, Optional<Sort.Direction> direction) {
         return !StringUtils.hasText(property) ? Optional.empty() : Optional.of(direction.map((it) -> {
             return new Sort.Order(it, property);
         }).orElseGet(() -> {

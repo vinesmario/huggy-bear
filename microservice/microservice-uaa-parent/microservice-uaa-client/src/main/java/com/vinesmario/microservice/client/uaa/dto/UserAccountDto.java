@@ -38,6 +38,6 @@ public class UserAccountDto extends BaseDto<Long> {
     /**
      * 角色列表
      */
-    private List<RoleDto> roleList;
+    private List<AuthorityDto> authorityList;
 
 }

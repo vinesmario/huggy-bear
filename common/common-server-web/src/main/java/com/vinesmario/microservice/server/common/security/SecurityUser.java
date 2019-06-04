@@ -9,7 +9,14 @@ import java.util.Collection;
 @Data
 public class SecurityUser extends User {
 
-    private GrantedAuthority currentAuthority;
+    /**
+     * 当前角色
+     */
+    private SecurityAuthority currentAuthority;
+    /**
+     * 当前客户端
+     */
+    private SecurityClient currentClient;
 
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);

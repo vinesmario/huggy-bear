@@ -6,21 +6,20 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class RoleDto extends BaseDto<Long> {
+public class AuthorityDto extends BaseDto<Long> {
 
     /**
-     * 英文名称
+     * 角色名称
      */
-    private String enName;
-    /**
-     * 中文名称
-     */
-    private String cnName;
+    private String role;
     /**
      * 主要角色，登录时默认角色
      */
     private Byte major;
 
+    /**
+     * 可访问、可操作资源
+     */
     private List<ResourceDto> resourceList;
 
 }

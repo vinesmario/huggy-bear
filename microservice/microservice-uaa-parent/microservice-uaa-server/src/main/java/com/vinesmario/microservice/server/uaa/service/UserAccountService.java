@@ -25,7 +25,6 @@ import java.util.Optional;
 public class UserAccountService extends BaseService<UserAccountDto, UserAccount, Long> {
 
     private final UserAccountMapper mapper;
-
     private final UserAccountMapStruct mapStruct;
 
     public UserAccountService(UserAccountMapper mapper,
@@ -80,5 +79,12 @@ public class UserAccountService extends BaseService<UserAccountDto, UserAccount,
     @Transactional(readOnly = true)
     public Optional<UserAccountDto> getWithAuthoritiesByEmail(String email) {
         return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByEmail(email)));
+    }
+
+    public void create(UserAccountDto dto) {
+        UserAccount entity = mapStruct.fromDto2Entity(dto);
+        this.mapper.insert(entity);
+        dto.setId(entity.getId());
+        // 初始化用户角色
     }
 }

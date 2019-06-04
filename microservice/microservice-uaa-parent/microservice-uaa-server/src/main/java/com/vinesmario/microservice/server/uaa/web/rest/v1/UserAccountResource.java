@@ -4,9 +4,11 @@ import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
 import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.microservice.server.common.security.SecurityUtils;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
+import com.vinesmario.microservice.server.common.web.rest.util.PaginationUtil;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.EmailAlreadyUsedException;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.MobileAlreadyUsedException;
@@ -14,6 +16,11 @@ import com.vinesmario.microservice.server.uaa.web.rest.errors.UsernameAlreadyUse
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -21,6 +28,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,10 +55,35 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
 
     }
 
+    @ApiOperation(value = "查询列表，有分页参数则分页", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiResponse(code = 200, message = "查询成功", response = String.class)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<UserAccountDto>> search(@ModelAttribute UserAccountConditionDto conditionDto) {
+        preConditionDto(conditionDto);
+        // 创建分页对象PageRequest
+        String[] directionParameter = conditionDto.getSort();
+        Sort sort = null;
+        if (!ObjectUtils.isEmpty(directionParameter)) {
+            sort = parseParameterIntoSort(directionParameter, DEFAULT_PROPERTY_DELIMITER);
+        }
+
+        if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
+                || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
+            // 分页参数不全
+            List<UserAccountDto> list = this.service.list(conditionDto, sort);
+            return ResponseEntity.ok().body(list);
+        } else {
+            Pageable pageable = PageRequest.of(conditionDto.getPageNumber(), conditionDto.getPageSize(), sort);
+            Page<UserAccountDto> page = this.service.page(conditionDto, pageable);
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
+            return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
+    }
+
     @ApiOperation(value = "添加", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
-//    @Secured
-    @PreAuthorize("hasPermission(Object target, Object permission)")
+//    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @Override
