@@ -26,10 +26,15 @@ import org.springframework.util.ObjectUtils;
 @Service
 public class ${className}Service extends BaseService<${className}Dto, ${className}, Long>{
 
-	@Autowired
-	private ${className}Mapper mapper;
-	@Autowired
-	private ${className}MapStructImpl mapStruct;
+	private final ${className}Mapper mapper;
+	private final ${className}MapStructImpl mapStruct;
+
+	public ${className}Service(${className}Mapper mapper,
+								@Qualifier("${classNameLower}MapStructImpl") ${className}MapStruct mapStruct) {
+		super(mapper, mapStruct);
+		this.mapper = mapper;
+		this.mapStruct = mapStruct;
+	}
 
 	public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
 		BaseExample example = new BaseExample();

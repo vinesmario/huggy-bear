@@ -26,8 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/${table.sqlName}")
 public class ${className}Resource extends BaseResource<${className}Dto, ${className}ConditionDto, Long>{
 
-    @Autowired
-    private ${className}Service service;
+    private final ${className}Service service;
+
+    public ${className}Resource(${className}Service service) {
+        super(service);
+        this.service = service;
+        this.entityName = "${className}";
+    }
 
     @Override
     public void preConditionDto(${className}ConditionDto queryDto) {
