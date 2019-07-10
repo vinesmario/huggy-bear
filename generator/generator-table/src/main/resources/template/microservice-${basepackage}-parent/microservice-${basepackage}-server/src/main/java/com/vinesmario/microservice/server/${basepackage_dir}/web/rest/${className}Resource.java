@@ -10,7 +10,7 @@ import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.${basepackage}.service.${className}Service;
 
 import io.swagger.annotations.Api;
-import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @Api(description = "${className}CRUD", tags = "${className}Controller", basePath = "/${table.sqlName}")
-@Data
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/${table.sqlName}")
 public class ${className}Resource extends BaseResource<${className}Dto, ${className}ConditionDto, Long>{

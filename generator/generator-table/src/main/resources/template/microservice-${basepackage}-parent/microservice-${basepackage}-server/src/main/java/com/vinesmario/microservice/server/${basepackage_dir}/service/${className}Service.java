@@ -12,7 +12,7 @@ import com.vinesmario.microservice.server.${basepackage}.entity.${className};
 import com.vinesmario.microservice.server.${basepackage}.mapper.${className}Mapper;
 import com.vinesmario.microservice.server.${basepackage}.mapstruct.${className}MapStruct;
 
-import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -22,7 +22,7 @@ import org.springframework.util.ObjectUtils;
  * @author maodipu
  * @date 2018-01-18
  */
-@Data
+@Slf4j
 @Service
 public class ${className}Service extends BaseService<${className}Dto, ${className}, Long>{
 
