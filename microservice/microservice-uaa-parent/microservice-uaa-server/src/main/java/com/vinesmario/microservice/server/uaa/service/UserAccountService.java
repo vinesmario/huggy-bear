@@ -5,7 +5,7 @@ import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
-import com.vinesmario.microservice.server.common.service.mybatis.BaseService;
+import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
 import com.vinesmario.microservice.server.uaa.mapper.UserAccountMapper;
 import com.vinesmario.microservice.server.uaa.mapstruct.UserAccountMapStruct;
