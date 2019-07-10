@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date
  */
 
-@Api(description = "${className}CRUD", tags = "${className}Controller", basePath = "/${classNameLower}s")
+@Api(description = "${className}CRUD", tags = "${className}Controller", basePath = "/${table.sqlName}")
 @Data
 @RestController
 @RequestMapping("/api/v1/${table.sqlName}")
