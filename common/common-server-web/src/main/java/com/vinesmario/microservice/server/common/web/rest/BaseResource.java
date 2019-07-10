@@ -4,7 +4,7 @@ import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 import com.vinesmario.microservice.server.common.constant.DictConstant;
-import com.vinesmario.microservice.server.common.service.CrudService;
+import com.vinesmario.microservice.server.common.service.mybatis.CrudService;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import io.swagger.annotations.ApiOperation;

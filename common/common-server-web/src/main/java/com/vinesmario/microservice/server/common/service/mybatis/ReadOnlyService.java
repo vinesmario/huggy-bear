@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.service;
+package com.vinesmario.microservice.server.common.service.mybatis;
 
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import org.springframework.data.domain.Page;

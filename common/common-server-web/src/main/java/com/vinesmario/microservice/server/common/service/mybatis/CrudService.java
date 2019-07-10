@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.service;
+package com.vinesmario.microservice.server.common.service.mybatis;
 
 public interface CrudService<T, PK> extends ReadOnlyService<T, PK> {
 

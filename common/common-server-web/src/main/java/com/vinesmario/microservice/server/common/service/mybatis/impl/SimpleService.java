@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.service.mybatis;
+package com.vinesmario.microservice.server.common.service.mybatis.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -10,7 +10,7 @@ import com.vinesmario.microservice.server.common.kit.StringKit;
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.ReadOnlyMapper;
-import com.vinesmario.microservice.server.common.service.ReadOnlyService;
+import com.vinesmario.microservice.server.common.service.mybatis.ReadOnlyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,7 +27,8 @@ import java.util.Optional;
 
 @Transactional
 public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
-        implements ReadOnlyService<DTO, PK> {
+        implements ReadOnlyService<DTO, PK>
+{
 
     private final ReadOnlyMapper<T, PK> mapper;
 
