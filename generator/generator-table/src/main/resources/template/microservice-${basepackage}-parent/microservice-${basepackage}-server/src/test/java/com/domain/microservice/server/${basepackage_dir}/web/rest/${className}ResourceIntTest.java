@@ -4,13 +4,13 @@
 package com.vinesmario.microservice.server.${basepackage}.web.rest;
 
 import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.web.rest.TestUtil;
 import com.vinesmario.microservice.server.common.web.rest.errors.ExceptionTranslator;
 import com.vinesmario.microservice.server.${basepackage}.ServiceApplicationIntTest;
-import com.vinesmario.microservice.server.${basepackage}.entity.${className};
-import com.vinesmario.microservice.server.${basepackage}.mapstruct.${className}MapStructImpl;
-import com.vinesmario.microservice.server.${basepackage}.service.${className}Service;
+{basepackage}.entity.${className};
+{basepackage}.mapstruct.${className}MapStructImpl;
+{basepackage}.service.${className}Service;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;

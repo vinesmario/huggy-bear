@@ -4,7 +4,6 @@
 package com.vinesmario.microservice.client.${basepackage}.web.client;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-{basepackage}.dto.${className}Dto;
 import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
 import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
 import com.vinesmario.microservice.client.${basepackage}.web.hystrix.${className}FallbackFactory;

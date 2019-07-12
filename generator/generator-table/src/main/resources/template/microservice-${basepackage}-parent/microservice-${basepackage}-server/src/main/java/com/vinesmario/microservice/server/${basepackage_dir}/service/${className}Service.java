@@ -3,6 +3,7 @@
 <#assign classNameLower = className?uncap_first> 
 package ${basepackage}.service;
 
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
 import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
@@ -13,7 +14,7 @@ import com.vinesmario.microservice.server.${basepackage}.mapper.${className}Mapp
 import com.vinesmario.microservice.server.${basepackage}.mapstruct.${className}MapStruct;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -27,7 +28,7 @@ import org.springframework.util.ObjectUtils;
 public class ${className}Service extends BaseService<${className}Dto, ${className}, Long>{
 
 	private final ${className}Mapper mapper;
-	private final ${className}MapStructImpl mapStruct;
+	private final ${className}MapStruct mapStruct;
 
 	public ${className}Service(${className}Mapper mapper,
 								@Qualifier("${classNameLower}MapStructImpl") ${className}MapStruct mapStruct) {
@@ -39,7 +40,7 @@ public class ${className}Service extends BaseService<${className}Dto, ${classNam
 	public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
 		BaseExample example = new BaseExample();
 		BaseExample.Criteria criteria = example.createCriteria();
-		criteria.andDeletedEqualTo(YES_NO_N);
+		criteria.andDeletedEqualTo(DictConstant.YES_NO_N);
 
 		if (!ObjectUtils.isEmpty(conditionDto)) {
 			${className}ConditionDto ${classNameLower}ConditionDto = (${className}ConditionDto) conditionDto;

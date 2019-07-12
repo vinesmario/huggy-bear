@@ -3,8 +3,8 @@
 <#assign classNameLower = className?uncap_first> 
 package com.vinesmario.microservice.client.${basepackage}.dto;
 
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -4,7 +4,7 @@
 package com.vinesmario.microservice.server.${basepackage}.entity;
 
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.common.constant.DictConstant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 

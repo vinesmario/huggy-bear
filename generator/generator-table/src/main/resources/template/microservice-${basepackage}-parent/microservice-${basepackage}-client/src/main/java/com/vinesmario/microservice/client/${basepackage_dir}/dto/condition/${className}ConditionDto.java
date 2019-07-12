@@ -53,5 +53,10 @@ public class ${className}ConditionDto implements ConditionDto {
         </#if>
     </#list>
 
-
+	/**
+	 * 分页参数
+	 */
+	private Integer pageNumber;
+	private Integer pageSize;
+	private String[] sort;
 }

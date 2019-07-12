@@ -3,15 +3,15 @@
 <#assign classNameLower = className?uncap_first> 
 package com.vinesmario.microservice.client.${basepackage}.web.client;
 
-import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-{basepackage}.dto.${className}Dto;
+import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
 import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import com.vinesmario.microservice.client.${basepackage}.web.feign.${className}Client;
+import feign.hystrix.FallbackFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @Component
-public interface ${className}FallbackFactory implements FallbackFactory<${className}Client>{
+public class ${className}FallbackFactory implements FallbackFactory<${className}Client>{
 
     @Override
     public ${className}Client create(Throwable throwable){
 		return new ${className}Client() {
             @Override
-			public ResponseEntity<List<${className}Dto>> search({className}ConditionDto condition){
+			public ResponseEntity<List<${className}Dto>> search(${className}ConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
