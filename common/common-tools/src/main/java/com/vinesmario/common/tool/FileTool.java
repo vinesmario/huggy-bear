@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.tool;
+package com.vinesmario.common.tool;
 
 import org.apache.commons.compress.archivers.*;
 import org.apache.commons.compress.compressors.CompressorException;

@@ -3,10 +3,10 @@ package com.vinesmario.microservice.server.common.service.mybatis.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.vinesmario.common.kit.StringKit;
 import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
-import com.vinesmario.microservice.server.common.kit.StringKit;
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.ReadOnlyMapper;
@@ -27,8 +27,7 @@ import java.util.Optional;
 
 @Transactional
 public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
-        implements ReadOnlyService<DTO, PK>
-{
+        implements ReadOnlyService<DTO, PK> {
 
     private final ReadOnlyMapper<T, PK> mapper;
 

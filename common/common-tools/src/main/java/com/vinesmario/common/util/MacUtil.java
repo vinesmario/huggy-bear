@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.util;
+package com.vinesmario.common.util;
 
 
 import java.io.BufferedReader;

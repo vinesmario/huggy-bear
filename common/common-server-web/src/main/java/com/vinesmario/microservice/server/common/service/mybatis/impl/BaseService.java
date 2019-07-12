@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.server.common.service.mybatis.impl;
 
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
@@ -15,8 +15,7 @@ import java.io.Serializable;
 @Transactional
 public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
         extends SimpleService<DTO, T, PK>
-        implements CrudService<DTO, PK>
-{
+        implements CrudService<DTO, PK> {
 
     private final CrudMapper<T, PK> mapper;
 

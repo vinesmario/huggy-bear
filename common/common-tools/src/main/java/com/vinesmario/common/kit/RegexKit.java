@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.kit;
+package com.vinesmario.common.kit;
 
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.generator;
+package com.vinesmario.common.generator;
 
 /**
  * Twitter_Snowflake<br>

@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.kit;
+package com.vinesmario.common.kit;
 
 import org.apache.commons.lang3.StringUtils;
 

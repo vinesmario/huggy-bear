@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.constant;
+package com.vinesmario.common.constant;
 
 public class DictConstant {
 

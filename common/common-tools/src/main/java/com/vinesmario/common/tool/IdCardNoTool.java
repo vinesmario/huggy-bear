@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.tool;
+package com.vinesmario.common.tool;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
