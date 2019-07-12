@@ -1,0 +1,46 @@
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        service-url:
+            defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/
+
+# https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/
+# see org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerConfiguration.class
+security:
+    oauth2:
+        # see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties.class
+        resource:
+#            id: resource-base
+            id: @project.artifactId@
+            # client-id和client-secret可以不用配置，会从 security.oauth2.client中获取,
+            # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
+#            client-id: internal
+#            client-secret: internal
+            jwt:
+                # 对称加密
+                # 在resource server中用来解析令牌，需要与authorization server同步
+                # 也可以设置 非对称加密方式获取公钥 public-key
+                key-value: signingKey
+        # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties.class
+        # see org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails.class
+        # server-base's client properties
+        client:
+            id: auto-increment
+            client-id: internal
+            client-secret: internal
+            scope: web-app
+            access-token-uri: http://oauth/token
+            user-authorization-uri: http://oauth/authorize
+            # query（跟在url参数后面）
+            # form（以form的body形式提交）
+            # header（放到Http Header里，默认）
+            # none（未知）
+#            client-authentication-scheme: header
+
+    basic:
+        enabled: false
+
+management:
+    security:
+        enabled: false

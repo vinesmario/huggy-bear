@@ -1,0 +1,77 @@
+spring:
+    application:
+        name: @project.artifactId@
+    profiles:
+        active: dev
+    cloud:
+        config:
+            label: master
+            profile: ${spring.profiles.active}
+#            方案一：先连接到配置中心，再通过配置中心获取注册中心地址
+#            uri: http://localhost:10001/
+#            方案二：先注册到注册中心，再通过注册中心找到配置中心地址（推荐）
+            discovery:
+                enabled: true
+                serviceId: cloud-config-server
+
+mybatis:
+    mapper-locations: classpath*:mapper/*.xml
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+ribbon:
+    # Ribbon是懒加载的，在首次请求时，才会开始初始化相关类
+    # 会导致第一次请求失败的问题
+    # 此处配置饥饿加载
+    eager-load:
+        enabled: true
+    ReadTimeout: 10000
+    ConnectTimeout: 10000
+    eureka:
+        enabled: true
+    httpclient:
+        enabled: false
+    okhttp:
+        enabled: true
+
+feign:
+    client:
+        config:
+            default:
+                connectTimeout: 5000
+                readTimeout: 5000
+    okhttp:
+        enable: true
+    hystrix:
+        enabled: true #Hystrix支持，如果为true，hystrix库必须在classpath中
+    compression:
+        request:
+            enabled: true #请求和响应GZIP压缩支持
+            mime-types: text/xml,application/xml,application/json #支持压缩的mime types
+            min-request-size: 2048
+        response:
+            enabled: true
+
+#hystrix:
+#    command:
+#        default:
+#            execution:
+#                timeout:
+#                    enabled: false
+#                isolation:
+#                    strategy: SEMAPHORE
+#                    thread:
+#                        timeoutInMilliseconds: 5000
+
+# 在Hystrix Dashboard中监控单个应用的地址 http://base-hostname:port/actuator/hystrix.stream
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*" #对外暴露监控接口
+    endpoint:
+        health:
+            show-details: ALWAYS
