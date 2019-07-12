@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.uaa.web.rest;
 
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.web.rest.TestUtil;
 import com.vinesmario.microservice.server.common.web.rest.errors.ExceptionTranslator;
 import com.vinesmario.microservice.server.uaa.UaaServerApplicationIntTest;

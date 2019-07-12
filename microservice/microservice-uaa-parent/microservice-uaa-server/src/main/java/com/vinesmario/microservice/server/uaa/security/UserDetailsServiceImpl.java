@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.uaa.security;
 
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.security.SecurityAuthority;
 import com.vinesmario.microservice.server.common.security.SecurityUser;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;

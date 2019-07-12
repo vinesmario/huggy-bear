@@ -3,8 +3,7 @@ package com.vinesmario.microservice.server.uaa.web.rest.v1;
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
 import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
-import com.vinesmario.microservice.server.common.security.SecurityUtils;
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
@@ -23,8 +22,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 

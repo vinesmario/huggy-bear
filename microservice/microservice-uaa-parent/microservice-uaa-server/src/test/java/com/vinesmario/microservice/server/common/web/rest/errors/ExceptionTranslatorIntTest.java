@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.common.web.rest.errors;
 
-import com.vinesmario.microservice.server.uaa.UaaServerApplication;
+import com.vinesmario.microservice.server.UaaServerApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

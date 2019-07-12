@@ -3,7 +3,7 @@ package com.vinesmario.microservice.server.uaa.service;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
-import com.vinesmario.microservice.server.common.constant.DictConstant;
+import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
