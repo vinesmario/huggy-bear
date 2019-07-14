@@ -54,6 +54,11 @@ public class ${className}FallbackFactory implements FallbackFactory<${className}
                 return ResponseEntity.notFound().build();
             }
 
+            @Override
+            public ResponseEntity<Void> deleteByExample(${className}ConditionDto condition){
+                log.error("进入回退逻辑", throwable);
+                return ResponseEntity.notFound().build();
+            }
         };
     }
 }
