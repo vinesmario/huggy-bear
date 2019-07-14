@@ -1,7 +1,6 @@
 package com.vinesmario.microservice.server.file.entity;
 
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
-import com.vinesmario.common.constant.DictConstant;
 import lombok.Data;
 
 /**
@@ -13,7 +12,7 @@ import lombok.Data;
 public class FileImage extends BaseEntity<Long> {
 
     /**
-     * 
+     *
      */
     private Long tenantId;
     /**
@@ -32,6 +31,10 @@ public class FileImage extends BaseEntity<Long> {
      * 图片存储绝对路径
      */
     private String imageAbsolutePath;
+    /**
+     * 图片访问绝对url
+     */
+    private String imageAbsoluteUrl;
     /**
      * 图片访问相对url
      */
@@ -56,6 +59,10 @@ public class FileImage extends BaseEntity<Long> {
      * 缩略图存储绝对路径
      */
     private String thumbnailAbsolutePath;
+    /**
+     * 缩略图访问绝对url
+     */
+    private String thumbnailAbsoluteUrl;
     /**
      * 缩略图访问相对url
      */

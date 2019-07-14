@@ -1,8 +1,10 @@
 package com.vinesmario.microservice.client.file.dto;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.vinesmario.common.constant.DictConstant;
+import com.vinesmario.microservice.client.common.dto.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -34,6 +36,10 @@ public class FileImageDto extends BaseDto<Long> {
      */
     private String imageAbsolutePath;
     /**
+     * 图片访问绝对url
+     */
+    private String imageAbsoluteUrl;
+    /**
      * 图片访问相对url
      */
     private String imageRelativeUrl;
@@ -58,6 +64,10 @@ public class FileImageDto extends BaseDto<Long> {
      */
     private String thumbnailAbsolutePath;
     /**
+     * 缩略图访问绝对url
+     */
+    private String thumbnailAbsoluteUrl;
+    /**
      * 缩略图访问相对url
      */
     private String thumbnailRelativeUrl;
@@ -73,6 +83,11 @@ public class FileImageDto extends BaseDto<Long> {
      * 缩略图大小，单位B
      */
     private Integer thumbnailSize;
- 
 
+    /**
+     * alert param
+     */
+    public String getAlertParam() {
+        return name;
+    }
 }

@@ -11,9 +11,13 @@ import com.vinesmario.microservice.server.file.mapper.FileImageMapper;
 import com.vinesmario.microservice.server.file.mapstruct.FileImageMapStruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+
+import java.util.Optional;
 
 /**
  * @author maodipu
@@ -50,5 +54,8 @@ public class FileImageService extends BaseService<FileImageDto, FileImage, Long>
 		return example;
 	}
 
-
+    @Transactional(readOnly = true)
+    public Optional<FileImageDto> getByUuid(String uuid) {
+        return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
+    }
 }

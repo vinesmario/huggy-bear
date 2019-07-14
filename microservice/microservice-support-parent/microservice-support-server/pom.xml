@@ -12,6 +12,11 @@
     <artifactId>microservice-support-server</artifactId>
     <description>技术支撑服务</description>
 
+    <properties>
+        <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
+        <aliyun.oss.version>2.8.3</aliyun.oss.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -29,6 +34,18 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>microservice-support-client</artifactId>
             <version>${project.common.version}</version>
+        </dependency>
+
+        <!-- 云存储-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>${qiniu.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${aliyun.oss.version}</version>
         </dependency>
 
         <!-- Test -->

@@ -2,18 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vinesmario.microservice.server.file.mapper.FileImageMapper">
   <resultMap id="BaseResultMap" type="com.vinesmario.microservice.server.file.entity.FileImage">
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
     <result column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="file_extension" jdbcType="VARCHAR" property="fileExtension" />
     <result column="image_name" jdbcType="VARCHAR" property="imageName" />
     <result column="image_absolute_path" jdbcType="VARCHAR" property="imageAbsolutePath" />
+    <result column="image_absolute_url" jdbcType="VARCHAR" property="imageAbsoluteUrl" />
     <result column="image_relative_url" jdbcType="VARCHAR" property="imageRelativeUrl" />
     <result column="image_height" jdbcType="INTEGER" property="imageHeight" />
     <result column="image_width" jdbcType="INTEGER" property="imageWidth" />
     <result column="image_size" jdbcType="INTEGER" property="imageSize" />
     <result column="thumbnail_name" jdbcType="VARCHAR" property="thumbnailName" />
     <result column="thumbnail_absolute_path" jdbcType="VARCHAR" property="thumbnailAbsolutePath" />
+    <result column="thumbnail_absolute_url" jdbcType="VARCHAR" property="thumbnailAbsoluteUrl" />
     <result column="thumbnail_relative_url" jdbcType="VARCHAR" property="thumbnailRelativeUrl" />
     <result column="thumbnail_height" jdbcType="INTEGER" property="thumbnailHeight" />
     <result column="thumbnail_width" jdbcType="INTEGER" property="thumbnailWidth" />
@@ -84,10 +86,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, tenant_id, uuid, file_extension, image_name, image_absolute_path, image_relative_url, 
-    image_height, image_width, image_size, thumbnail_name, thumbnail_absolute_path, thumbnail_relative_url, 
-    thumbnail_height, thumbnail_width, thumbnail_size, created_by, created_date, last_modified_by, 
-    last_modified_date, memo, deleted
+    id, tenant_id, uuid, file_extension, image_name, image_absolute_path, image_absolute_url, 
+    image_relative_url, image_height, image_width, image_size, thumbnail_name, thumbnail_absolute_path, 
+    thumbnail_absolute_url, thumbnail_relative_url, thumbnail_height, thumbnail_width, 
+    thumbnail_size, created_by, created_date, last_modified_by, last_modified_date, memo, 
+    deleted
   </sql>
   <select id="selectByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample" resultMap="BaseResultMap">
     select
@@ -103,6 +106,22 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from file_image
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from file_image
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from file_image
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <delete id="deleteByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample">
     delete from file_image
     <if test="_parameter != null">
@@ -112,16 +131,18 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.file.entity.FileImage">
     insert into file_image (id, tenant_id, uuid, 
       file_extension, image_name, image_absolute_path, 
-      image_relative_url, image_height, image_width, 
-      image_size, thumbnail_name, thumbnail_absolute_path, 
+      image_absolute_url, image_relative_url, image_height, 
+      image_width, image_size, thumbnail_name, 
+      thumbnail_absolute_path, thumbnail_absolute_url, 
       thumbnail_relative_url, thumbnail_height, 
       thumbnail_width, thumbnail_size, created_by, 
       created_date, last_modified_by, last_modified_date, 
       memo, deleted)
     values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, 
       #{fileExtension,jdbcType=VARCHAR}, #{imageName,jdbcType=VARCHAR}, #{imageAbsolutePath,jdbcType=VARCHAR}, 
-      #{imageRelativeUrl,jdbcType=VARCHAR}, #{imageHeight,jdbcType=INTEGER}, #{imageWidth,jdbcType=INTEGER}, 
-      #{imageSize,jdbcType=INTEGER}, #{thumbnailName,jdbcType=VARCHAR}, #{thumbnailAbsolutePath,jdbcType=VARCHAR}, 
+      #{imageAbsoluteUrl,jdbcType=VARCHAR}, #{imageRelativeUrl,jdbcType=VARCHAR}, #{imageHeight,jdbcType=INTEGER}, 
+      #{imageWidth,jdbcType=INTEGER}, #{imageSize,jdbcType=INTEGER}, #{thumbnailName,jdbcType=VARCHAR}, 
+      #{thumbnailAbsolutePath,jdbcType=VARCHAR}, #{thumbnailAbsoluteUrl,jdbcType=VARCHAR}, 
       #{thumbnailRelativeUrl,jdbcType=VARCHAR}, #{thumbnailHeight,jdbcType=INTEGER}, 
       #{thumbnailWidth,jdbcType=INTEGER}, #{thumbnailSize,jdbcType=INTEGER}, #{createdBy,jdbcType=BIGINT}, 
       #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=BIGINT}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
@@ -148,6 +169,9 @@
       <if test="imageAbsolutePath != null">
         image_absolute_path,
       </if>
+      <if test="imageAbsoluteUrl != null">
+        image_absolute_url,
+      </if>
       <if test="imageRelativeUrl != null">
         image_relative_url,
       </if>
@@ -165,6 +189,9 @@
       </if>
       <if test="thumbnailAbsolutePath != null">
         thumbnail_absolute_path,
+      </if>
+      <if test="thumbnailAbsoluteUrl != null">
+        thumbnail_absolute_url,
       </if>
       <if test="thumbnailRelativeUrl != null">
         thumbnail_relative_url,
@@ -216,6 +243,9 @@
       <if test="imageAbsolutePath != null">
         #{imageAbsolutePath,jdbcType=VARCHAR},
       </if>
+      <if test="imageAbsoluteUrl != null">
+        #{imageAbsoluteUrl,jdbcType=VARCHAR},
+      </if>
       <if test="imageRelativeUrl != null">
         #{imageRelativeUrl,jdbcType=VARCHAR},
       </if>
@@ -233,6 +263,9 @@
       </if>
       <if test="thumbnailAbsolutePath != null">
         #{thumbnailAbsolutePath,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailAbsoluteUrl != null">
+        #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},
       </if>
       <if test="thumbnailRelativeUrl != null">
         #{thumbnailRelativeUrl,jdbcType=VARCHAR},
@@ -293,6 +326,9 @@
       <if test="record.imageAbsolutePath != null">
         image_absolute_path = #{record.imageAbsolutePath,jdbcType=VARCHAR},
       </if>
+      <if test="record.imageAbsoluteUrl != null">
+        image_absolute_url = #{record.imageAbsoluteUrl,jdbcType=VARCHAR},
+      </if>
       <if test="record.imageRelativeUrl != null">
         image_relative_url = #{record.imageRelativeUrl,jdbcType=VARCHAR},
       </if>
@@ -310,6 +346,9 @@
       </if>
       <if test="record.thumbnailAbsolutePath != null">
         thumbnail_absolute_path = #{record.thumbnailAbsolutePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumbnailAbsoluteUrl != null">
+        thumbnail_absolute_url = #{record.thumbnailAbsoluteUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.thumbnailRelativeUrl != null">
         thumbnail_relative_url = #{record.thumbnailRelativeUrl,jdbcType=VARCHAR},
@@ -354,12 +393,14 @@
       file_extension = #{record.fileExtension,jdbcType=VARCHAR},
       image_name = #{record.imageName,jdbcType=VARCHAR},
       image_absolute_path = #{record.imageAbsolutePath,jdbcType=VARCHAR},
+      image_absolute_url = #{record.imageAbsoluteUrl,jdbcType=VARCHAR},
       image_relative_url = #{record.imageRelativeUrl,jdbcType=VARCHAR},
       image_height = #{record.imageHeight,jdbcType=INTEGER},
       image_width = #{record.imageWidth,jdbcType=INTEGER},
       image_size = #{record.imageSize,jdbcType=INTEGER},
       thumbnail_name = #{record.thumbnailName,jdbcType=VARCHAR},
       thumbnail_absolute_path = #{record.thumbnailAbsolutePath,jdbcType=VARCHAR},
+      thumbnail_absolute_url = #{record.thumbnailAbsoluteUrl,jdbcType=VARCHAR},
       thumbnail_relative_url = #{record.thumbnailRelativeUrl,jdbcType=VARCHAR},
       thumbnail_height = #{record.thumbnailHeight,jdbcType=INTEGER},
       thumbnail_width = #{record.thumbnailWidth,jdbcType=INTEGER},
@@ -373,5 +414,107 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vinesmario.microservice.server.file.entity.FileImage">
+    update file_image
+    <set>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExtension != null">
+        file_extension = #{fileExtension,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null">
+        image_name = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAbsolutePath != null">
+        image_absolute_path = #{imageAbsolutePath,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAbsoluteUrl != null">
+        image_absolute_url = #{imageAbsoluteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageRelativeUrl != null">
+        image_relative_url = #{imageRelativeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageHeight != null">
+        image_height = #{imageHeight,jdbcType=INTEGER},
+      </if>
+      <if test="imageWidth != null">
+        image_width = #{imageWidth,jdbcType=INTEGER},
+      </if>
+      <if test="imageSize != null">
+        image_size = #{imageSize,jdbcType=INTEGER},
+      </if>
+      <if test="thumbnailName != null">
+        thumbnail_name = #{thumbnailName,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailAbsolutePath != null">
+        thumbnail_absolute_path = #{thumbnailAbsolutePath,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailAbsoluteUrl != null">
+        thumbnail_absolute_url = #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailRelativeUrl != null">
+        thumbnail_relative_url = #{thumbnailRelativeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnailHeight != null">
+        thumbnail_height = #{thumbnailHeight,jdbcType=INTEGER},
+      </if>
+      <if test="thumbnailWidth != null">
+        thumbnail_width = #{thumbnailWidth,jdbcType=INTEGER},
+      </if>
+      <if test="thumbnailSize != null">
+        thumbnail_size = #{thumbnailSize,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null">
+        last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifiedDate != null">
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vinesmario.microservice.server.file.entity.FileImage">
+    update file_image
+    set tenant_id = #{tenantId,jdbcType=BIGINT},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      file_extension = #{fileExtension,jdbcType=VARCHAR},
+      image_name = #{imageName,jdbcType=VARCHAR},
+      image_absolute_path = #{imageAbsolutePath,jdbcType=VARCHAR},
+      image_absolute_url = #{imageAbsoluteUrl,jdbcType=VARCHAR},
+      image_relative_url = #{imageRelativeUrl,jdbcType=VARCHAR},
+      image_height = #{imageHeight,jdbcType=INTEGER},
+      image_width = #{imageWidth,jdbcType=INTEGER},
+      image_size = #{imageSize,jdbcType=INTEGER},
+      thumbnail_name = #{thumbnailName,jdbcType=VARCHAR},
+      thumbnail_absolute_path = #{thumbnailAbsolutePath,jdbcType=VARCHAR},
+      thumbnail_absolute_url = #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},
+      thumbnail_relative_url = #{thumbnailRelativeUrl,jdbcType=VARCHAR},
+      thumbnail_height = #{thumbnailHeight,jdbcType=INTEGER},
+      thumbnail_width = #{thumbnailWidth,jdbcType=INTEGER},
+      thumbnail_size = #{thumbnailSize,jdbcType=INTEGER},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

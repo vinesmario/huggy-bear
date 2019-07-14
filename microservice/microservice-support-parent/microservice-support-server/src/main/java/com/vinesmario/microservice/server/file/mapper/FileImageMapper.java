@@ -10,4 +10,5 @@ import com.vinesmario.microservice.server.file.entity.FileImage;
 
 public interface FileImageMapper extends CrudMapper<FileImage, Long>{
 
+    FileImage selectByUuid(String uuid);
 }

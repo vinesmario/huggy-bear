@@ -18,21 +18,24 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-file-server", path = "/api/v1/file_image", fallbackFactory = FileImageFallbackFactory.class)
-public interface FileImageClient extends CrudClient<FileImageDto, FileImageConditionDto, Long>{
+public interface FileImageClient extends CrudClient<FileImageDto, FileImageConditionDto, Long> {
 
-	@GetMapping("")
-	ResponseEntity<List<FileImageDto>> search(@ModelAttribute FileImageConditionDto condition);
+    @GetMapping("")
+    ResponseEntity<List<FileImageDto>> search(@ModelAttribute FileImageConditionDto condition);
 
-	@GetMapping("/{id}")
-	ResponseEntity<FileImageDto> get(@PathVariable("id") Long id);
+    @GetMapping("/{id}")
+    ResponseEntity<FileImageDto> get(@PathVariable("id") Long id);
 
-	@PostMapping("")
-	ResponseEntity<FileImageDto> create(@RequestBody FileImageDto fileImage);
+    @PostMapping("")
+    ResponseEntity<FileImageDto> create(@RequestBody FileImageDto fileImage);
 
-	@PutMapping("/{id}")
-	ResponseEntity<FileImageDto> modify(@PathVariable("id") Long id, @RequestBody FileImageDto fileImage);
+    @PutMapping("/{id}")
+    ResponseEntity<FileImageDto> modify(@PathVariable("id") Long id, @RequestBody FileImageDto fileImage);
 
-	@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);
-	
+
+    @DeleteMapping("")
+    ResponseEntity<Void> deleteByExample(@RequestBody FileImageConditionDto conditionDto);
+
 }
