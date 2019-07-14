@@ -5,9 +5,12 @@ import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.QiniuCloudStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -31,58 +34,51 @@ public class QiniuCloudStorageService extends AbstractStorageService {
     }
 
     @Override
-    public String upload(MultipartFile multipartFile, String path) throws Exception {
-        return null;
+    public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsoluteUrl(upload(multipartFile.getBytes(), fileRelativePath));
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsoluteUrl(upload(IOUtils.toByteArray(inputStream), fileRelativePath));
     }
 
     @Override
-    public String upload(byte[] data, String path) throws Exception {
-        return null;
+    public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsoluteUrl(upload(data, fileRelativePath));
     }
 
     @Override
-    public StorageImageDto uploadImage(MultipartFile multipartFile, String path) throws Exception {
-        String imageName = multipartFile.getOriginalFilename();
-        String imageUrl = "";
-
-        try {
-            UploadManager uploadManager = new UploadManager(new Configuration(Zone.autoZone()));
-            String token = Auth.create(config.getAccessKey(), config.getSecretKey()).uploadToken(config.getBucketName());
-            Response response = uploadManager.put(multipartFile.getBytes(), path, token);
-            if (!response.isOK()) {
-                throw new RuntimeException("上传七牛出错：" + response.toString());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("上传文件失败，请核对七牛配置信息", e);
-        }
-
-//        return config.getDomain() + "/" + path;
-//
-//        StorageImageDto storageImageDto = new StorageImageDto();
-//        storageImageDto.setUuid(UUID.randomUUID().toString().replaceAll("-", ""));
-//        storageImageDto.setImageName(imageName);
-//        storageImageDto.setImageAbsoluteUrl(imageUrl);
-//        storageImageDto.setImageHeight();
-        return null;
+    public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsoluteUrl(upload(multipartFile.getBytes(), imageRelativePath));
     }
 
     @Override
-    public StorageImageDto uploadImage(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsoluteUrl(upload(IOUtils.toByteArray(inputStream), imageRelativePath));
     }
 
     @Override
-    public StorageImageDto uploadImage(byte[] data, String path) throws Exception {
-        return null;
+    public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsoluteUrl(upload(data, imageRelativePath));
     }
 
     @Override
     public void deleteObject(String key) throws Exception {
 
+    }
+
+    private String upload(byte[] data, String fileRelativePath) throws Exception {
+        if (StringUtils.isNotBlank(config.getNameSpace())) {
+            fileRelativePath = config.getNameSpace() + "/" + fileRelativePath;
+        }
+        UploadManager uploadManager = new UploadManager(new Configuration(Zone.autoZone()));
+        String token = Auth.create(config.getAccessKey(), config.getSecretKey()).uploadToken(config.getBucketName());
+        Response response = uploadManager.put(data, fileRelativePath, token);
+        if (!response.isOK()) {
+            throw new RuntimeException("上传七牛出错：" + response.toString());
+        }
+        String fileAbsoluteUrl = "http://" + config.getDomain() + "/" + fileRelativePath;
+        return fileAbsoluteUrl;
     }
 }

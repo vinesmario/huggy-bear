@@ -1,13 +1,17 @@
 package com.vinesmario.microservice.server.storage.strategy;
 
+import com.aliyun.oss.OSSClient;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.AliyunCloudStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 @Lazy
@@ -26,37 +30,47 @@ public class AliyunCloudStorageService extends AbstractStorageService {
     }
 
     @Override
-    public String upload(MultipartFile multipartFile, String path) throws Exception {
-        return null;
+    public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsoluteUrl(upload(multipartFile.getInputStream(), fileRelativePath));
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsoluteUrl(upload(inputStream, fileRelativePath));
     }
 
     @Override
-    public String upload(byte[] data, String path) throws Exception {
-        return null;
+    public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsoluteUrl(upload(new ByteArrayInputStream(data), fileRelativePath));
     }
 
     @Override
-    public StorageImageDto uploadImage(MultipartFile multipartFile, String path) throws Exception {
-        return null;
+    public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsoluteUrl(upload(multipartFile.getInputStream(), imageRelativePath));
     }
 
     @Override
-    public StorageImageDto uploadImage(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsoluteUrl(upload(inputStream, imageRelativePath));
     }
 
     @Override
-    public StorageImageDto uploadImage(byte[] data, String path) throws Exception {
-        return null;
+    public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsoluteUrl(upload(new ByteArrayInputStream(data), imageRelativePath));
     }
 
     @Override
     public void deleteObject(String key) throws Exception {
 
+    }
+
+    private String upload(InputStream inputStream, String fileRelativePath) throws Exception {
+        if (StringUtils.isNotBlank(config.getNameSpace())) {
+            fileRelativePath = config.getNameSpace() + "/" + fileRelativePath;
+        }
+        OSSClient client = new OSSClient(config.getEndPoint(), config.getAccessKeyId(), config.getAccessKeySecret());
+        client.putObject(config.getBucketName(), fileRelativePath, inputStream);
+        String fileAbsoluteUrl = "http://" + config.getDomain() + "/" + fileRelativePath;
+        return fileAbsoluteUrl;
     }
 }

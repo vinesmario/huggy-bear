@@ -9,10 +9,6 @@ public class AliyunCloudStorageConfig {
      */
     private String domain;
     /**
-     * 阿里云路径前缀
-     */
-    private String prefix;
-    /**
      * 阿里云EndPoint
      */
     private String endPoint;
@@ -25,8 +21,12 @@ public class AliyunCloudStorageConfig {
      */
     private String accessKeySecret;
     /**
-     * 阿里云BucketName
+     * 阿里云存储空间名
      */
     private String bucketName;
+    /**
+     * 阿里云访问url命名空间
+     */
+    private String nameSpace;
 
 }

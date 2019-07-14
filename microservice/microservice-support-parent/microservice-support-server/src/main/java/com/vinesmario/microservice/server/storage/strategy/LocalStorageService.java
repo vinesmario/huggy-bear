@@ -1,94 +1,99 @@
 package com.vinesmario.microservice.server.storage.strategy;
 
+import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.server.common.web.rest.errors.InternalServerErrorException;
-import com.vinesmario.microservice.server.storage.service.StorageImageService;
 import com.vinesmario.microservice.server.storage.config.LocalStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
-import org.apache.commons.io.FilenameUtils;
+import com.vinesmario.microservice.server.storage.service.StorageFileService;
+import com.vinesmario.microservice.server.storage.service.StorageImageService;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
+import java.io.OutputStream;
 
 @Lazy
 @Service
 public class LocalStorageService extends AbstractStorageService {
 
-    private final LocalStorageConfig config;
-    private final StorageImageService service;
+    @Autowired
+    private StorageFileService storageFileService;
+    @Autowired
+    private StorageImageService storageImageService;
 
-    public LocalStorageService(StorageProperties storageProperties, StorageImageService service) {
+    private final LocalStorageConfig config;
+
+    public LocalStorageService(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getLocal())) {
             throw new IllegalArgumentException("Property 'file.storage.local' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getLocal().getRoot())) {
             throw new IllegalArgumentException("Property 'file.storage.local.root' is empty ");
         }
         this.config = storageProperties.getLocal();
-        this.service = service;
     }
 
     @Override
-    public String upload(MultipartFile multipartFile, String path) throws Exception {
-        return null;
+    public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsolutePath(upload(multipartFile.getInputStream(), fileRelativePath));
+        storageFileService.create(storageFileDto);
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsolutePath(upload(inputStream, fileRelativePath));
+        storageFileService.create(storageFileDto);
     }
 
     @Override
-    public String upload(byte[] data, String path) throws Exception {
-        return null;
+    public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+        storageFileDto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), fileRelativePath));
+        storageFileService.create(storageFileDto);
     }
 
     @Override
-    public StorageImageDto uploadImage(MultipartFile multipartFile, String path) throws Exception {
-        String originalFilename = multipartFile.getOriginalFilename();
-        String extension = FilenameUtils.getExtension(originalFilename);
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        String imageName = uuid + "." + extension;
-        String imagePath = config.getRoot() + "/" + imageName;
-        StorageImageDto storageImageDto = new StorageImageDto();
-        storageImageDto.setUuid(uuid);
-        storageImageDto.setImageName(imageName);
-        storageImageDto.setImageAbsolutePath(imagePath);
-//        storageImageDto.setImageHeight();
-        try {
-            File file = new File(imagePath);
-            //判断路径是否存在，如果不存在就创建一个
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
-
-            // TODO 图片高度和宽度、大小、MD5、SHA1
-            multipartFile.transferTo(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new InternalServerErrorException(e.getMessage());
-        }
-        service.create(storageImageDto);
-        return storageImageDto;
+    public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsolutePath(upload(multipartFile.getInputStream(), imageRelativePath));
+        storageImageService.create(storageImageDto);
     }
 
     @Override
-    public StorageImageDto uploadImage(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsolutePath(upload(inputStream, imageRelativePath));
+        storageImageService.create(storageImageDto);
     }
 
     @Override
-    public StorageImageDto uploadImage(byte[] data, String path) throws Exception {
-        return null;
+    public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+        storageImageDto.setImageAbsolutePath(upload(new ByteArrayInputStream(data), imageRelativePath));
+        storageImageService.create(storageImageDto);
     }
 
     @Override
     public void deleteObject(String key) throws Exception {
 
+    }
+
+    private String upload(InputStream inputStream, String fileRelativePath) throws Exception {
+        if (StringUtils.isNotBlank(config.getBucketName())) {
+            fileRelativePath = config.getBucketName() + "/" + fileRelativePath;
+        }
+        String fileAbsolutePath = config.getRoot() + "/" + fileRelativePath;
+        File file = new File(fileAbsolutePath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        OutputStream outputStream = FileUtils.openOutputStream(file);
+        IOUtils.copy(inputStream, outputStream);
+        outputStream.flush();
+        outputStream.close();
+        return fileAbsolutePath;
     }
 }

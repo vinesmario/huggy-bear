@@ -3,22 +3,23 @@ storage:
     # 本地存储。
     local:
         root: "E:"
+        bucketName:
     # 云端存储，需指定服务商及服务商提供的登录凭证
     cloud:
         strategy: QINIU # 服务商名称需取自枚举类CloudStorageStrategy
         aliyun:
             domain:
-            prefix:
-            endPoint:
             accessKeyId:
             accessKeySecret:
             bucketName:
+            nameSpace:
+            endPoint:
         qiniu:
-            domain:
-            prefix:
+            httpHost:
             accessKey:
             secretKey:
             bucketName:
+            nameSpace:
         ypyun:
             domain:
             prefix:

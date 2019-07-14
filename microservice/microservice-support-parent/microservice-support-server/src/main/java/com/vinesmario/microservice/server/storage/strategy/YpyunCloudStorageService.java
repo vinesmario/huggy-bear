@@ -1,5 +1,6 @@
 package com.vinesmario.microservice.server.storage.strategy;
 
+import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.config.YpyunCloudStorageConfig;
@@ -26,33 +27,33 @@ public class YpyunCloudStorageService extends AbstractStorageService {
     }
 
     @Override
-    public String upload(MultipartFile multipartFile, String path) throws Exception {
-        return null;
+    public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+
     }
 
     @Override
-    public String upload(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+
     }
 
     @Override
-    public String upload(byte[] data, String path) throws Exception {
-        return null;
+    public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
+
     }
 
     @Override
-    public StorageImageDto uploadImage(MultipartFile multipartFile, String path) throws Exception {
-        return null;
+    public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+
     }
 
     @Override
-    public StorageImageDto uploadImage(InputStream inputStream, String path) throws Exception {
-        return null;
+    public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+
     }
 
     @Override
-    public StorageImageDto uploadImage(byte[] data, String path) throws Exception {
-        return null;
+    public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
+
     }
 
     @Override

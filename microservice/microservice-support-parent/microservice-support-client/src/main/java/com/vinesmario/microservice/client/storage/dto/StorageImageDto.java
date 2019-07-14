@@ -51,7 +51,7 @@ public class StorageImageDto extends BaseDto<Long> {
     /**
      * 图片大小，单位B
      */
-    private Integer imageSize;
+    private Long imageSize;
     /**
      * 缩略图名称
      */

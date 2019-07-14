@@ -12,7 +12,7 @@
     <result column="image_relative_url" jdbcType="VARCHAR" property="imageRelativeUrl" />
     <result column="image_height" jdbcType="INTEGER" property="imageHeight" />
     <result column="image_width" jdbcType="INTEGER" property="imageWidth" />
-    <result column="image_size" jdbcType="INTEGER" property="imageSize" />
+    <result column="image_size" jdbcType="BIGINT" property="imageSize" />
     <result column="thumbnail_name" jdbcType="VARCHAR" property="thumbnailName" />
     <result column="thumbnail_absolute_path" jdbcType="VARCHAR" property="thumbnailAbsolutePath" />
     <result column="thumbnail_absolute_url" jdbcType="VARCHAR" property="thumbnailAbsoluteUrl" />
@@ -141,7 +141,7 @@
     values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, 
       #{fileExtension,jdbcType=VARCHAR}, #{imageName,jdbcType=VARCHAR}, #{imageAbsolutePath,jdbcType=VARCHAR}, 
       #{imageAbsoluteUrl,jdbcType=VARCHAR}, #{imageRelativeUrl,jdbcType=VARCHAR}, #{imageHeight,jdbcType=INTEGER}, 
-      #{imageWidth,jdbcType=INTEGER}, #{imageSize,jdbcType=INTEGER}, #{thumbnailName,jdbcType=VARCHAR}, 
+      #{imageWidth,jdbcType=INTEGER}, #{imageSize,jdbcType=BIGINT}, #{thumbnailName,jdbcType=VARCHAR},
       #{thumbnailAbsolutePath,jdbcType=VARCHAR}, #{thumbnailAbsoluteUrl,jdbcType=VARCHAR}, 
       #{thumbnailRelativeUrl,jdbcType=VARCHAR}, #{thumbnailHeight,jdbcType=INTEGER}, 
       #{thumbnailWidth,jdbcType=INTEGER}, #{thumbnailSize,jdbcType=INTEGER}, #{createdBy,jdbcType=BIGINT}, 
@@ -256,7 +256,7 @@
         #{imageWidth,jdbcType=INTEGER},
       </if>
       <if test="imageSize != null">
-        #{imageSize,jdbcType=INTEGER},
+        #{imageSize,jdbcType=BIGINT},
       </if>
       <if test="thumbnailName != null">
         #{thumbnailName,jdbcType=VARCHAR},
@@ -339,7 +339,7 @@
         image_width = #{record.imageWidth,jdbcType=INTEGER},
       </if>
       <if test="record.imageSize != null">
-        image_size = #{record.imageSize,jdbcType=INTEGER},
+        image_size = #{record.imageSize,jdbcType=BIGINT},
       </if>
       <if test="record.thumbnailName != null">
         thumbnail_name = #{record.thumbnailName,jdbcType=VARCHAR},
@@ -397,7 +397,7 @@
       image_relative_url = #{record.imageRelativeUrl,jdbcType=VARCHAR},
       image_height = #{record.imageHeight,jdbcType=INTEGER},
       image_width = #{record.imageWidth,jdbcType=INTEGER},
-      image_size = #{record.imageSize,jdbcType=INTEGER},
+      image_size = #{record.imageSize,jdbcType=BIGINT},
       thumbnail_name = #{record.thumbnailName,jdbcType=VARCHAR},
       thumbnail_absolute_path = #{record.thumbnailAbsolutePath,jdbcType=VARCHAR},
       thumbnail_absolute_url = #{record.thumbnailAbsoluteUrl,jdbcType=VARCHAR},
@@ -446,7 +446,7 @@
         image_width = #{imageWidth,jdbcType=INTEGER},
       </if>
       <if test="imageSize != null">
-        image_size = #{imageSize,jdbcType=INTEGER},
+        image_size = #{imageSize,jdbcType=BIGINT},
       </if>
       <if test="thumbnailName != null">
         thumbnail_name = #{thumbnailName,jdbcType=VARCHAR},
@@ -501,7 +501,7 @@
       image_relative_url = #{imageRelativeUrl,jdbcType=VARCHAR},
       image_height = #{imageHeight,jdbcType=INTEGER},
       image_width = #{imageWidth,jdbcType=INTEGER},
-      image_size = #{imageSize,jdbcType=INTEGER},
+      image_size = #{imageSize,jdbcType=BIGINT},
       thumbnail_name = #{thumbnailName,jdbcType=VARCHAR},
       thumbnail_absolute_path = #{thumbnailAbsolutePath,jdbcType=VARCHAR},
       thumbnail_absolute_url = #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},

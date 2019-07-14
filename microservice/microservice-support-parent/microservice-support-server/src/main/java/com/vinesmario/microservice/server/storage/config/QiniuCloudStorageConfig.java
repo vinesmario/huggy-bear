@@ -9,10 +9,6 @@ public class QiniuCloudStorageConfig {
      */
     private String domain;
     /**
-     * 七牛路径前缀
-     */
-    private String prefix;
-    /**
      * 七牛ACCESS_KEY
      */
     private String accessKey;
@@ -24,4 +20,8 @@ public class QiniuCloudStorageConfig {
      * 七牛存储空间名
      */
     private String bucketName;
+    /**
+     * 七牛访问url命名空间
+     */
+    private String nameSpace;
 }

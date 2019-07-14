@@ -6,14 +6,15 @@ import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
+import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.service.StorageImageService;
 import com.vinesmario.microservice.server.storage.strategy.AbstractStorageService;
 import com.vinesmario.microservice.server.storage.strategy.StorageServiceFactory;
-import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,12 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author
@@ -77,18 +83,37 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
 //    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageImageDto> create(@RequestParam("image") MultipartFile image,
-                                               @RequestParam(value = "name", required = false) String name,
-                                               @RequestParam(value = "memo", required = false) String memo)
+    public ResponseEntity<StorageImageDto> create(@RequestParam("image") MultipartFile multipartFile,
+                                                  @RequestParam(value = "tenantId", required = false) Long tenantId,
+                                                  @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
-        if (ObjectUtils.isEmpty(image) || image.isEmpty()) {
+        if (ObjectUtils.isEmpty(multipartFile) || multipartFile.isEmpty()) {
             throw new BadRequestAlertException("File cannot be empty",
-                    null, "file.empty", entityName);
+                    null, "image.empty", entityName);
         }
         AbstractStorageService storageService = StorageServiceFactory.build();
-        StorageImageDto storageImageDto = storageService.uploadImage(image, "");
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        String imageName = uuid + "." + extension;
+        String imageRelativePath = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                + "/" + imageName;
+        if (!ObjectUtils.isEmpty(tenantId)) {
+            imageRelativePath = tenantId + "/" + imageRelativePath;
+        }
+        StorageImageDto storageImageDto = new StorageImageDto();
+        storageImageDto.setTenantId(tenantId);
+        storageImageDto.setUuid(uuid);
+        storageImageDto.setImageName(imageName);
+        storageImageDto.setImageSize(multipartFile.getSize());
+        // TODO 图片高度和宽度、大小、MD5、SHA1
+        BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
+        storageImageDto.setImageWidth(bufferedImage.getWidth());
+        storageImageDto.setImageHeight(bufferedImage.getHeight());
+
+        storageService.uploadImage(multipartFile, imageRelativePath, storageImageDto);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityCreationAlert(entityName, storageImageDto.getAlertParam()))
                 .body(storageImageDto);
     }
+
 }
