@@ -7,6 +7,8 @@ import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author
  * @date
@@ -22,7 +24,7 @@ public class ${className}ConditionDto implements ConditionDto {
     /**
      * ID为空，true表示查询记录为空
      */
-    private boolean idIsNull=false;
+    private boolean idIsNull = false;
     /**
      * ID列表
      */

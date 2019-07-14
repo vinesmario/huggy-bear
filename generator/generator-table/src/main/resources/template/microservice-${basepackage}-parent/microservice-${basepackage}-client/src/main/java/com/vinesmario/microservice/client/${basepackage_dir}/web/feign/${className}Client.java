@@ -38,5 +38,8 @@ public interface ${className}Client extends CrudClient<${className}Dto, ${classN
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);
+
+	@DeleteMapping("")
+    ResponseEntity<Void> deleteByExample(@RequestBody ${className}ConditionDto condition);
 	
 }

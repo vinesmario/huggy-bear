@@ -40,6 +40,11 @@ public class ${className}Dto extends BaseDto<Long> {
     private ${column.simpleJavaType} ${column.columnNameLower};
         </#if>
     </#list>
- 
 
+    /**
+     * alert param
+     */
+    public String getAlertParam() {
+        return name;
+    }
 }
