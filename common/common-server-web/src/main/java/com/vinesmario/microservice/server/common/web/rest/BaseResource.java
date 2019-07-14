@@ -78,11 +78,11 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
                 .build();
     }
 
-    @ApiOperation(value = "删除", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiResponse(code = 200, message = "删除成功", response = String.class)
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "批量删除", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
+    @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> deleteByExample(@ModelAttribute CONDITION conditionDto) {
+    public ResponseEntity<Void> deleteByExample(@RequestBody CONDITION conditionDto) {
         preConditionDto(conditionDto);
         List<DTO> list = service.list(conditionDto);
         String alertParam = "";
