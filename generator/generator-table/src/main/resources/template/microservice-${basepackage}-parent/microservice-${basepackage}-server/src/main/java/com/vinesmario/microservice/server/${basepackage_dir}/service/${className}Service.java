@@ -40,7 +40,7 @@ public class ${className}Service extends BaseService<${className}Dto, ${classNam
 	public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
 		BaseExample example = new BaseExample();
 		BaseExample.Criteria criteria = example.createCriteria();
-		criteria.andDeletedEqualTo(DictConstant.YES_NO_N);
+		criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
 		if (!ObjectUtils.isEmpty(conditionDto)) {
 			${className}ConditionDto ${classNameLower}ConditionDto = (${className}ConditionDto) conditionDto;
