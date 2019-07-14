@@ -40,4 +40,8 @@ public class UserAccountDto extends BaseDto<Long> {
      */
     private List<AuthorityDto> authorityList;
 
+    @Override
+    public String getAlertParam() {
+        return username;
+    }
 }

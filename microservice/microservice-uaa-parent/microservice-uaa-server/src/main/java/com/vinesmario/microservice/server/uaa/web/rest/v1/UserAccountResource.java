@@ -68,11 +68,11 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
         if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
                 || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
             // 分页参数不全
-            List<UserAccountDto> list = this.service.list(conditionDto, sort);
+            List<UserAccountDto> list = service.list(conditionDto, sort);
             return ResponseEntity.ok().body(list);
         } else {
             Pageable pageable = PageRequest.of(conditionDto.getPageNumber(), conditionDto.getPageSize(), sort);
-            Page<UserAccountDto> page = this.service.page(conditionDto, pageable);
+            Page<UserAccountDto> page = service.page(conditionDto, pageable);
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
@@ -86,18 +86,18 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @Override
     public ResponseEntity<UserAccountDto> create(@RequestBody UserAccountDto dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
-            throw new BadRequestAlertException("A new " + this.entityName + " cannot already have an ID",
-                    null, "id.exists", this.entityName);
-        } else if (this.service.getByUsername(dto.getUsername()).isPresent()) {
-            throw new UsernameAlreadyUsedException(this.entityName);
-        } else if (this.service.getByMobile(dto.getMobile()).isPresent()) {
-            throw new MobileAlreadyUsedException(this.entityName);
-        } else if (this.service.getByEmail(dto.getEmail()).isPresent()) {
-            throw new EmailAlreadyUsedException(this.entityName);
+            throw new BadRequestAlertException("A new " + entityName + " cannot already have an ID",
+                    null, "id.exists", entityName);
+        } else if (service.getByUsername(dto.getUsername()).isPresent()) {
+            throw new UsernameAlreadyUsedException(entityName);
+        } else if (service.getByMobile(dto.getMobile()).isPresent()) {
+            throw new MobileAlreadyUsedException(entityName);
+        } else if (service.getByEmail(dto.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException(entityName);
         } else {
-            this.service.create(dto);
+            service.create(dto);
             return ResponseEntity.ok()
-                    .headers(HeaderUtil.createEntityCreationAlert(this.entityName, dto.getId().toString()))
+                    .headers(HeaderUtil.createEntityCreationAlert(entityName, dto.getAlertParam()))
                     .body(dto);
         }
     }
@@ -108,23 +108,23 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @ResponseBody
     public ResponseEntity<UserAccountDto> modify(@PathVariable("id") Long id,
                                                  @RequestBody UserAccountDto dto) {
-        Optional<UserAccountDto> optional = this.service.getByUsername(dto.getUsername());
+        Optional<UserAccountDto> optional = service.getByUsername(dto.getUsername());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
-            throw new UsernameAlreadyUsedException(this.entityName);
+            throw new UsernameAlreadyUsedException(entityName);
         }
-        optional = this.service.getByMobile(dto.getMobile());
+        optional = service.getByMobile(dto.getMobile());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
-            throw new MobileAlreadyUsedException(this.entityName);
+            throw new MobileAlreadyUsedException(entityName);
         }
-        optional = this.service.getByEmail(dto.getEmail());
+        optional = service.getByEmail(dto.getEmail());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
-            throw new EmailAlreadyUsedException(this.entityName);
+            throw new EmailAlreadyUsedException(entityName);
         }
         dto.setId(id);
         dto.setDeleted(DictConstant.BYTE_YES_NO_N);
-        this.service.modify(dto);
+        service.modify(dto);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(this.entityName, dto.getId().toString()))
+                .headers(HeaderUtil.createEntityUpdateAlert(entityName, dto.getAlertParam()))
                 .body(dto);
     }
 }

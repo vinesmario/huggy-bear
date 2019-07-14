@@ -22,4 +22,8 @@ public class AuthorityDto extends BaseDto<Long> {
      */
     private List<ResourceDto> resourceList;
 
+    @Override
+    public String getAlertParam() {
+        return role;
+    }
 }

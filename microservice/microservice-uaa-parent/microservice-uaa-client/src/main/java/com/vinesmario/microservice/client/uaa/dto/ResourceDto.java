@@ -15,4 +15,8 @@ public class ResourceDto extends TreeDto<ResourceDto> {
      */
     private String permission;
 
+    @Override
+    public String getAlertParam() {
+        return permission;
+    }
 }
