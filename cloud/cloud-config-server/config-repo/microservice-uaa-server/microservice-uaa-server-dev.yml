@@ -24,6 +24,7 @@ spring:
           # 采样率，模式0.1，也就是10%，为了便于观察效果，改为1.0，也就是100%。生产环境建议保持默认。
 #          probability: 1.0
     datasource:
+        driver-class-name: com.mysql.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
         # HikariCP
 #        type: com.zaxxer.hikari.HikariDataSource
@@ -31,7 +32,6 @@ spring:
         url: jdbc:mysql://127.0.0.1/uaa?autoReconnect=true&useSSL=false&characterEncoding=utf-8
         username: root
         password: 123456
-        driver-class-name: com.mysql.jdbc.Driver
         ##连接池属性配置
         initialSize: 5
         minIdle: 5

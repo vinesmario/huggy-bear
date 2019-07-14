@@ -18,7 +18,7 @@ spring:
                 native:
                     # 本地配置需要写本地文件目录的全路径，否则获取不到配置信息
                     # 其他服务读取本地文件信息时，源码的label处理未考虑到此种情况，因此不建议使用native配置
-                    search-locations: file:E:\project\huggy-bear\cloud\cloud-config-server\config-repo\{application}
+                    search-locations: file:D:\project\huggy-bear\cloud\cloud-config-server\config-repo\{application}
 
 management:
     endpoints:
