@@ -9,13 +9,17 @@ import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlert
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class BaseResource<DTO extends BaseDto, CONDITION extends ConditionDto, PK extends Serializable>
         extends SimpleResource<DTO, CONDITION, PK>
@@ -35,12 +39,12 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @ResponseBody
     public ResponseEntity<DTO> create(@RequestBody DTO dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
-            throw new BadRequestAlertException("A new " + this.entityName + " cannot already have an ID",
-                    null, "id.exists", this.entityName);
+            throw new BadRequestAlertException("A new " + entityName + " cannot already have an ID",
+                    null, "id.exists", entityName);
         }
-        this.service.create(dto);
+        service.create(dto);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityCreationAlert(this.entityName, dto.getId().toString()))
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, dto.getAlertParam()))
                 .body(dto);
     }
 
@@ -52,9 +56,9 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
                                       @RequestBody DTO dto) {
         dto.setId(id);
         dto.setDeleted(DictConstant.BYTE_YES_NO_N);
-        this.service.modify(dto);
+        service.modify(dto);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(this.entityName, dto.getId().toString()))
+                .headers(HeaderUtil.createEntityUpdateAlert(entityName, dto.getAlertParam()))
                 .body(dto);
     }
 
@@ -63,12 +67,31 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable("id") PK id) {
-        Optional<DTO> optional = this.service.get(id);
+        Optional<DTO> optional = service.get(id);
+        String alertParam = "";
         if (optional.isPresent()) {
-            this.service.delete(optional.get());
+            service.delete(optional.get());
+            alertParam = optional.get().getAlertParam();
         }
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityDeletionAlert(this.entityName, id.toString()))
+                .headers(HeaderUtil.createEntityDeletionAlert(entityName, alertParam))
+                .build();
+    }
+
+    @ApiOperation(value = "删除", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiResponse(code = 200, message = "删除成功", response = String.class)
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseEntity<Void> deleteByExample(@ModelAttribute CONDITION conditionDto) {
+        preConditionDto(conditionDto);
+        List<DTO> list = service.list(conditionDto);
+        String alertParam = "";
+        if (!CollectionUtils.isEmpty(list)) {
+            service.deleteIterable(list);
+            alertParam = StringUtils.join(list.stream().map(dto -> dto.getAlertParam()).collect(Collectors.toList()), ",");
+        }
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityDeletionCollectionAlert(entityName, alertParam))
                 .build();
     }
 

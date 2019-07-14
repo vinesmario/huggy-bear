@@ -6,6 +6,7 @@ public interface CrudService<T, PK> extends ReadOnlyService<T, PK> {
 
     void delete(T t);
 
-    void modify(T t);
+    void deleteIterable(Iterable<T> iterable);
 
+    void modify(T t);
 }

@@ -60,11 +60,11 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
         if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
                 || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
             // 分页参数不全
-            List<DTO> list = this.service.list(conditionDto, sort);
+            List<DTO> list = service.list(conditionDto, sort);
             return ResponseEntity.ok().body(list);
         } else {
             Pageable pageable = PageRequest.of(conditionDto.getPageNumber(), conditionDto.getPageSize(), sort);
-            Page<DTO> page = this.service.page(conditionDto, pageable);
+            Page<DTO> page = service.page(conditionDto, pageable);
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
@@ -75,7 +75,7 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<DTO> get(@PathVariable("id") PK id) {
-        Optional<DTO> dto = this.service.get(id);
+        Optional<DTO> dto = service.get(id);
         return ResponseUtil.wrapOrNotFound(dto);
     }
 

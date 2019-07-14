@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class BaseDto<PK extends Serializable> {
+public abstract class BaseDto<PK extends Serializable> {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,4 +46,7 @@ public class BaseDto<PK extends Serializable> {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = DictConstant.DEFAULT_TIMEZONE)
     private LocalDateTime lastModifiedDate;
+
+    public abstract String getAlertParam();
+
 }

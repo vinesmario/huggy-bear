@@ -46,6 +46,12 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
         this.mapper.updateByPrimaryKeySelective(entity);
     }
 
+    public void deleteIterable(Iterable<DTO> iterable) {
+        for (DTO dto : iterable) {
+            delete(dto);
+        }
+    }
+
     public void modify(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
         this.mapper.updateByPrimaryKey(entity);
