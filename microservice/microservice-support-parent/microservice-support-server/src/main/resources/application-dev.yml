@@ -1,12 +1,28 @@
-file:
-    # 本地存储与云端存储共同配置时，使用本地存储
-    storage:
-        # 本地存储。
-        local:
-            root: "E:"
-        # 云端存储，需指定服务商及服务商提供的登录凭证
-        cloud:
-            strategy: YPYUN # 服务商名称需取自枚举类
-            url:
-            key: key
-            secret: secret
+# 本地存储与云端存储共同配置时，使用本地存储
+storage:
+    # 本地存储。
+    local:
+        root: "E:"
+    # 云端存储，需指定服务商及服务商提供的登录凭证
+    cloud:
+        strategy: QINIU # 服务商名称需取自枚举类CloudStorageStrategy
+        aliyun:
+            domain:
+            prefix:
+            endPoint:
+            accessKeyId:
+            accessKeySecret:
+            bucketName:
+        qiniu:
+            domain:
+            prefix:
+            accessKey:
+            secretKey:
+            bucketName:
+        ypyun:
+            domain:
+            prefix:
+            endPoint:
+            accessKeyId:
+            accessKeySecret:
+            bucketName:

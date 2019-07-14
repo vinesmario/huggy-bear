@@ -1,4 +1,4 @@
-CREATE TABLE `file_image` (
+CREATE TABLE `storage_image` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tenant_id` bigint(20) DEFAULT NULL,
   `uuid` varchar(32) DEFAULT NULL COMMENT 'UUID',
