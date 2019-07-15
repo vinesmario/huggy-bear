@@ -96,7 +96,7 @@
     thumbnail_height, thumbnail_width, thumbnail_size, thumbnail_md5_hex, thumbnail_sha1_hex, 
     created_by, created_date, last_modified_by, last_modified_date, memo, deleted
   </sql>
-  <select id="selectByExample" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImageExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -120,7 +120,7 @@
     delete from storage_image
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImageExample">
+  <delete id="deleteByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample">
     delete from storage_image
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -323,7 +323,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImageExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample" resultType="java.lang.Long">
     select count(*) from storage_image
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
