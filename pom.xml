@@ -32,8 +32,7 @@
         <!-- spring 家族 -->
         <spring-boot.version>2.0.9.RELEASE</spring-boot.version>
         <spring-boot-admin.version>2.0.6</spring-boot-admin.version>
-        <spring-data.version>2.0.14.RELEASE</spring-data.version>
-        <!--<spring-data-releasetrain.version>Fowler-SR2</spring-data-releasetrain.version>-->
+        <spring-data-releasetrain.version>Kay-SR14</spring-data-releasetrain.version>
         <spring-cloud.version>Finchley.SR3</spring-cloud.version>
 
         <org.projectlombok.version>1.16.20</org.projectlombok.version>
@@ -79,13 +78,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.data</groupId>-->
-                <!--<artifactId>spring-data-releasetrain</artifactId>-->
-                <!--<version>${spring-data-releasetrain.version}</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-releasetrain</artifactId>
+                <version>${spring-data-releasetrain.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-dependencies</artifactId>
