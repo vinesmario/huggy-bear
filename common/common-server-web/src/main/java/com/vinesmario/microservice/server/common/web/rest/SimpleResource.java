@@ -75,8 +75,8 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<DTO> get(@PathVariable("id") PK id) {
-        Optional<DTO> dto = service.get(id);
-        return ResponseUtil.wrapOrNotFound(dto);
+        Optional<DTO> optional = service.get(id);
+        return ResponseUtil.wrapOrNotFound(optional);
     }
 
     /**

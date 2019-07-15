@@ -3,6 +3,9 @@ package com.vinesmario.microservice.server.common.web.rest.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import javax.activation.MimetypesFileTypeMap;
 
 /**
  * Utility class for HTTP headers creation.
@@ -48,4 +51,12 @@ public final class HeaderUtil {
         headers.add("X-" + APPLICATION_NAME + "-params", entityName);
         return headers;
     }
+
+    public static HttpHeaders createDownload(String fileName) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return headers;
+    }
+
 }
