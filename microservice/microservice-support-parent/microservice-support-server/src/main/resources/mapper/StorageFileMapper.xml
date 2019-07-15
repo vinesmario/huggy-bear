@@ -11,6 +11,8 @@
     <result column="file_absolute_url" jdbcType="VARCHAR" property="fileAbsoluteUrl" />
     <result column="file_relative_url" jdbcType="VARCHAR" property="fileRelativeUrl" />
     <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+    <result column="file_md5_hex" jdbcType="VARCHAR" property="fileMd5Hex" />
+    <result column="file_sha1_hex" jdbcType="VARCHAR" property="fileSha1Hex" />
     <result column="created_by" jdbcType="BIGINT" property="createdBy" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="last_modified_by" jdbcType="BIGINT" property="lastModifiedBy" />
@@ -78,8 +80,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, tenant_id, uuid, file_extension, file_name, file_absolute_path, file_absolute_url, 
-    file_relative_url, file_size, created_by, created_date, last_modified_by, last_modified_date, 
-    memo, deleted
+    file_relative_url, file_size, file_md5_hex, file_sha1_hex, created_by, created_date, 
+    last_modified_by, last_modified_date, memo, deleted
   </sql>
   <select id="selectByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample" resultMap="BaseResultMap">
     select
@@ -121,15 +123,15 @@
     insert into storage_file (id, tenant_id, uuid, 
       file_extension, file_name, file_absolute_path, 
       file_absolute_url, file_relative_url, file_size, 
-      created_by, created_date, last_modified_by, 
-      last_modified_date, memo, deleted
-      )
+      file_md5_hex, file_sha1_hex, created_by, 
+      created_date, last_modified_by, last_modified_date, 
+      memo, deleted)
     values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, 
       #{fileExtension,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileAbsolutePath,jdbcType=VARCHAR}, 
       #{fileAbsoluteUrl,jdbcType=VARCHAR}, #{fileRelativeUrl,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, 
-      #{createdBy,jdbcType=BIGINT}, #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=BIGINT}, 
-      #{lastModifiedDate,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT}
-      )
+      #{fileMd5Hex,jdbcType=VARCHAR}, #{fileSha1Hex,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=BIGINT}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
+      #{memo,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.entity.StorageFile">
     insert into storage_file
@@ -160,6 +162,12 @@
       </if>
       <if test="fileSize != null">
         file_size,
+      </if>
+      <if test="fileMd5Hex != null">
+        file_md5_hex,
+      </if>
+      <if test="fileSha1Hex != null">
+        file_sha1_hex,
       </if>
       <if test="createdBy != null">
         created_by,
@@ -207,6 +215,12 @@
       </if>
       <if test="fileSize != null">
         #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="fileMd5Hex != null">
+        #{fileMd5Hex,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSha1Hex != null">
+        #{fileSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="createdBy != null">
         #{createdBy,jdbcType=BIGINT},
@@ -264,6 +278,12 @@
       <if test="record.fileSize != null">
         file_size = #{record.fileSize,jdbcType=BIGINT},
       </if>
+      <if test="record.fileMd5Hex != null">
+        file_md5_hex = #{record.fileMd5Hex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSha1Hex != null">
+        file_sha1_hex = #{record.fileSha1Hex,jdbcType=VARCHAR},
+      </if>
       <if test="record.createdBy != null">
         created_by = #{record.createdBy,jdbcType=BIGINT},
       </if>
@@ -298,6 +318,8 @@
       file_absolute_url = #{record.fileAbsoluteUrl,jdbcType=VARCHAR},
       file_relative_url = #{record.fileRelativeUrl,jdbcType=VARCHAR},
       file_size = #{record.fileSize,jdbcType=BIGINT},
+      file_md5_hex = #{record.fileMd5Hex,jdbcType=VARCHAR},
+      file_sha1_hex = #{record.fileSha1Hex,jdbcType=VARCHAR},
       created_by = #{record.createdBy,jdbcType=BIGINT},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       last_modified_by = #{record.lastModifiedBy,jdbcType=BIGINT},
@@ -335,6 +357,12 @@
       <if test="fileSize != null">
         file_size = #{fileSize,jdbcType=BIGINT},
       </if>
+      <if test="fileMd5Hex != null">
+        file_md5_hex = #{fileMd5Hex,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSha1Hex != null">
+        file_sha1_hex = #{fileSha1Hex,jdbcType=VARCHAR},
+      </if>
       <if test="createdBy != null">
         created_by = #{createdBy,jdbcType=BIGINT},
       </if>
@@ -366,6 +394,8 @@
       file_absolute_url = #{fileAbsoluteUrl,jdbcType=VARCHAR},
       file_relative_url = #{fileRelativeUrl,jdbcType=VARCHAR},
       file_size = #{fileSize,jdbcType=BIGINT},
+      file_md5_hex = #{fileMd5Hex,jdbcType=VARCHAR},
+      file_sha1_hex = #{fileSha1Hex,jdbcType=VARCHAR},
       created_by = #{createdBy,jdbcType=BIGINT},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},

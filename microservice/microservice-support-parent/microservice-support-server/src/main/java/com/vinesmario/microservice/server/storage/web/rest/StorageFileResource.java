@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,10 +62,19 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
 
     @ApiOperation(value = "添加", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
-//    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageFileDto> create(@RequestParam("image") MultipartFile multipartFile,
+    public ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto dto){
+        // 不需支持该方法
+        return ResponseEntity.notFound().build();
+    }
+
+    @ApiOperation(value = "上传文件", httpMethod = "POST")
+    @ApiResponse(code = 200, message = "上传文件成功", response = String.class)
+//    @PreAuthorize("hasPermission(Object target, Object permission)")
+    @PostMapping(value = "/upload")
+    @ResponseBody
+    public ResponseEntity<StorageFileDto> upload(@RequestParam("image") MultipartFile multipartFile,
                                                  @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                  @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -86,11 +96,25 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
         storageFileDto.setUuid(uuid);
         storageFileDto.setFileName(imageName);
         storageFileDto.setFileSize(multipartFile.getSize());
-        // TODO 文件MD5、SHA1
+        // 文件MD5、SHA1
+        String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
+        String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
+        storageFileDto.setFileMd5Hex(md5Hex);
+        storageFileDto.setFileSha1Hex(sha1Hex);
 
         storageService.upload(multipartFile, imageRelativePath, storageFileDto);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
                 .body(storageFileDto);
+    }
+
+    @ApiOperation(value = "下载文件", httpMethod = "GET")
+    @ApiResponse(code = 200, message = "下载文件成功", response = String.class)
+    @GetMapping(value = "/download/{uuid}")
+    @ResponseBody
+    public ResponseEntity<StorageFileDto> download(@PathVariable("uuid") String uuid) {
+        Optional<StorageFileDto> dto = service.getByUuid(uuid);
+
+        return ResponseUtil.wrapOrNotFound(dto);
     }
 }
