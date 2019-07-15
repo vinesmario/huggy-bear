@@ -5,7 +5,10 @@ package com.vinesmario.microservice.client.${basepackage}.dto.condition;
 
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -13,8 +16,10 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "${className}", description = "${className}")
+@ApiModel(value = "${className}ConditionDto", description = "${className}筛选条件数据传输对象")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ${className}ConditionDto implements ConditionDto {
 
     /**
@@ -50,6 +55,7 @@ public class ${className}ConditionDto implements ConditionDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = DEFAULT_TIMEZONE)
 	private String ${column.columnNameLower};
 			<#else>
+	@ApiModelProperty(value = "${column.remarks}")
 	private ${column.simpleJavaType} ${column.columnNameLower};
 			</#if>
         </#if>

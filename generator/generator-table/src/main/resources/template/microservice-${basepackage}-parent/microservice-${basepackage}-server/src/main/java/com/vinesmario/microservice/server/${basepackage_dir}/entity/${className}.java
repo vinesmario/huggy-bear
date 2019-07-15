@@ -4,16 +4,22 @@
 package com.vinesmario.microservice.server.${basepackage}.entity;
 
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
-import com.vinesmario.common.constant.DictConstant;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Table;
 /**
  * @author
  * @date
  */
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "${table.sqlName}")
 public class ${className} extends BaseEntity<Long> {
 
     <#list table.columns as column>
@@ -35,6 +41,7 @@ public class ${className} extends BaseEntity<Long> {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = DictConstant.DEFAULT_TIMEZONE)
 			<#else>
 			</#if>
+    @Column(name = "${column.constantName}")
     private ${column.simpleJavaType} ${column.columnNameLower};
         </#if>
     </#list>

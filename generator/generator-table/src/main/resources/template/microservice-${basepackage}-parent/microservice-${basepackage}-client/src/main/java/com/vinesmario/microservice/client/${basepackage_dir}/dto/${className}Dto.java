@@ -3,19 +3,22 @@
 <#assign classNameLower = className?uncap_first> 
 package com.vinesmario.microservice.client.${basepackage}.dto;
 
-import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author
  * @date
  */
-@ApiModel(value = "${className}", description = "${className}")
+@ApiModel(value = "${className}Dto", description = "${className}数据传输对象")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ${className}Dto extends BaseDto<Long> {
 
     <#list table.columns as column>
@@ -37,6 +40,7 @@ public class ${className}Dto extends BaseDto<Long> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = DictConstant.DEFAULT_TIMEZONE)
             <#else>
             </#if>
+    @ApiModelProperty(value = "${column.remarks}")
     private ${column.simpleJavaType} ${column.columnNameLower};
         </#if>
     </#list>
