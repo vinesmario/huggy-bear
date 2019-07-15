@@ -33,9 +33,9 @@ public class LocalStorageService extends AbstractStorageService {
 
     public LocalStorageService(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getLocal())) {
-            throw new IllegalArgumentException("Property 'file.storage.local' is empty ");
+            throw new IllegalArgumentException("Property 'storage.local' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getLocal().getRoot())) {
-            throw new IllegalArgumentException("Property 'file.storage.local.root' is empty ");
+            throw new IllegalArgumentException("Property 'storage.local.root' is empty ");
         }
         this.config = storageProperties.getLocal();
     }
@@ -43,37 +43,49 @@ public class LocalStorageService extends AbstractStorageService {
     @Override
     public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
         storageFileDto.setFileAbsolutePath(upload(multipartFile.getInputStream(), fileRelativePath));
+        storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageFileDto.getUuid()));
         storageFileService.create(storageFileDto);
+        storageFileDto.setFileAbsolutePath(null);
     }
 
     @Override
     public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
         storageFileDto.setFileAbsolutePath(upload(inputStream, fileRelativePath));
+        storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageFileDto.getUuid()));
         storageFileService.create(storageFileDto);
+        storageFileDto.setFileAbsolutePath(null);
     }
 
     @Override
     public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
         storageFileDto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), fileRelativePath));
+        storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageFileDto.getUuid()));
         storageFileService.create(storageFileDto);
+        storageFileDto.setFileAbsolutePath(null);
     }
 
     @Override
     public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
         storageImageDto.setImageAbsolutePath(upload(multipartFile.getInputStream(), imageRelativePath));
+        storageImageDto.setImageRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
         storageImageService.create(storageImageDto);
+        storageImageDto.setImageAbsolutePath(null);
     }
 
     @Override
     public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
         storageImageDto.setImageAbsolutePath(upload(inputStream, imageRelativePath));
+        storageImageDto.setImageRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
         storageImageService.create(storageImageDto);
+        storageImageDto.setImageAbsolutePath(null);
     }
 
     @Override
     public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
         storageImageDto.setImageAbsolutePath(upload(new ByteArrayInputStream(data), imageRelativePath));
+        storageImageDto.setImageRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
         storageImageService.create(storageImageDto);
+        storageImageDto.setImageAbsolutePath(null);
     }
 
     @Override

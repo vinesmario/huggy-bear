@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties("file.storage")
+@ConfigurationProperties("storage")
 public class StorageProperties {
 
     private LocalStorageConfig local;

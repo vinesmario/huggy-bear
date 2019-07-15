@@ -1,5 +1,6 @@
 package com.vinesmario.microservice.server.storage.web.rest;
 
+import com.vinesmario.common.constant.FileExtension;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDto;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
@@ -14,7 +15,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
@@ -23,9 +26,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -77,7 +84,7 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
 //    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StorageImageDto> upload(@RequestParam("image") MultipartFile multipartFile,
+    public ResponseEntity<StorageImageDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                   @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                   @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -87,8 +94,11 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
         }
         AbstractStorageService storageService = StorageServiceFactory.build();
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        if(!FileExtension.IMAGE.contains(extension)){
+            throw new BadRequestAlertException("Unsupported file extension",
+                    null, "image.extension.unsupported", entityName);
+        }
         String imageName = uuid + "." + extension;
         String imageRelativePath = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
                 + "/" + imageName;
@@ -98,6 +108,7 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
         StorageImageDto storageImageDto = new StorageImageDto();
         storageImageDto.setTenantId(tenantId);
         storageImageDto.setUuid(uuid);
+        storageImageDto.setFileExtension(extension);
         storageImageDto.setImageName(imageName);
         storageImageDto.setImageSize(multipartFile.getSize());
         // 图片高度、宽度
@@ -120,9 +131,31 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
     @ApiResponse(code = 200, message = "下载图片成功", response = String.class)
     @GetMapping(value = "/download/{uuid}")
     @ResponseBody
-    public ResponseEntity<StorageImageDto> download(@PathVariable("uuid") String uuid) {
-        Optional<StorageImageDto> dto = service.getByUuid(uuid);
-
-        return ResponseUtil.wrapOrNotFound(dto);
+    public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
+            throws IOException
+    {
+        Optional<StorageImageDto> optional = service.getByUuid(uuid);
+        if(!optional.isPresent()){
+            return ResponseEntity.notFound()
+                    .headers(HeaderUtil.createFailureAlert("record not found",404,"record.not_found",entityName))
+                    .build();
+        } else {
+            String fileAbsolutePath = optional.get().getImageAbsolutePath();
+            if(StringUtils.isBlank(fileAbsolutePath)){
+                return ResponseEntity.notFound()
+                        .headers(HeaderUtil.createFailureAlert("image path is empty",404,"file_path.empty",entityName))
+                        .build();
+            } else {
+                File file = new File(fileAbsolutePath);
+                if(!file.exists()){
+                    return ResponseEntity.notFound()
+                            .headers(HeaderUtil.createFailureAlert("file not found",404,"file.not_found",entityName))
+                            .build();
+                }
+                return ResponseEntity.ok()
+                        .headers(HeaderUtil.createDownload(file.getName()))
+                        .body(FileUtils.readFileToByteArray(file));
+            }
+        }
     }
 }

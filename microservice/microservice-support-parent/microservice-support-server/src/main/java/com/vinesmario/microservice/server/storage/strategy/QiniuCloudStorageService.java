@@ -26,9 +26,9 @@ public class QiniuCloudStorageService extends AbstractStorageService {
 
     public QiniuCloudStorageService(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
-            throw new IllegalArgumentException("Property 'file.storage.cloud' is empty ");
+            throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getQiniu())) {
-            throw new IllegalArgumentException("Property 'file.storage.cloud.qiniu' is empty ");
+            throw new IllegalArgumentException("Property 'storage.cloud.qiniu' is empty ");
         }
         this.config = storageProperties.getCloud().getQiniu();
     }

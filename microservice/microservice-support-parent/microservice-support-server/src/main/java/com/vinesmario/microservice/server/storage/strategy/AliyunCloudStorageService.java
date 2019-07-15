@@ -22,9 +22,9 @@ public class AliyunCloudStorageService extends AbstractStorageService {
 
     public AliyunCloudStorageService(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
-            throw new IllegalArgumentException("Property 'file.storage.cloud' is empty ");
+            throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getAliyun())) {
-            throw new IllegalArgumentException("Property 'file.storage.cloud.aliyun' is empty ");
+            throw new IllegalArgumentException("Property 'storage.cloud.aliyun' is empty ");
         }
         this.config = storageProperties.getCloud().getAliyun();
     }

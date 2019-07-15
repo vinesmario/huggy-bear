@@ -19,9 +19,9 @@ public class YpyunCloudStorageService extends AbstractStorageService {
 
     public YpyunCloudStorageService(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
-            throw new IllegalArgumentException("Property 'file.storage.cloud' is empty ");
+            throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getYpyun())) {
-            throw new IllegalArgumentException("Property 'file.storage.cloud.ypyun' is empty ");
+            throw new IllegalArgumentException("Property 'storage.cloud.ypyun' is empty ");
         }
         this.config = storageProperties.getCloud().getYpyun();
     }

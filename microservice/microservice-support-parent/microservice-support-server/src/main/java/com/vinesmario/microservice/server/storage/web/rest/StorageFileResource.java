@@ -14,13 +14,17 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -74,7 +78,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
 //    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StorageFileDto> upload(@RequestParam("image") MultipartFile multipartFile,
+    public ResponseEntity<StorageFileDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                  @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                  @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -94,6 +98,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
         StorageFileDto storageFileDto = new StorageFileDto();
         storageFileDto.setTenantId(tenantId);
         storageFileDto.setUuid(uuid);
+        storageFileDto.setFileExtension(extension);
         storageFileDto.setFileName(imageName);
         storageFileDto.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
@@ -112,9 +117,31 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @ApiResponse(code = 200, message = "下载文件成功", response = String.class)
     @GetMapping(value = "/download/{uuid}")
     @ResponseBody
-    public ResponseEntity<StorageFileDto> download(@PathVariable("uuid") String uuid) {
-        Optional<StorageFileDto> dto = service.getByUuid(uuid);
-
-        return ResponseUtil.wrapOrNotFound(dto);
+    public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
+            throws IOException
+    {
+        Optional<StorageFileDto> optional = service.getByUuid(uuid);
+        if(!optional.isPresent()){
+            return ResponseEntity.notFound()
+                    .headers(HeaderUtil.createFailureAlert("record not found",404,"record.not_found",entityName))
+                    .build();
+        } else {
+            String fileAbsolutePath = optional.get().getFileAbsolutePath();
+            if(StringUtils.isBlank(fileAbsolutePath)){
+                return ResponseEntity.notFound()
+                        .headers(HeaderUtil.createFailureAlert("file path is empty",404,"file_path.empty",entityName))
+                        .build();
+            } else {
+                File file = new File(fileAbsolutePath);
+                if(!file.exists()){
+                    return ResponseEntity.notFound()
+                            .headers(HeaderUtil.createFailureAlert("file not found",404,"file.not_found",entityName))
+                            .build();
+                }
+                return ResponseEntity.ok()
+                        .headers(HeaderUtil.createDownload(file.getName()))
+                        .body(FileUtils.readFileToByteArray(file));
+            }
+        }
     }
 }

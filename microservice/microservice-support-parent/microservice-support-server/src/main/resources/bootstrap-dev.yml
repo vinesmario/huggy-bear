@@ -37,10 +37,3 @@ security:
             # header（放到Http Header里，默认）
             # none（未知）
 #            client-authentication-scheme: header
-
-    basic:
-        enabled: false
-
-management:
-    security:
-        enabled: false
