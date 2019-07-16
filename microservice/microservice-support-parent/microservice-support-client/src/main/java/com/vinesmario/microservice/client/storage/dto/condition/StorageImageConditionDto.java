@@ -91,51 +91,6 @@ public class StorageImageConditionDto implements ConditionDto {
      */
 	@ApiModelProperty(value = "图片SHA1算法哈希值")
 	private String imageSha1Hex;
-    /**
-     * 缩略图名称
-     */
-	@ApiModelProperty(value = "缩略图名称")
-	private String thumbnailName;
-    /**
-     * 缩略图存储绝对路径
-     */
-	@ApiModelProperty(value = "缩略图存储绝对路径")
-	private String thumbnailAbsolutePath;
-    /**
-     * 缩略图访问绝对url
-     */
-	@ApiModelProperty(value = "缩略图访问绝对url")
-	private String thumbnailAbsoluteUrl;
-    /**
-     * 缩略图访问相对url
-     */
-	@ApiModelProperty(value = "缩略图访问相对url")
-	private String thumbnailRelativeUrl;
-    /**
-     * 缩略图高度
-     */
-	@ApiModelProperty(value = "缩略图高度")
-	private Integer thumbnailHeight;
-    /**
-     * 缩略图宽度
-     */
-	@ApiModelProperty(value = "缩略图宽度")
-	private Integer thumbnailWidth;
-    /**
-     * 缩略图大小，单位B
-     */
-	@ApiModelProperty(value = "缩略图大小，单位B")
-	private Integer thumbnailSize;
-    /**
-     * 缩略图MD5算法哈希值
-     */
-	@ApiModelProperty(value = "缩略图MD5算法哈希值")
-	private String thumbnailMd5Hex;
-    /**
-     * 缩略图SHA1算法哈希值
-     */
-	@ApiModelProperty(value = "缩略图SHA1算法哈希值")
-	private String thumbnailSha1Hex;
 
 	/**
 	 * 分页参数

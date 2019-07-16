@@ -15,15 +15,6 @@
     <result column="image_size" jdbcType="BIGINT" property="imageSize" />
     <result column="image_md5_hex" jdbcType="VARCHAR" property="imageMd5Hex" />
     <result column="image_sha1_hex" jdbcType="VARCHAR" property="imageSha1Hex" />
-    <result column="thumbnail_name" jdbcType="VARCHAR" property="thumbnailName" />
-    <result column="thumbnail_absolute_path" jdbcType="VARCHAR" property="thumbnailAbsolutePath" />
-    <result column="thumbnail_absolute_url" jdbcType="VARCHAR" property="thumbnailAbsoluteUrl" />
-    <result column="thumbnail_relative_url" jdbcType="VARCHAR" property="thumbnailRelativeUrl" />
-    <result column="thumbnail_height" jdbcType="INTEGER" property="thumbnailHeight" />
-    <result column="thumbnail_width" jdbcType="INTEGER" property="thumbnailWidth" />
-    <result column="thumbnail_size" jdbcType="INTEGER" property="thumbnailSize" />
-    <result column="thumbnail_md5_hex" jdbcType="VARCHAR" property="thumbnailMd5Hex" />
-    <result column="thumbnail_sha1_hex" jdbcType="VARCHAR" property="thumbnailSha1Hex" />
     <result column="created_by" jdbcType="BIGINT" property="createdBy" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="last_modified_by" jdbcType="BIGINT" property="lastModifiedBy" />
@@ -92,8 +83,6 @@
   <sql id="Base_Column_List">
     id, tenant_id, uuid, file_extension, image_name, image_absolute_path, image_absolute_url, 
     image_relative_url, image_height, image_width, image_size, image_md5_hex, image_sha1_hex, 
-    thumbnail_name, thumbnail_absolute_path, thumbnail_absolute_url, thumbnail_relative_url, 
-    thumbnail_height, thumbnail_width, thumbnail_size, thumbnail_md5_hex, thumbnail_sha1_hex, 
     created_by, created_date, last_modified_by, last_modified_date, memo, deleted
   </sql>
   <select id="selectByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample" resultMap="BaseResultMap">
@@ -116,6 +105,12 @@
     from storage_image
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from storage_image
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from storage_image
     where id = #{id,jdbcType=BIGINT}
@@ -126,29 +121,23 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImage">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImage">
     insert into storage_image (id, tenant_id, uuid, 
       file_extension, image_name, image_absolute_path, 
       image_absolute_url, image_relative_url, image_height, 
       image_width, image_size, image_md5_hex, 
-      image_sha1_hex, thumbnail_name, thumbnail_absolute_path, 
-      thumbnail_absolute_url, thumbnail_relative_url, 
-      thumbnail_height, thumbnail_width, thumbnail_size, 
-      thumbnail_md5_hex, thumbnail_sha1_hex, created_by, 
-      created_date, last_modified_by, last_modified_date, 
-      memo, deleted)
+      image_sha1_hex, created_by, created_date, 
+      last_modified_by, last_modified_date, memo, 
+      deleted)
     values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, 
       #{fileExtension,jdbcType=VARCHAR}, #{imageName,jdbcType=VARCHAR}, #{imageAbsolutePath,jdbcType=VARCHAR}, 
       #{imageAbsoluteUrl,jdbcType=VARCHAR}, #{imageRelativeUrl,jdbcType=VARCHAR}, #{imageHeight,jdbcType=INTEGER}, 
       #{imageWidth,jdbcType=INTEGER}, #{imageSize,jdbcType=BIGINT}, #{imageMd5Hex,jdbcType=VARCHAR}, 
-      #{imageSha1Hex,jdbcType=VARCHAR}, #{thumbnailName,jdbcType=VARCHAR}, #{thumbnailAbsolutePath,jdbcType=VARCHAR}, 
-      #{thumbnailAbsoluteUrl,jdbcType=VARCHAR}, #{thumbnailRelativeUrl,jdbcType=VARCHAR}, 
-      #{thumbnailHeight,jdbcType=INTEGER}, #{thumbnailWidth,jdbcType=INTEGER}, #{thumbnailSize,jdbcType=INTEGER}, 
-      #{thumbnailMd5Hex,jdbcType=VARCHAR}, #{thumbnailSha1Hex,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, 
-      #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=BIGINT}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
-      #{memo,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT})
+      #{imageSha1Hex,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{lastModifiedBy,jdbcType=BIGINT}, #{lastModifiedDate,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImage">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImage">
     insert into storage_image
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -189,33 +178,6 @@
       </if>
       <if test="imageSha1Hex != null">
         image_sha1_hex,
-      </if>
-      <if test="thumbnailName != null">
-        thumbnail_name,
-      </if>
-      <if test="thumbnailAbsolutePath != null">
-        thumbnail_absolute_path,
-      </if>
-      <if test="thumbnailAbsoluteUrl != null">
-        thumbnail_absolute_url,
-      </if>
-      <if test="thumbnailRelativeUrl != null">
-        thumbnail_relative_url,
-      </if>
-      <if test="thumbnailHeight != null">
-        thumbnail_height,
-      </if>
-      <if test="thumbnailWidth != null">
-        thumbnail_width,
-      </if>
-      <if test="thumbnailSize != null">
-        thumbnail_size,
-      </if>
-      <if test="thumbnailMd5Hex != null">
-        thumbnail_md5_hex,
-      </if>
-      <if test="thumbnailSha1Hex != null">
-        thumbnail_sha1_hex,
       </if>
       <if test="createdBy != null">
         created_by,
@@ -275,33 +237,6 @@
       </if>
       <if test="imageSha1Hex != null">
         #{imageSha1Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailName != null">
-        #{thumbnailName,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailAbsolutePath != null">
-        #{thumbnailAbsolutePath,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailAbsoluteUrl != null">
-        #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailRelativeUrl != null">
-        #{thumbnailRelativeUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailHeight != null">
-        #{thumbnailHeight,jdbcType=INTEGER},
-      </if>
-      <if test="thumbnailWidth != null">
-        #{thumbnailWidth,jdbcType=INTEGER},
-      </if>
-      <if test="thumbnailSize != null">
-        #{thumbnailSize,jdbcType=INTEGER},
-      </if>
-      <if test="thumbnailMd5Hex != null">
-        #{thumbnailMd5Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailSha1Hex != null">
-        #{thumbnailSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="createdBy != null">
         #{createdBy,jdbcType=BIGINT},
@@ -371,33 +306,6 @@
       <if test="record.imageSha1Hex != null">
         image_sha1_hex = #{record.imageSha1Hex,jdbcType=VARCHAR},
       </if>
-      <if test="record.thumbnailName != null">
-        thumbnail_name = #{record.thumbnailName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.thumbnailAbsolutePath != null">
-        thumbnail_absolute_path = #{record.thumbnailAbsolutePath,jdbcType=VARCHAR},
-      </if>
-      <if test="record.thumbnailAbsoluteUrl != null">
-        thumbnail_absolute_url = #{record.thumbnailAbsoluteUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.thumbnailRelativeUrl != null">
-        thumbnail_relative_url = #{record.thumbnailRelativeUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.thumbnailHeight != null">
-        thumbnail_height = #{record.thumbnailHeight,jdbcType=INTEGER},
-      </if>
-      <if test="record.thumbnailWidth != null">
-        thumbnail_width = #{record.thumbnailWidth,jdbcType=INTEGER},
-      </if>
-      <if test="record.thumbnailSize != null">
-        thumbnail_size = #{record.thumbnailSize,jdbcType=INTEGER},
-      </if>
-      <if test="record.thumbnailMd5Hex != null">
-        thumbnail_md5_hex = #{record.thumbnailMd5Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="record.thumbnailSha1Hex != null">
-        thumbnail_sha1_hex = #{record.thumbnailSha1Hex,jdbcType=VARCHAR},
-      </if>
       <if test="record.createdBy != null">
         created_by = #{record.createdBy,jdbcType=BIGINT},
       </if>
@@ -436,15 +344,6 @@
       image_size = #{record.imageSize,jdbcType=BIGINT},
       image_md5_hex = #{record.imageMd5Hex,jdbcType=VARCHAR},
       image_sha1_hex = #{record.imageSha1Hex,jdbcType=VARCHAR},
-      thumbnail_name = #{record.thumbnailName,jdbcType=VARCHAR},
-      thumbnail_absolute_path = #{record.thumbnailAbsolutePath,jdbcType=VARCHAR},
-      thumbnail_absolute_url = #{record.thumbnailAbsoluteUrl,jdbcType=VARCHAR},
-      thumbnail_relative_url = #{record.thumbnailRelativeUrl,jdbcType=VARCHAR},
-      thumbnail_height = #{record.thumbnailHeight,jdbcType=INTEGER},
-      thumbnail_width = #{record.thumbnailWidth,jdbcType=INTEGER},
-      thumbnail_size = #{record.thumbnailSize,jdbcType=INTEGER},
-      thumbnail_md5_hex = #{record.thumbnailMd5Hex,jdbcType=VARCHAR},
-      thumbnail_sha1_hex = #{record.thumbnailSha1Hex,jdbcType=VARCHAR},
       created_by = #{record.createdBy,jdbcType=BIGINT},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       last_modified_by = #{record.lastModifiedBy,jdbcType=BIGINT},
@@ -494,33 +393,6 @@
       <if test="imageSha1Hex != null">
         image_sha1_hex = #{imageSha1Hex,jdbcType=VARCHAR},
       </if>
-      <if test="thumbnailName != null">
-        thumbnail_name = #{thumbnailName,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailAbsolutePath != null">
-        thumbnail_absolute_path = #{thumbnailAbsolutePath,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailAbsoluteUrl != null">
-        thumbnail_absolute_url = #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailRelativeUrl != null">
-        thumbnail_relative_url = #{thumbnailRelativeUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailHeight != null">
-        thumbnail_height = #{thumbnailHeight,jdbcType=INTEGER},
-      </if>
-      <if test="thumbnailWidth != null">
-        thumbnail_width = #{thumbnailWidth,jdbcType=INTEGER},
-      </if>
-      <if test="thumbnailSize != null">
-        thumbnail_size = #{thumbnailSize,jdbcType=INTEGER},
-      </if>
-      <if test="thumbnailMd5Hex != null">
-        thumbnail_md5_hex = #{thumbnailMd5Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnailSha1Hex != null">
-        thumbnail_sha1_hex = #{thumbnailSha1Hex,jdbcType=VARCHAR},
-      </if>
       <if test="createdBy != null">
         created_by = #{createdBy,jdbcType=BIGINT},
       </if>
@@ -556,15 +428,6 @@
       image_size = #{imageSize,jdbcType=BIGINT},
       image_md5_hex = #{imageMd5Hex,jdbcType=VARCHAR},
       image_sha1_hex = #{imageSha1Hex,jdbcType=VARCHAR},
-      thumbnail_name = #{thumbnailName,jdbcType=VARCHAR},
-      thumbnail_absolute_path = #{thumbnailAbsolutePath,jdbcType=VARCHAR},
-      thumbnail_absolute_url = #{thumbnailAbsoluteUrl,jdbcType=VARCHAR},
-      thumbnail_relative_url = #{thumbnailRelativeUrl,jdbcType=VARCHAR},
-      thumbnail_height = #{thumbnailHeight,jdbcType=INTEGER},
-      thumbnail_width = #{thumbnailWidth,jdbcType=INTEGER},
-      thumbnail_size = #{thumbnailSize,jdbcType=INTEGER},
-      thumbnail_md5_hex = #{thumbnailMd5Hex,jdbcType=VARCHAR},
-      thumbnail_sha1_hex = #{thumbnailSha1Hex,jdbcType=VARCHAR},
       created_by = #{createdBy,jdbcType=BIGINT},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},

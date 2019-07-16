@@ -17,25 +17,25 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "microservice-support-server", path = "/api/v1/storage_image", fallbackFactory = StorageImageFallbackFactory.class)
-public interface StorageImageClient extends CrudClient<StorageImageDto, StorageImageConditionDto, Long> {
+@FeignClient(name = "microservice-storage-server", path = "/api/v1/storage_image", fallbackFactory = StorageImageFallbackFactory.class)
+public interface StorageImageClient extends CrudClient<StorageImageDto, StorageImageConditionDto, Long>{
 
-    @GetMapping("")
-    ResponseEntity<List<StorageImageDto>> search(@ModelAttribute StorageImageConditionDto condition);
+	@GetMapping("")
+	ResponseEntity<List<StorageImageDto>> search(@ModelAttribute StorageImageConditionDto condition);
 
-    @GetMapping("/{id}")
-    ResponseEntity<StorageImageDto> get(@PathVariable("id") Long id);
+	@GetMapping("/{id}")
+	ResponseEntity<StorageImageDto> get(@PathVariable("id") Long id);
 
-    @PostMapping("")
-    ResponseEntity<StorageImageDto> create(@RequestBody StorageImageDto storageImage);
+	@PostMapping("")
+	ResponseEntity<StorageImageDto> create(@RequestBody StorageImageDto storageImage);
 
-    @PutMapping("/{id}")
-    ResponseEntity<StorageImageDto> modify(@PathVariable("id") Long id, @RequestBody StorageImageDto storageImage);
+	@PutMapping("/{id}")
+	ResponseEntity<StorageImageDto> modify(@PathVariable("id") Long id, @RequestBody StorageImageDto storageImage);
 
-    @DeleteMapping("/{id}")
+	@DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);
 
-    @DeleteMapping("")
-    ResponseEntity<Void> deleteByExample(@RequestBody StorageImageConditionDto conditionDto);
-
+	@DeleteMapping("")
+    ResponseEntity<Void> deleteByExample(@RequestBody StorageImageConditionDto condition);
+	
 }

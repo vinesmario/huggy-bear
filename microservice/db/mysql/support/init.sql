@@ -8,6 +8,8 @@ CREATE TABLE `storage_file` (
   `file_absolute_url` varchar(255) DEFAULT NULL COMMENT '文件访问绝对url',
   `file_relative_url` varchar(255) DEFAULT NULL COMMENT '文件访问相对url',
   `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小，单位B',
+  `file_md5_hex` varchar(64) DEFAULT NULL COMMENT '文件MD5算法哈希值',
+  `file_sha1_hex` varchar(64) DEFAULT NULL COMMENT '文件SHA1算法哈希值',
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `last_modified_by` bigint(20) DEFAULT NULL,
@@ -30,13 +32,8 @@ CREATE TABLE `storage_image` (
   `image_height` int(11) DEFAULT NULL COMMENT '图片高度',
   `image_width` int(11) DEFAULT NULL COMMENT '图片宽',
   `image_size` bigint(20) DEFAULT NULL COMMENT '图片大小，单位B',
-  `thumbnail_name` varchar(50) DEFAULT NULL COMMENT '缩略图名称',
-  `thumbnail_absolute_path` varchar(255) DEFAULT NULL COMMENT '缩略图存储绝对路径',
-  `thumbnail_absolute_url` varchar(255) DEFAULT NULL COMMENT '缩略图访问绝对url',
-  `thumbnail_relative_url` varchar(255) DEFAULT NULL COMMENT '缩略图访问相对url',
-  `thumbnail_height` int(11) DEFAULT NULL COMMENT '缩略图高度',
-  `thumbnail_width` int(11) DEFAULT NULL COMMENT '缩略图宽度',
-  `thumbnail_size` int(11) DEFAULT NULL COMMENT '缩略图大小，单位B',
+  `image_md5_hex` varchar(64) DEFAULT NULL COMMENT '图片MD5算法哈希值',
+  `image_sha1_hex` varchar(64) DEFAULT NULL COMMENT '图片SHA1算法哈希值',
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `last_modified_by` bigint(20) DEFAULT NULL,
@@ -46,3 +43,4 @@ CREATE TABLE `storage_image` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

@@ -56,7 +56,6 @@ public class StorageImageFallbackFactory implements FallbackFactory<StorageImage
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
-
         };
     }
 }
