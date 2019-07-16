@@ -15,15 +15,14 @@ storage:
             nameSpace:
             endPoint:
         qiniu:
-            httpHost:
+            domain:
             accessKey:
             secretKey:
             bucketName:
             nameSpace:
         ypyun:
             domain:
-            prefix:
-            endPoint:
             accessKeyId:
             accessKeySecret:
             bucketName:
+            nameSpace:

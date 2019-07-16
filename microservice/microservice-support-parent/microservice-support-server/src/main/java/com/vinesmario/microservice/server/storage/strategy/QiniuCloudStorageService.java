@@ -9,13 +9,13 @@ import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.QiniuCloudStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 @Lazy
@@ -35,32 +35,32 @@ public class QiniuCloudStorageService extends AbstractStorageService {
 
     @Override
     public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-        storageFileDto.setFileAbsoluteUrl(upload(multipartFile.getBytes(), fileRelativePath));
+        storageFileDto.setFileAbsoluteUrl(upload(multipartFile.getInputStream(), fileRelativePath));
     }
 
     @Override
     public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-        storageFileDto.setFileAbsoluteUrl(upload(IOUtils.toByteArray(inputStream), fileRelativePath));
+        storageFileDto.setFileAbsoluteUrl(upload(inputStream, fileRelativePath));
     }
 
     @Override
     public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-        storageFileDto.setFileAbsoluteUrl(upload(data, fileRelativePath));
+        storageFileDto.setFileAbsoluteUrl(upload(new ByteArrayInputStream(data), fileRelativePath));
     }
 
     @Override
     public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsoluteUrl(upload(multipartFile.getBytes(), imageRelativePath));
+        storageImageDto.setFileAbsoluteUrl(upload(multipartFile.getInputStream(), imageRelativePath));
     }
 
     @Override
     public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsoluteUrl(upload(IOUtils.toByteArray(inputStream), imageRelativePath));
+        storageImageDto.setFileAbsoluteUrl(upload(inputStream, imageRelativePath));
     }
 
     @Override
     public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsoluteUrl(upload(data, imageRelativePath));
+        storageImageDto.setFileAbsoluteUrl(upload(new ByteArrayInputStream(data), imageRelativePath));
     }
 
     @Override
@@ -68,13 +68,13 @@ public class QiniuCloudStorageService extends AbstractStorageService {
 
     }
 
-    private String upload(byte[] data, String fileRelativePath) throws Exception {
+    private String upload(InputStream inputStream, String fileRelativePath) throws Exception {
         if (StringUtils.isNotBlank(config.getNameSpace())) {
             fileRelativePath = config.getNameSpace() + "/" + fileRelativePath;
         }
         UploadManager uploadManager = new UploadManager(new Configuration(Zone.autoZone()));
         String token = Auth.create(config.getAccessKey(), config.getSecretKey()).uploadToken(config.getBucketName());
-        Response response = uploadManager.put(data, fileRelativePath, token);
+        Response response = uploadManager.put(inputStream, fileRelativePath, token,null,null);
         if (!response.isOK()) {
             throw new RuntimeException("上传七牛出错：" + response.toString());
         }

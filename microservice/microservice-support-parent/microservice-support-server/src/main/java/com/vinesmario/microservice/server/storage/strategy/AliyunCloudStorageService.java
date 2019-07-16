@@ -46,17 +46,17 @@ public class AliyunCloudStorageService extends AbstractStorageService {
 
     @Override
     public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsoluteUrl(upload(multipartFile.getInputStream(), imageRelativePath));
+        storageImageDto.setFileAbsoluteUrl(upload(multipartFile.getInputStream(), imageRelativePath));
     }
 
     @Override
     public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsoluteUrl(upload(inputStream, imageRelativePath));
+        storageImageDto.setFileAbsoluteUrl(upload(inputStream, imageRelativePath));
     }
 
     @Override
     public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsoluteUrl(upload(new ByteArrayInputStream(data), imageRelativePath));
+        storageImageDto.setFileAbsoluteUrl(upload(new ByteArrayInputStream(data), imageRelativePath));
     }
 
     @Override

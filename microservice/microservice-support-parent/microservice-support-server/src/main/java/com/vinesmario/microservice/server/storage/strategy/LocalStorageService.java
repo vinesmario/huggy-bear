@@ -66,26 +66,26 @@ public class LocalStorageService extends AbstractStorageService {
 
     @Override
     public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsolutePath(upload(multipartFile.getInputStream(), imageRelativePath));
-        storageImageDto.setImageRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
+        storageImageDto.setFileAbsolutePath(upload(multipartFile.getInputStream(), imageRelativePath));
+        storageImageDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
         storageImageService.create(storageImageDto);
-        storageImageDto.setImageAbsolutePath(null);
+        storageImageDto.setFileAbsolutePath(null);
     }
 
     @Override
     public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsolutePath(upload(inputStream, imageRelativePath));
-        storageImageDto.setImageRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
+        storageImageDto.setFileAbsolutePath(upload(inputStream, imageRelativePath));
+        storageImageDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
         storageImageService.create(storageImageDto);
-        storageImageDto.setImageAbsolutePath(null);
+        storageImageDto.setFileAbsolutePath(null);
     }
 
     @Override
     public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setImageAbsolutePath(upload(new ByteArrayInputStream(data), imageRelativePath));
-        storageImageDto.setImageRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
+        storageImageDto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), imageRelativePath));
+        storageImageDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}",storageImageDto.getUuid()));
         storageImageService.create(storageImageDto);
-        storageImageDto.setImageAbsolutePath(null);
+        storageImageDto.setFileAbsolutePath(null);
     }
 
     @Override

@@ -107,8 +107,8 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
         storageImageDto.setTenantId(tenantId);
         storageImageDto.setUuid(uuid);
         storageImageDto.setFileExtension(extension);
-        storageImageDto.setImageName(imageName);
-        storageImageDto.setImageSize(multipartFile.getSize());
+        storageImageDto.setFileName(imageName);
+        storageImageDto.setFileSize(multipartFile.getSize());
         // 图片高度、宽度
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
         storageImageDto.setImageWidth(bufferedImage.getWidth());
@@ -116,8 +116,8 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
         // 图片MD5、SHA1
-        storageImageDto.setImageMd5Hex(md5Hex);
-        storageImageDto.setImageSha1Hex(sha1Hex);
+        storageImageDto.setFileMd5Hex(md5Hex);
+        storageImageDto.setFileSha1Hex(sha1Hex);
 
         storageService.uploadImage(multipartFile, imageRelativePath, storageImageDto);
         return ResponseEntity.ok()
@@ -138,7 +138,7 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
                     .headers(HeaderUtil.createFailureAlert("record not found",404,"record.not_found",entityName))
                     .build();
         } else {
-            String fileAbsolutePath = optional.get().getImageAbsolutePath();
+            String fileAbsolutePath = optional.get().getFileAbsolutePath();
             if(StringUtils.isBlank(fileAbsolutePath)){
                 return ResponseEntity.notFound()
                         .headers(HeaderUtil.createFailureAlert("image path is empty",404,"file_path.empty",entityName))
@@ -156,4 +156,5 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
             }
         }
     }
+
 }

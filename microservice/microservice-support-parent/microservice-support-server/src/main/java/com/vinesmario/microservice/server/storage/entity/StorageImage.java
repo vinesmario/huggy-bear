@@ -18,68 +18,17 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "storage_image")
-public class StorageImage extends BaseEntity<Long> {
+public class StorageImage extends StorageFile {
 
-    /**
-     * 
-     */
-    @Column(name = "TENANT_ID")
-    private Long tenantId;
-    /**
-     * UUID
-     */
-    @Column(name = "UUID")
-    private String uuid;
-    /**
-     * 文件扩展名
-     */
-    @Column(name = "FILE_EXTENSION")
-    private String fileExtension;
-    /**
-     * 图片名称
-     */
-    @Column(name = "IMAGE_NAME")
-    private String imageName;
-    /**
-     * 图片存储绝对路径
-     */
-    @Column(name = "IMAGE_ABSOLUTE_PATH")
-    private String imageAbsolutePath;
-    /**
-     * 图片访问绝对url
-     */
-    @Column(name = "IMAGE_ABSOLUTE_URL")
-    private String imageAbsoluteUrl;
-    /**
-     * 图片访问相对url
-     */
-    @Column(name = "IMAGE_RELATIVE_URL")
-    private String imageRelativeUrl;
     /**
      * 图片高度
      */
     @Column(name = "IMAGE_HEIGHT")
     private Integer imageHeight;
     /**
-     * 图片宽
+     * 图片宽度
      */
     @Column(name = "IMAGE_WIDTH")
     private Integer imageWidth;
-    /**
-     * 图片大小，单位B
-     */
-    @Column(name = "IMAGE_SIZE")
-    private Long imageSize;
-    /**
-     * 图片MD5算法哈希值
-     */
-    @Column(name = "IMAGE_MD5_HEX")
-    private String imageMd5Hex;
-    /**
-     * 图片SHA1算法哈希值
-     */
-    @Column(name = "IMAGE_SHA1_HEX")
-    private String imageSha1Hex;
-
 
 }

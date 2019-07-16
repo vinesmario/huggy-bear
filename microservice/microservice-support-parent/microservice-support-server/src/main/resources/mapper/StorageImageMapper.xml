@@ -6,15 +6,15 @@
     <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
     <result column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="file_extension" jdbcType="VARCHAR" property="fileExtension" />
-    <result column="image_name" jdbcType="VARCHAR" property="imageName" />
-    <result column="image_absolute_path" jdbcType="VARCHAR" property="imageAbsolutePath" />
-    <result column="image_absolute_url" jdbcType="VARCHAR" property="imageAbsoluteUrl" />
-    <result column="image_relative_url" jdbcType="VARCHAR" property="imageRelativeUrl" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="file_absolute_path" jdbcType="VARCHAR" property="fileAbsolutePath" />
+    <result column="file_absolute_url" jdbcType="VARCHAR" property="fileAbsoluteUrl" />
+    <result column="file_relative_url" jdbcType="VARCHAR" property="fileRelativeUrl" />
+    <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+    <result column="file_md5_hex" jdbcType="VARCHAR" property="fileMd5Hex" />
+    <result column="file_sha1_hex" jdbcType="VARCHAR" property="fileSha1Hex" />
     <result column="image_height" jdbcType="INTEGER" property="imageHeight" />
     <result column="image_width" jdbcType="INTEGER" property="imageWidth" />
-    <result column="image_size" jdbcType="BIGINT" property="imageSize" />
-    <result column="image_md5_hex" jdbcType="VARCHAR" property="imageMd5Hex" />
-    <result column="image_sha1_hex" jdbcType="VARCHAR" property="imageSha1Hex" />
     <result column="created_by" jdbcType="BIGINT" property="createdBy" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="last_modified_by" jdbcType="BIGINT" property="lastModifiedBy" />
@@ -81,8 +81,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, tenant_id, uuid, file_extension, image_name, image_absolute_path, image_absolute_url, 
-    image_relative_url, image_height, image_width, image_size, image_md5_hex, image_sha1_hex, 
+    id, tenant_id, uuid, file_extension, file_name, file_absolute_path, file_absolute_url, 
+    file_relative_url, file_size, file_md5_hex, file_sha1_hex, image_height, image_width, 
     created_by, created_date, last_modified_by, last_modified_date, memo, deleted
   </sql>
   <select id="selectByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample" resultMap="BaseResultMap">
@@ -123,17 +123,17 @@
   </delete>
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.entity.StorageImage">
     insert into storage_image (id, tenant_id, uuid, 
-      file_extension, image_name, image_absolute_path, 
-      image_absolute_url, image_relative_url, image_height, 
-      image_width, image_size, image_md5_hex, 
-      image_sha1_hex, created_by, created_date, 
+      file_extension, file_name, file_absolute_path, 
+      file_absolute_url, file_relative_url, file_size, 
+      file_md5_hex, file_sha1_hex, image_height, 
+      image_width, created_by, created_date, 
       last_modified_by, last_modified_date, memo, 
       deleted)
     values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{uuid,jdbcType=VARCHAR}, 
-      #{fileExtension,jdbcType=VARCHAR}, #{imageName,jdbcType=VARCHAR}, #{imageAbsolutePath,jdbcType=VARCHAR}, 
-      #{imageAbsoluteUrl,jdbcType=VARCHAR}, #{imageRelativeUrl,jdbcType=VARCHAR}, #{imageHeight,jdbcType=INTEGER}, 
-      #{imageWidth,jdbcType=INTEGER}, #{imageSize,jdbcType=BIGINT}, #{imageMd5Hex,jdbcType=VARCHAR}, 
-      #{imageSha1Hex,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{fileExtension,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileAbsolutePath,jdbcType=VARCHAR}, 
+      #{fileAbsoluteUrl,jdbcType=VARCHAR}, #{fileRelativeUrl,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, 
+      #{fileMd5Hex,jdbcType=VARCHAR}, #{fileSha1Hex,jdbcType=VARCHAR}, #{imageHeight,jdbcType=INTEGER}, 
+      #{imageWidth,jdbcType=INTEGER}, #{createdBy,jdbcType=BIGINT}, #{createdDate,jdbcType=TIMESTAMP}, 
       #{lastModifiedBy,jdbcType=BIGINT}, #{lastModifiedDate,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, 
       #{deleted,jdbcType=TINYINT})
   </insert>
@@ -152,32 +152,32 @@
       <if test="fileExtension != null">
         file_extension,
       </if>
-      <if test="imageName != null">
-        image_name,
+      <if test="fileName != null">
+        file_name,
       </if>
-      <if test="imageAbsolutePath != null">
-        image_absolute_path,
+      <if test="fileAbsolutePath != null">
+        file_absolute_path,
       </if>
-      <if test="imageAbsoluteUrl != null">
-        image_absolute_url,
+      <if test="fileAbsoluteUrl != null">
+        file_absolute_url,
       </if>
-      <if test="imageRelativeUrl != null">
-        image_relative_url,
+      <if test="fileRelativeUrl != null">
+        file_relative_url,
+      </if>
+      <if test="fileSize != null">
+        file_size,
+      </if>
+      <if test="fileMd5Hex != null">
+        file_md5_hex,
+      </if>
+      <if test="fileSha1Hex != null">
+        file_sha1_hex,
       </if>
       <if test="imageHeight != null">
         image_height,
       </if>
       <if test="imageWidth != null">
         image_width,
-      </if>
-      <if test="imageSize != null">
-        image_size,
-      </if>
-      <if test="imageMd5Hex != null">
-        image_md5_hex,
-      </if>
-      <if test="imageSha1Hex != null">
-        image_sha1_hex,
       </if>
       <if test="createdBy != null">
         created_by,
@@ -211,32 +211,32 @@
       <if test="fileExtension != null">
         #{fileExtension,jdbcType=VARCHAR},
       </if>
-      <if test="imageName != null">
-        #{imageName,jdbcType=VARCHAR},
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
       </if>
-      <if test="imageAbsolutePath != null">
-        #{imageAbsolutePath,jdbcType=VARCHAR},
+      <if test="fileAbsolutePath != null">
+        #{fileAbsolutePath,jdbcType=VARCHAR},
       </if>
-      <if test="imageAbsoluteUrl != null">
-        #{imageAbsoluteUrl,jdbcType=VARCHAR},
+      <if test="fileAbsoluteUrl != null">
+        #{fileAbsoluteUrl,jdbcType=VARCHAR},
       </if>
-      <if test="imageRelativeUrl != null">
-        #{imageRelativeUrl,jdbcType=VARCHAR},
+      <if test="fileRelativeUrl != null">
+        #{fileRelativeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="fileMd5Hex != null">
+        #{fileMd5Hex,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSha1Hex != null">
+        #{fileSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="imageHeight != null">
         #{imageHeight,jdbcType=INTEGER},
       </if>
       <if test="imageWidth != null">
         #{imageWidth,jdbcType=INTEGER},
-      </if>
-      <if test="imageSize != null">
-        #{imageSize,jdbcType=BIGINT},
-      </if>
-      <if test="imageMd5Hex != null">
-        #{imageMd5Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="imageSha1Hex != null">
-        #{imageSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="createdBy != null">
         #{createdBy,jdbcType=BIGINT},
@@ -279,32 +279,32 @@
       <if test="record.fileExtension != null">
         file_extension = #{record.fileExtension,jdbcType=VARCHAR},
       </if>
-      <if test="record.imageName != null">
-        image_name = #{record.imageName,jdbcType=VARCHAR},
+      <if test="record.fileName != null">
+        file_name = #{record.fileName,jdbcType=VARCHAR},
       </if>
-      <if test="record.imageAbsolutePath != null">
-        image_absolute_path = #{record.imageAbsolutePath,jdbcType=VARCHAR},
+      <if test="record.fileAbsolutePath != null">
+        file_absolute_path = #{record.fileAbsolutePath,jdbcType=VARCHAR},
       </if>
-      <if test="record.imageAbsoluteUrl != null">
-        image_absolute_url = #{record.imageAbsoluteUrl,jdbcType=VARCHAR},
+      <if test="record.fileAbsoluteUrl != null">
+        file_absolute_url = #{record.fileAbsoluteUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.imageRelativeUrl != null">
-        image_relative_url = #{record.imageRelativeUrl,jdbcType=VARCHAR},
+      <if test="record.fileRelativeUrl != null">
+        file_relative_url = #{record.fileRelativeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null">
+        file_size = #{record.fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="record.fileMd5Hex != null">
+        file_md5_hex = #{record.fileMd5Hex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSha1Hex != null">
+        file_sha1_hex = #{record.fileSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="record.imageHeight != null">
         image_height = #{record.imageHeight,jdbcType=INTEGER},
       </if>
       <if test="record.imageWidth != null">
         image_width = #{record.imageWidth,jdbcType=INTEGER},
-      </if>
-      <if test="record.imageSize != null">
-        image_size = #{record.imageSize,jdbcType=BIGINT},
-      </if>
-      <if test="record.imageMd5Hex != null">
-        image_md5_hex = #{record.imageMd5Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imageSha1Hex != null">
-        image_sha1_hex = #{record.imageSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="record.createdBy != null">
         created_by = #{record.createdBy,jdbcType=BIGINT},
@@ -335,15 +335,15 @@
       tenant_id = #{record.tenantId,jdbcType=BIGINT},
       uuid = #{record.uuid,jdbcType=VARCHAR},
       file_extension = #{record.fileExtension,jdbcType=VARCHAR},
-      image_name = #{record.imageName,jdbcType=VARCHAR},
-      image_absolute_path = #{record.imageAbsolutePath,jdbcType=VARCHAR},
-      image_absolute_url = #{record.imageAbsoluteUrl,jdbcType=VARCHAR},
-      image_relative_url = #{record.imageRelativeUrl,jdbcType=VARCHAR},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      file_absolute_path = #{record.fileAbsolutePath,jdbcType=VARCHAR},
+      file_absolute_url = #{record.fileAbsoluteUrl,jdbcType=VARCHAR},
+      file_relative_url = #{record.fileRelativeUrl,jdbcType=VARCHAR},
+      file_size = #{record.fileSize,jdbcType=BIGINT},
+      file_md5_hex = #{record.fileMd5Hex,jdbcType=VARCHAR},
+      file_sha1_hex = #{record.fileSha1Hex,jdbcType=VARCHAR},
       image_height = #{record.imageHeight,jdbcType=INTEGER},
       image_width = #{record.imageWidth,jdbcType=INTEGER},
-      image_size = #{record.imageSize,jdbcType=BIGINT},
-      image_md5_hex = #{record.imageMd5Hex,jdbcType=VARCHAR},
-      image_sha1_hex = #{record.imageSha1Hex,jdbcType=VARCHAR},
       created_by = #{record.createdBy,jdbcType=BIGINT},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       last_modified_by = #{record.lastModifiedBy,jdbcType=BIGINT},
@@ -366,32 +366,32 @@
       <if test="fileExtension != null">
         file_extension = #{fileExtension,jdbcType=VARCHAR},
       </if>
-      <if test="imageName != null">
-        image_name = #{imageName,jdbcType=VARCHAR},
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
       </if>
-      <if test="imageAbsolutePath != null">
-        image_absolute_path = #{imageAbsolutePath,jdbcType=VARCHAR},
+      <if test="fileAbsolutePath != null">
+        file_absolute_path = #{fileAbsolutePath,jdbcType=VARCHAR},
       </if>
-      <if test="imageAbsoluteUrl != null">
-        image_absolute_url = #{imageAbsoluteUrl,jdbcType=VARCHAR},
+      <if test="fileAbsoluteUrl != null">
+        file_absolute_url = #{fileAbsoluteUrl,jdbcType=VARCHAR},
       </if>
-      <if test="imageRelativeUrl != null">
-        image_relative_url = #{imageRelativeUrl,jdbcType=VARCHAR},
+      <if test="fileRelativeUrl != null">
+        file_relative_url = #{fileRelativeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        file_size = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="fileMd5Hex != null">
+        file_md5_hex = #{fileMd5Hex,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSha1Hex != null">
+        file_sha1_hex = #{fileSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="imageHeight != null">
         image_height = #{imageHeight,jdbcType=INTEGER},
       </if>
       <if test="imageWidth != null">
         image_width = #{imageWidth,jdbcType=INTEGER},
-      </if>
-      <if test="imageSize != null">
-        image_size = #{imageSize,jdbcType=BIGINT},
-      </if>
-      <if test="imageMd5Hex != null">
-        image_md5_hex = #{imageMd5Hex,jdbcType=VARCHAR},
-      </if>
-      <if test="imageSha1Hex != null">
-        image_sha1_hex = #{imageSha1Hex,jdbcType=VARCHAR},
       </if>
       <if test="createdBy != null">
         created_by = #{createdBy,jdbcType=BIGINT},
@@ -419,15 +419,15 @@
     set tenant_id = #{tenantId,jdbcType=BIGINT},
       uuid = #{uuid,jdbcType=VARCHAR},
       file_extension = #{fileExtension,jdbcType=VARCHAR},
-      image_name = #{imageName,jdbcType=VARCHAR},
-      image_absolute_path = #{imageAbsolutePath,jdbcType=VARCHAR},
-      image_absolute_url = #{imageAbsoluteUrl,jdbcType=VARCHAR},
-      image_relative_url = #{imageRelativeUrl,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      file_absolute_path = #{fileAbsolutePath,jdbcType=VARCHAR},
+      file_absolute_url = #{fileAbsoluteUrl,jdbcType=VARCHAR},
+      file_relative_url = #{fileRelativeUrl,jdbcType=VARCHAR},
+      file_size = #{fileSize,jdbcType=BIGINT},
+      file_md5_hex = #{fileMd5Hex,jdbcType=VARCHAR},
+      file_sha1_hex = #{fileSha1Hex,jdbcType=VARCHAR},
       image_height = #{imageHeight,jdbcType=INTEGER},
       image_width = #{imageWidth,jdbcType=INTEGER},
-      image_size = #{imageSize,jdbcType=BIGINT},
-      image_md5_hex = #{imageMd5Hex,jdbcType=VARCHAR},
-      image_sha1_hex = #{imageSha1Hex,jdbcType=VARCHAR},
       created_by = #{createdBy,jdbcType=BIGINT},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       last_modified_by = #{lastModifiedBy,jdbcType=BIGINT},
