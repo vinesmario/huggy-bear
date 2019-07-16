@@ -10,7 +10,6 @@ import com.vinesmario.microservice.server.${basepackage}.entity.${className};
  * @author
  * @date
  */
-
 public interface ${className}Mapper extends CrudMapper<${className}, Long>{
 
 }

@@ -12,7 +12,6 @@ import org.mapstruct.Mapper;
  * @author
  * @date
  */
-
 @Mapper(componentModel = "spring")
 public interface ${className}MapStruct extends BaseMapStruct<${className}, ${className}Dto> {
 

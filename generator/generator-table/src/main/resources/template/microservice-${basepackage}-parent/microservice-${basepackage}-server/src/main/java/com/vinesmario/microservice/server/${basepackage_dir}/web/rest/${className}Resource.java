@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author
  * @date
  */
-
 @Api(description = "${className}CRUD", tags = "${className}Controller", basePath = "/${table.sqlName}")
 @Slf4j
 @RestController

@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+
 /**
  * @author
  * @date
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
