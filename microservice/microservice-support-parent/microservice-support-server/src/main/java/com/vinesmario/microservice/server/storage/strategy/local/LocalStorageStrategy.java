@@ -6,6 +6,7 @@ import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.service.StorageFileService;
 import com.vinesmario.microservice.server.storage.service.StorageImageService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+@Slf4j
 @Lazy
 @Service
 public class LocalStorageStrategy extends StorageStrategy {
@@ -31,8 +33,10 @@ public class LocalStorageStrategy extends StorageStrategy {
                                 StorageFileService storageFileService,
                                 StorageImageService storageImageService) {
         if (ObjectUtils.isEmpty(storageProperties.getLocal())) {
+            log.error("Property 'storage.local' is empty ");
             throw new IllegalArgumentException("Property 'storage.local' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getLocal().getRoot())) {
+            log.error("Property 'storage.local.root' is empty ");
             throw new IllegalArgumentException("Property 'storage.local.root' is empty ");
         }
         this.config = storageProperties.getLocal();

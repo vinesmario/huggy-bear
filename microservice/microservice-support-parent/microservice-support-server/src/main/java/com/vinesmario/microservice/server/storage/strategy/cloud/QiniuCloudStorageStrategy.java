@@ -9,6 +9,7 @@ import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+@Slf4j
 @Lazy
 @Service
 public class QiniuCloudStorageStrategy extends StorageStrategy {
@@ -26,8 +28,10 @@ public class QiniuCloudStorageStrategy extends StorageStrategy {
 
     public QiniuCloudStorageStrategy(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
+            log.error("Property 'storage.cloud' is empty ");
             throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getQiniu())) {
+            log.error("Property 'storage.cloud.qiniu' is empty ");
             throw new IllegalArgumentException("Property 'storage.cloud.qiniu' is empty ");
         }
         this.config = storageProperties.getCloud().getQiniu();
