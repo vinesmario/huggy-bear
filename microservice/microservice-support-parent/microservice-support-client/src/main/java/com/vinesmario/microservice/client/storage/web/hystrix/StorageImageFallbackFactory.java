@@ -52,7 +52,7 @@ public class StorageImageFallbackFactory implements FallbackFactory<StorageImage
             }
 
             @Override
-            public ResponseEntity<Void> deleteByExample(StorageImageConditionDto condition){
+            public ResponseEntity<Void> delete(StorageImageConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

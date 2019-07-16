@@ -52,7 +52,7 @@ public class StorageFileFallbackFactory implements FallbackFactory<StorageFileCl
             }
 
             @Override
-            public ResponseEntity<Void> deleteByExample(StorageFileConditionDto condition){
+            public ResponseEntity<Void> delete(StorageFileConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

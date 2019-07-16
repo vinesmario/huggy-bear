@@ -48,7 +48,7 @@ public class UserAccountFallbackFactory implements FallbackFactory<UserAccountCl
             }
 
             @Override
-            public ResponseEntity<Void> deleteByExample(UserAccountConditionDto condition){
+            public ResponseEntity<Void> delete(UserAccountConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
