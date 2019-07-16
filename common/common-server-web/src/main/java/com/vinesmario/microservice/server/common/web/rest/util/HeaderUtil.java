@@ -38,8 +38,8 @@ public final class HeaderUtil {
         return createAlert(APPLICATION_NAME + "." + entityName + ".deleted", param);
     }
 
-    public static HttpHeaders createEntityDeletionCollectionAlert(String entityName, String param) {
-        return createAlert(APPLICATION_NAME + "." + entityName + ".deleted.collection", param);
+    public static HttpHeaders createEntityDeletionCollectionAlert(String entityName) {
+        return createAlert(APPLICATION_NAME + "." + entityName + ".deleted.collection", null);
     }
 
     public static HttpHeaders createFailureAlert(String defaultMessage, Integer errorCode, String errorKey, String entityName) {

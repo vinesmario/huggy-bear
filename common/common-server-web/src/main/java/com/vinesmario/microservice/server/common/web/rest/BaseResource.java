@@ -84,14 +84,9 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @ResponseBody
     public ResponseEntity<Void> deleteByExample(@RequestBody CONDITION conditionDto) {
         preConditionDto(conditionDto);
-        List<DTO> list = service.list(conditionDto);
-        String alertParam = "";
-        if (!CollectionUtils.isEmpty(list)) {
-            service.deleteIterable(list);
-            alertParam = StringUtils.join(list.stream().map(dto -> dto.getAlertParam()).collect(Collectors.toList()), ",");
-        }
+        deleteByExample(conditionDto);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityDeletionCollectionAlert(entityName, alertParam))
+                .headers(HeaderUtil.createEntityDeletionCollectionAlert(entityName))
                 .build();
     }
 

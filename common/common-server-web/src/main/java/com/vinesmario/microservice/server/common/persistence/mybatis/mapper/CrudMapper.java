@@ -25,13 +25,16 @@ public interface CrudMapper<T extends BaseEntity<PK>, PK extends Serializable>
 
     void deleteByPrimaryKey(PK primaryKey);
 
+    @Deprecated
     void deleteByExample(BaseExample example);
 
     void updateByPrimaryKey(T entity);
 
     void updateByPrimaryKeySelective(T entity);
 
+    @Deprecated
     void updateByExample(@Param("record") T record, @Param("example") BaseExample example);
 
+    @Deprecated
     void updateByExampleSelective(@Param("record") T record, @Param("example") BaseExample example);
 }

@@ -43,7 +43,7 @@ public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK
     @Transactional(readOnly = true)
     public Integer count(ConditionDto conditionDto) {
         BaseExample example = fromConditionDto2Example(conditionDto);
-        return this.mapper.countByExample(example);
+        return mapper.countByExample(example);
     }
 
     @Transactional(readOnly = true)
@@ -71,7 +71,7 @@ public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK
             }
         }
 
-        List<T> list = this.mapper.selectByExample(example);
+        List<T> list = mapper.selectByExample(example);
         PageInfo<T> pageInfo = new PageInfo<>(list);
 
         // 转换为org.springframework.data.domain.PageImpl对象
@@ -106,12 +106,12 @@ public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK
             }
         }
 
-        return mapStruct.fromEntities2Dtos(this.mapper.selectByExample(example));
+        return mapStruct.fromEntities2Dtos(mapper.selectByExample(example));
     }
 
     @Transactional(readOnly = true)
     public Optional<DTO> get(PK primaryKey) {
-        return Optional.ofNullable(mapStruct.fromEntity2Dto(this.mapper.selectByPrimaryKey(primaryKey)));
+        return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByPrimaryKey(primaryKey)));
     }
 
 }
