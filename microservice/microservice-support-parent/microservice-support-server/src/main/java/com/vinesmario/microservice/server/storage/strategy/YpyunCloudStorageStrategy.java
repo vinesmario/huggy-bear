@@ -13,11 +13,11 @@ import java.io.InputStream;
 
 @Lazy
 @Service
-public class YpyunCloudStorageService extends AbstractStorageService {
+public class YpyunCloudStorageStrategy extends StorageStrategy {
 
     private final YpyunCloudStorageConfig config;
 
-    public YpyunCloudStorageService(StorageProperties storageProperties) {
+    public YpyunCloudStorageStrategy(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
             throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getYpyun())) {

@@ -7,8 +7,8 @@ import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlert
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
 import com.vinesmario.microservice.server.storage.service.StorageFileService;
-import com.vinesmario.microservice.server.storage.strategy.AbstractStorageService;
-import com.vinesmario.microservice.server.storage.strategy.StorageServiceFactory;
+import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
+import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -86,7 +86,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
             throw new BadRequestAlertException("File cannot be empty",
                     null, "image.empty", entityName);
         }
-        AbstractStorageService storageService = StorageServiceFactory.build();
+        StorageStrategy storageService = StorageStrategyFactory.build();
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String imageName = uuid + "." + extension;

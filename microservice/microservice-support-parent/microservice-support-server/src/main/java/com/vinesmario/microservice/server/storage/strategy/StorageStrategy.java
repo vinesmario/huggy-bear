@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
-public abstract class AbstractStorageService {
+public abstract class StorageStrategy {
     /**
      * 文件上传
      *

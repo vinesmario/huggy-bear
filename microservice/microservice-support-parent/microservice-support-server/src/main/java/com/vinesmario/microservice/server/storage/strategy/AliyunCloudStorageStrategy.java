@@ -16,11 +16,11 @@ import java.io.InputStream;
 
 @Lazy
 @Service
-public class AliyunCloudStorageService extends AbstractStorageService {
+public class AliyunCloudStorageStrategy extends StorageStrategy {
 
     private final AliyunCloudStorageConfig config;
 
-    public AliyunCloudStorageService(StorageProperties storageProperties) {
+    public AliyunCloudStorageStrategy(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
             throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getAliyun())) {

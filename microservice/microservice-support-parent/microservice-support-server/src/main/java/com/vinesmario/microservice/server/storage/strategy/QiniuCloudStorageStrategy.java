@@ -20,11 +20,11 @@ import java.io.InputStream;
 
 @Lazy
 @Service
-public class QiniuCloudStorageService extends AbstractStorageService {
+public class QiniuCloudStorageStrategy extends StorageStrategy {
 
     private final QiniuCloudStorageConfig config;
 
-    public QiniuCloudStorageService(StorageProperties storageProperties) {
+    public QiniuCloudStorageStrategy(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getCloud())) {
             throw new IllegalArgumentException("Property 'storage.cloud' is empty ");
         } else if (ObjectUtils.isEmpty(storageProperties.getCloud().getQiniu())) {
