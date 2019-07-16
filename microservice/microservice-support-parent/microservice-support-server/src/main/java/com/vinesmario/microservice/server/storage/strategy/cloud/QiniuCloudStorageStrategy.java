@@ -7,7 +7,6 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.server.storage.config.QiniuCloudStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import org.apache.commons.lang3.StringUtils;

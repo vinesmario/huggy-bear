@@ -1,9 +1,12 @@
-package com.vinesmario.microservice.server.storage.config;
+package com.vinesmario.microservice.server.storage.strategy.cloud;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 阿里云
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

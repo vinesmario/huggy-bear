@@ -2,7 +2,6 @@ package com.vinesmario.microservice.server.storage.strategy.local;
 
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.server.storage.config.LocalStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.service.StorageFileService;
 import com.vinesmario.microservice.server.storage.service.StorageImageService;

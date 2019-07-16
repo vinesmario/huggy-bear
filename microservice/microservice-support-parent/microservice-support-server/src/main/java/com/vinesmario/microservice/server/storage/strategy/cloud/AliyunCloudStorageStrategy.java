@@ -3,7 +3,6 @@ package com.vinesmario.microservice.server.storage.strategy.cloud;
 import com.aliyun.oss.OSSClient;
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.server.storage.config.AliyunCloudStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.storage.config;
+package com.vinesmario.microservice.server.storage.strategy.local;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

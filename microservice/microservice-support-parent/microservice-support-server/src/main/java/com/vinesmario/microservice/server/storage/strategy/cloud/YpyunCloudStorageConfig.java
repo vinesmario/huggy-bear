@@ -1,15 +1,18 @@
-package com.vinesmario.microservice.server.storage.config;
+package com.vinesmario.microservice.server.storage.strategy.cloud;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 又拍云
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class YpyunCloudStorageConfig {
     /**
-     * 又拍绑定的域名
+     * 又拍云绑定的域名
      */
     private String domain;
 }
