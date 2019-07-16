@@ -1,9 +1,10 @@
-package com.vinesmario.microservice.server.storage.strategy;
+package com.vinesmario.microservice.server.storage.strategy.cloud;
 
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.config.YpyunCloudStorageConfig;
+import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;

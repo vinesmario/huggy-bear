@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.storage.strategy;
+package com.vinesmario.microservice.server.storage.strategy.cloud;
 
 import org.apache.commons.lang3.StringUtils;
 

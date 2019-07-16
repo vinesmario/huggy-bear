@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.storage.strategy;
+package com.vinesmario.microservice.server.storage.strategy.cloud;
 
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -9,6 +9,7 @@ import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.QiniuCloudStorageConfig;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
