@@ -40,8 +40,8 @@ public class StorageStrategyFactory {
     }
 
     public static StorageStrategy buildCloud(String strategy) {
-        Class storageClass = CloudStorageStrategyEnum.getClassByStrategy(strategy);
-        return (StorageStrategy) SpringContextUtil.getBean(storageClass);
+        Class strategyClass = CloudStorageStrategyEnum.getClassByStrategy(strategy);
+        return (StorageStrategy) SpringContextUtil.getBean(strategyClass);
     }
 
 }
