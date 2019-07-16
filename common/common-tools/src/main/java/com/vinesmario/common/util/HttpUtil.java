@@ -1,9 +1,9 @@
 package com.vinesmario.common.util;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -76,6 +76,23 @@ public class HttpUtil {
             return bos.toString("utf-8");
         }
         return null;
+    }
+
+    public static void saveFile(String urlStr, String filePath) throws IOException
+    {
+        URL url = new URL(urlStr);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        File file = new File(filePath);
+        if (!file.getParentFile().exists())
+        {
+            file.getParentFile().mkdirs();
+        }
+        InputStream is = httpURLConnection.getInputStream();
+        OutputStream os = FileUtils.openOutputStream(file);
+        //得到输入流
+        IOUtils.copy(is, os);
+        is.close();
+        os.close();
     }
 
 }

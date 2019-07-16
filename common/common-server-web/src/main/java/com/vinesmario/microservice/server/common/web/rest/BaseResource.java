@@ -82,9 +82,9 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> deleteByExample(@RequestBody CONDITION conditionDto) {
+    public ResponseEntity<Void> delete(@RequestBody CONDITION conditionDto) {
         preConditionDto(conditionDto);
-        deleteByExample(conditionDto);
+        service.delete(conditionDto);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionCollectionAlert(entityName))
                 .build();
