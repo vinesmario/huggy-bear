@@ -37,6 +37,6 @@ public interface StorageFileClient extends CrudClient<StorageFileDto, StorageFil
     ResponseEntity<Void> delete(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> deleteByExample(@RequestBody StorageFileConditionDto condition);
+    ResponseEntity<Void> delete(@RequestBody StorageFileConditionDto condition);
 	
 }

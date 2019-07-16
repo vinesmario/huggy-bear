@@ -36,6 +36,6 @@ public interface StorageImageClient extends CrudClient<StorageImageDto, StorageI
     ResponseEntity<Void> delete(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> deleteByExample(@RequestBody StorageImageConditionDto condition);
+    ResponseEntity<Void> delete(@RequestBody StorageImageConditionDto condition);
 	
 }

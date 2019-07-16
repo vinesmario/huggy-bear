@@ -15,7 +15,7 @@ spring:
                 serviceId: cloud-config-server
 
 mybatis:
-    mapper-locations: classpath*:mapper/*.xml
+    mapper-locations: classpath*:mapper/**/*.xml
 pagehelper:
     helperDialect: mysql
     reasonable: true
