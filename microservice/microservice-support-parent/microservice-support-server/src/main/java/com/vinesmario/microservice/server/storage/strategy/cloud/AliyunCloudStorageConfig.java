@@ -38,6 +38,6 @@ public class AliyunCloudStorageConfig {
     /**
      * 持久化文件记录
      */
-    private boolean persistent = false;
+    private boolean persistent = true;
 
 }
