@@ -2,7 +2,6 @@ package com.vinesmario.microservice.client.common.web.feign;
 
 import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;

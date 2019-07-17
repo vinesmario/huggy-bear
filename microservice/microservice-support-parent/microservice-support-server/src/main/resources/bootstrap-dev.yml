@@ -11,27 +11,34 @@ security:
     oauth2:
         # see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties.class
         resource:
-#            id: resource-base
+#            id: resource-support
             id: @project.artifactId@
-            # client-id和client-secret可以不用配置，会从 security.oauth2.client中获取,
+            # client-id和client-secret可以不用配置，会自行从 security.oauth2.client中获取,
             # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
 #            client-id: internal
 #            client-secret: internal
             jwt:
                 # 对称加密
                 # 在resource server中用来解析令牌，需要与authorization server同步
-                # 也可以设置 非对称加密方式获取公钥 public-key
+                # 也可以设置 非对称加密方式，以key-uri参数获取公钥 public-key
                 key-value: signingKey
         # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties.class
         # see org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails.class
-        # server-base's client properties
+        # see org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails.class
+        # see org.springframework.security.oauth2.client.token.grant.redirect.AbstractRedirectResourceDetails.class
+        # server-support's client properties
         client:
             id: auto-increment
+            # 所有资源服务器，client-id和client-secret可以配置相同的内容
             client-id: internal
             client-secret: internal
             scope: web-app
-            access-token-uri: http://oauth/token
-            user-authorization-uri: http://oauth/authorize
+            # 资源服务器参数，指向鉴权服务器api
+            access-token-uri: http://localhost:11001/oauth/token
+            user-authorization-uri: http://localhost:11001/oauth/authorize
+            # 使用gateway时 ???
+#            access-token-uri: http://microservice-uaa-server/oauth/token
+#            user-authorization-uri: http://microservice-uaa-server/oauth/authorize
             # query（跟在url参数后面）
             # form（以form的body形式提交）
             # header（放到Http Header里，默认）
