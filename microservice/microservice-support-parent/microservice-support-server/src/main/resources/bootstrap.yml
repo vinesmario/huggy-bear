@@ -1,3 +1,5 @@
+#SpringBoot本身并不支持bootstrap文件，需要和Spring Cloud 的组件结合
+#只有加上Spring Cloud Context依赖才能生效
 spring:
     application:
         name: @project.artifactId@

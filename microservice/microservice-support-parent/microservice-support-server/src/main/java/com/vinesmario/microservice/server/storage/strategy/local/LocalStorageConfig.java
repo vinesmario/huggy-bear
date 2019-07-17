@@ -16,5 +16,9 @@ public class LocalStorageConfig {
      * 存储空间名
      */
     private String bucketName;
+    /**
+     * 持久化文件记录
+     */
+    private boolean persistent = true;
 
 }

@@ -1,10 +1,7 @@
 package com.vinesmario.microservice.server.storage.strategy.local;
 
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
-import com.vinesmario.microservice.server.storage.service.StorageFileService;
-import com.vinesmario.microservice.server.storage.service.StorageImageService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -26,12 +23,8 @@ import java.io.OutputStream;
 public class LocalStorageStrategy extends StorageStrategy {
 
     private final LocalStorageConfig config;
-    private final StorageFileService storageFileService;
-    private final StorageImageService storageImageService;
 
-    public LocalStorageStrategy(StorageProperties storageProperties,
-                                StorageFileService storageFileService,
-                                StorageImageService storageImageService) {
+    public LocalStorageStrategy(StorageProperties storageProperties) {
         if (ObjectUtils.isEmpty(storageProperties.getLocal())) {
             log.error("Property 'storage.local' is empty ");
             throw new IllegalArgumentException("Property 'storage.local' is empty ");
@@ -40,64 +33,30 @@ public class LocalStorageStrategy extends StorageStrategy {
             throw new IllegalArgumentException("Property 'storage.local.root' is empty ");
         }
         this.config = storageProperties.getLocal();
-        this.storageFileService = storageFileService;
-        this.storageImageService = storageImageService;
     }
 
     @Override
-    public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-        storageFileDto.setFileAbsolutePath(upload(multipartFile.getInputStream(), fileRelativePath));
-        storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDto.getUuid()));
-        storageFileService.create(storageFileDto);
-        storageFileDto.setFileAbsolutePath(null);
+    public boolean isPersistent() {
+        return config.isPersistent();
     }
 
     @Override
-    public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-        storageFileDto.setFileAbsolutePath(upload(inputStream, fileRelativePath));
-        storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDto.getUuid()));
-        storageFileService.create(storageFileDto);
-        storageFileDto.setFileAbsolutePath(null);
+    public <T extends StorageFileDto> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception {
+        dto.setFileAbsolutePath(upload(multipartFile.getInputStream(), fileRelativePath));
     }
 
     @Override
-    public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-        storageFileDto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), fileRelativePath));
-        storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDto.getUuid()));
-        storageFileService.create(storageFileDto);
-        storageFileDto.setFileAbsolutePath(null);
+    public <T extends StorageFileDto> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception {
+        dto.setFileAbsolutePath(upload(inputStream, fileRelativePath));
     }
 
     @Override
-    public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setFileAbsolutePath(upload(multipartFile.getInputStream(), imageRelativePath));
-        storageImageDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageImageDto.getUuid()));
-        storageImageService.create(storageImageDto);
-        storageImageDto.setFileAbsolutePath(null);
+    public <T extends StorageFileDto> void upload(byte[] data, String fileRelativePath, T dto) throws Exception {
+        dto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), fileRelativePath));
     }
 
     @Override
-    public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setFileAbsolutePath(upload(inputStream, imageRelativePath));
-        storageImageDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageImageDto.getUuid()));
-        storageImageService.create(storageImageDto);
-        storageImageDto.setFileAbsolutePath(null);
-    }
-
-    @Override
-    public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-        storageImageDto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), imageRelativePath));
-        storageImageDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageImageDto.getUuid()));
-        storageImageService.create(storageImageDto);
-        storageImageDto.setFileAbsolutePath(null);
-    }
-
-    @Override
-    public void deleteObject(String key) throws Exception {
-
-    }
-
-    private String upload(InputStream inputStream, String fileRelativePath) throws Exception {
+    public String upload(InputStream inputStream, String fileRelativePath) throws Exception {
         if (StringUtils.isNotBlank(config.getBucketName())) {
             fileRelativePath = config.getBucketName() + "/" + fileRelativePath;
         }
@@ -112,4 +71,10 @@ public class LocalStorageStrategy extends StorageStrategy {
         outputStream.close();
         return fileAbsolutePath;
     }
+
+    @Override
+    public void deleteObject(String key) throws Exception {
+
+    }
+
 }

@@ -7,14 +7,13 @@ import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
+import com.vinesmario.microservice.server.storage.factory.AbstractStorageFactory;
+import com.vinesmario.microservice.server.storage.factory.StorageImageFactory;
 import com.vinesmario.microservice.server.storage.service.StorageImageService;
-import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
-import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,14 +23,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author
@@ -90,36 +84,13 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
             throw new BadRequestAlertException("File cannot be empty",
                     null, "image.empty", entityName);
         }
-        StorageStrategy storageService = StorageStrategyFactory.build();
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         if(!FileExtension.IMAGE.contains(extension)){
             throw new BadRequestAlertException("Unsupported file extension",
                     null, "image.extension.unsupported", entityName);
         }
-        String imageName = uuid + "." + extension;
-        String imageRelativePath = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
-                + "/" + imageName;
-        if (!ObjectUtils.isEmpty(tenantId)) {
-            imageRelativePath = tenantId + "/" + imageRelativePath;
-        }
-        StorageImageDto storageImageDto = new StorageImageDto();
-        storageImageDto.setTenantId(tenantId);
-        storageImageDto.setUuid(uuid);
-        storageImageDto.setFileExtension(extension);
-        storageImageDto.setFileName(imageName);
-        storageImageDto.setFileSize(multipartFile.getSize());
-        // 图片高度、宽度
-        BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
-        storageImageDto.setImageWidth(bufferedImage.getWidth());
-        storageImageDto.setImageHeight(bufferedImage.getHeight());
-        String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
-        String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        // 图片MD5、SHA1
-        storageImageDto.setFileMd5Hex(md5Hex);
-        storageImageDto.setFileSha1Hex(sha1Hex);
-
-        storageService.uploadImage(multipartFile, imageRelativePath, storageImageDto);
+        AbstractStorageFactory<StorageImageDto> storageFactory = new StorageImageFactory();
+        StorageImageDto storageImageDto = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityCreationAlert(entityName, storageImageDto.getAlertParam()))
                 .body(storageImageDto);

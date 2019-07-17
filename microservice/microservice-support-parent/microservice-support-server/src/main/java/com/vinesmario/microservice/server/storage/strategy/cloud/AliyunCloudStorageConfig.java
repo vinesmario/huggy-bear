@@ -35,5 +35,9 @@ public class AliyunCloudStorageConfig {
      * 阿里云访问url命名空间
      */
     private String nameSpace;
+    /**
+     * 持久化文件记录
+     */
+    private boolean persistent = false;
 
 }

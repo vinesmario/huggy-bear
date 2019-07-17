@@ -24,6 +24,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
+@Transactional
 public class StorageImageService extends BaseService<StorageImageDto, StorageImage, Long>{
 
 	private final StorageImageMapper mapper;

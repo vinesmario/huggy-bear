@@ -1,21 +1,17 @@
 package com.vinesmario.microservice.server.storage.strategy.cloud;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
 import com.vinesmario.microservice.server.storage.config.StorageProperties;
-import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
 @Slf4j
 @Lazy
 @Service
-public class YpyunCloudStorageStrategy extends StorageStrategy {
+public class YpyunCloudStorageStrategy extends CloudStorageStrategy {
 
     private final YpyunCloudStorageConfig config;
 
@@ -31,37 +27,18 @@ public class YpyunCloudStorageStrategy extends StorageStrategy {
     }
 
     @Override
-    public void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-
+    public boolean isPersistent() {
+        return config.isPersistent();
     }
 
     @Override
-    public void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-
-    }
-
-    @Override
-    public void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception {
-
-    }
-
-    @Override
-    public void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-
-    }
-
-    @Override
-    public void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-
-    }
-
-    @Override
-    public void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception {
-
+    public String upload(InputStream inputStream, String fileRelativePath) throws Exception {
+        return null;
     }
 
     @Override
     public void deleteObject(String key) throws Exception {
 
     }
+
 }

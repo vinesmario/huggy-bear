@@ -6,16 +6,14 @@ import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
+import com.vinesmario.microservice.server.storage.factory.AbstractStorageFactory;
+import com.vinesmario.microservice.server.storage.factory.StorageFileFactory;
 import com.vinesmario.microservice.server.storage.service.StorageFileService;
-import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
-import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author
@@ -86,28 +81,8 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
             throw new BadRequestAlertException("File cannot be empty",
                     null, "image.empty", entityName);
         }
-        StorageStrategy storageService = StorageStrategyFactory.build();
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-        String imageName = uuid + "." + extension;
-        String imageRelativePath = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
-                + "/" + imageName;
-        if (!ObjectUtils.isEmpty(tenantId)) {
-            imageRelativePath = tenantId + "/" + imageRelativePath;
-        }
-        StorageFileDto storageFileDto = new StorageFileDto();
-        storageFileDto.setTenantId(tenantId);
-        storageFileDto.setUuid(uuid);
-        storageFileDto.setFileExtension(extension);
-        storageFileDto.setFileName(imageName);
-        storageFileDto.setFileSize(multipartFile.getSize());
-        // 文件MD5、SHA1
-        String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
-        String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageFileDto.setFileMd5Hex(md5Hex);
-        storageFileDto.setFileSha1Hex(sha1Hex);
-
-        storageService.upload(multipartFile, imageRelativePath, storageFileDto);
+        AbstractStorageFactory<StorageFileDto> storageFactory = new StorageFileFactory();
+        StorageFileDto storageFileDto = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
                 .body(storageFileDto);

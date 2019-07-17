@@ -16,6 +16,7 @@ import com.vinesmario.microservice.server.${basepackage}.mapstruct.${className}M
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -25,6 +26,7 @@ import org.springframework.util.ObjectUtils;
  */
 @Slf4j
 @Service
+@Transactional
 public class ${className}Service extends BaseService<${className}Dto, ${className}, Long>{
 
 	private final ${className}Mapper mapper;

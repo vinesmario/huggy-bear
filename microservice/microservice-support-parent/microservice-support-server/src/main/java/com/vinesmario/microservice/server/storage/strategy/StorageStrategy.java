@@ -7,65 +7,49 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 
 public abstract class StorageStrategy {
+
+    /**
+     * 数据持久化入库
+     *
+     * @return
+     */
+    public abstract boolean isPersistent();
+
     /**
      * 文件上传
      *
      * @param multipartFile
      * @param fileRelativePath
-     * @return 返回http地址
      * @throws Exception
      */
-    public abstract void upload(MultipartFile multipartFile, String fileRelativePath, StorageFileDto storageFileDto) throws Exception;
+    public abstract <T extends StorageFileDto> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
      *
      * @param inputStream      字节流
      * @param fileRelativePath
-     * @return 返回http地址
      * @throws Exception
      */
-    public abstract void upload(InputStream inputStream, String fileRelativePath, StorageFileDto storageFileDto) throws Exception;
+    public abstract <T extends StorageFileDto> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
      *
      * @param data             文件字节数组
      * @param fileRelativePath
-     * @return 返回http地址
      * @throws Exception
      */
-    public abstract void upload(byte[] data, String fileRelativePath, StorageFileDto storageFileDto) throws Exception;
+    public abstract <T extends StorageFileDto> void upload(byte[] data, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
      *
-     * @param multipartFile
-     * @param imageRelativePath
-     * @return 返回http地址
+     * @param inputStream      字节流
+     * @param fileRelativePath
      * @throws Exception
      */
-    public abstract void uploadImage(MultipartFile multipartFile, String imageRelativePath, StorageImageDto storageImageDto) throws Exception;
-
-    /**
-     * 文件上传
-     *
-     * @param inputStream       字节流
-     * @param imageRelativePath
-     * @return 返回http地址
-     * @throws Exception
-     */
-    public abstract void uploadImage(InputStream inputStream, String imageRelativePath, StorageImageDto storageImageDto) throws Exception;
-
-    /**
-     * 文件上传
-     *
-     * @param data              文件字节数组
-     * @param imageRelativePath
-     * @return 返回http地址
-     * @throws Exception
-     */
-    public abstract void uploadImage(byte[] data, String imageRelativePath, StorageImageDto storageImageDto) throws Exception;
+    public abstract String upload(InputStream inputStream, String fileRelativePath) throws Exception;
 
     /**
      * 删除单个文件:
