@@ -1,9 +1,15 @@
 server:
-    port: 11011
+    port: 12000
 
-#logging:
-#    level:
-#        root: debug
+logging:
+    level:
+        root: info
+        com:
+            vinesmario:
+                microservice:
+                    server:
+                        storage:
+                            mapper: debug
 
 spring:
     #设置服务名，不配置时默认使用spring.application.name

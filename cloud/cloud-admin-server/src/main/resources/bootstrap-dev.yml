@@ -33,4 +33,4 @@ eureka:
                 password: ${spring.security.user.password} #can access the protected client endpoints
     client:
         service-url:
-            defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/
+            defaultZone: http://eureka_username:eureka_password@localhost:10000/eureka/

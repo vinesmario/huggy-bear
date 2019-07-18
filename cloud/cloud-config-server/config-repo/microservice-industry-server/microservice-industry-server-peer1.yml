@@ -1,17 +1,17 @@
 server:
     port: 11101
 
-#logging:
-#    level:
-#        root: debug
+logging:
+    level:
+        root: debug
 
 spring:
     #设置服务名，不配置时默认使用spring.application.name
 #    service:
 #        name: microservice-base-server
-#    zipkin:
+    zipkin:
         # 使用http请求收集
-#        base-url: http://localhost:9411
+        base-url: http://localhost:9411
         # 使用kafka收集
 #        sender:
 #            type: kafka
@@ -19,16 +19,16 @@ spring:
 #        kafka:
 #            topic: zipkin
         # kafka参数另行配置
-#    sleuth:
-#        sampler:
+    sleuth:
+        sampler:
           # 采样率，模式0.1，也就是10%，为了便于观察效果，改为1.0，也就是100%。生产环境建议保持默认。
-#          probability: 1.0
+          probability: 1.0
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         # HikariCP
 #        type: com.zaxxer.hikari.HikariDataSource
         ## 使用localhost，mysql 中 GRANT 命令单独配置
-        url: jdbc:mysql://127.0.0.1/base?autoReconnect=true&useSSL=false&characterEncoding=utf-8
+        url: jdbc:mysql://127.0.0.1/industry?autoReconnect=true&useSSL=false&characterEncoding=utf-8
         username: root
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver

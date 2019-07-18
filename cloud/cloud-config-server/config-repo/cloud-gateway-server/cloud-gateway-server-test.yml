@@ -1,5 +1,5 @@
 server:
-    port: 10501
+    port: 10500
 
 logging:
     level:

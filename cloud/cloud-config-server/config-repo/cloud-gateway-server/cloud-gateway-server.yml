@@ -4,8 +4,11 @@ zuul:
         microservice-uaa-server:
             path: /uaa/**
             sensitive-headers:
-        microservice-base-server:
-            path: /base/**
+        microservice-industry-server:
+            path: /industry/**
+            sensitive-headers:
+        microservice-support-server:
+            path: /support/**
             sensitive-headers:
 #        product-service:
 #            path: /product/**
