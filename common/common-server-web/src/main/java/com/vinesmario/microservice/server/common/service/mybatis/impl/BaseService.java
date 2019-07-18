@@ -34,6 +34,7 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
 
     public void create(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
+        dto.setDeleted(DictConstant.BYTE_YES_NO_N);
         mapper.insert(entity);
         dto.setId(entity.getId());
     }
@@ -80,6 +81,7 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
     @Deprecated
     public void insert(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
+        entity.setDeleted(DictConstant.BYTE_YES_NO_N);
         mapper.insert(entity);
         dto.setId(entity.getId());
     }
@@ -87,6 +89,7 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
     @Deprecated
     public void insertSelective(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
+        entity.setDeleted(DictConstant.BYTE_YES_NO_N);
         mapper.insertSelective(entity);
         dto.setId(entity.getId());
     }
