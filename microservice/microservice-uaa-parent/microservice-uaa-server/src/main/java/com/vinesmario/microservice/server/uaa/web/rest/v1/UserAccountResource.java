@@ -4,6 +4,7 @@ import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
 import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
 import com.vinesmario.common.constant.DictConstant;
+import com.vinesmario.microservice.server.common.security.SecurityUtils;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
@@ -15,6 +16,7 @@ import com.vinesmario.microservice.server.uaa.web.rest.errors.UsernameAlreadyUse
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +39,7 @@ import java.util.Optional;
  */
 
 @Api(description = "UserAccountCRUD", tags = "UserAccountController", basePath = "/user_account")
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/user_account")
 public class UserAccountResource extends BaseResource<UserAccountDto, UserAccountConditionDto, Long>
@@ -49,7 +55,9 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
 
     @Override
     public void preConditionDto(UserAccountConditionDto queryDto) {
-
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        log.info("server-authentication: " + authentication);
     }
 
     @ApiOperation(value = "查询列表，有分页参数则分页", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

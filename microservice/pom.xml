@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>microservice-uaa-parent</module>
-        <module>microservice-base-parent</module>
+        <module>microservice-industry-parent</module>
         <module>microservice-support-parent</module>
         <module>microservice-social-parent</module>
     </modules>

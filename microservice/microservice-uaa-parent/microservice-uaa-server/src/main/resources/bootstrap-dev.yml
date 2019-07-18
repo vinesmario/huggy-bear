@@ -3,7 +3,7 @@ eureka:
         prefer-ip-address: true
     client:
         service-url:
-            defaultZone: http://eureka_username:eureka_password@localhost:10001/eureka/
+            defaultZone: http://eureka_username:eureka_password@localhost:10000/eureka/
 
 # https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/
 # org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.class

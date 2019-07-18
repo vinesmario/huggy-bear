@@ -11,37 +11,30 @@ security:
     oauth2:
         # see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties.class
         resource:
-            id: resource-support
-#            id: @project.artifactId@
-            # client-id和client-secret可以不用配置，会自行从 security.oauth2.client中获取,
+#            id: resource-industry
+            id: @project.artifactId@
+            # client-id和client-secret可以不用配置，会从 security.oauth2.client中获取,
             # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
 #            client-id: internal
 #            client-secret: internal
-            token-info-uri: http://MICROSERVICE-UAA-SERVER/oauth/check_token
             jwt:
                 # 对称加密
                 # 在resource server中用来解析令牌，需要与authorization server同步
-                # 也可以设置 非对称加密方式，以key-uri参数获取公钥 public-key
+                # 也可以设置 非对称加密方式获取公钥 public-key
                 key-value: signingKey
         # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties.class
         # see org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails.class
-        # see org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails.class
-        # see org.springframework.security.oauth2.client.token.grant.redirect.AbstractRedirectResourceDetails.class
-        # server-support's client properties
+        # server-base's client properties
         client:
             id: auto-increment
-            # 所有资源服务器，client-id和client-secret可以配置相同的内容
             client-id: internal
             client-secret: internal
             scope: web-app
-            # 资源服务器参数，指向鉴权服务器api
-#            access-token-uri: http://oauth/token
-#            user-authorization-uri: http://oauth/authorize
-            # 使用gateway时 ???
-            access-token-uri: http://MICROSERVICE-UAA-SERVER/oauth/token
-            user-authorization-uri: http://MICROSERVICE-UAA-SERVER/oauth/authorize
+            access-token-uri: http://oauth/token
+            user-authorization-uri: http://oauth/authorize
             # query（跟在url参数后面）
             # form（以form的body形式提交）
             # header（放到Http Header里，默认）
             # none（未知）
 #            client-authentication-scheme: header
+

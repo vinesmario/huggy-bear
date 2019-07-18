@@ -2,6 +2,8 @@ package com.vinesmario.microservice.server.storage.web.rest;
 
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
+import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
@@ -15,8 +17,12 @@ import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +42,9 @@ import java.util.Optional;
 @RequestMapping("/api/v1/storage_file")
 public class StorageFileResource extends BaseResource<StorageFileDto, StorageFileConditionDto, Long> {
 
+    @Autowired
+    private UserAccountClient userAccountClient;
+
     private final StorageFileService service;
 
     public StorageFileResource(StorageFileService service) {
@@ -46,7 +55,10 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
 
     @Override
     public void preConditionDto(StorageFileConditionDto queryDto) {
-
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        log.info("server-authentication: " + authentication);
+        userAccountClient.search(new UserAccountConditionDto());
     }
 
     @ApiOperation(value = "查找明细", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -63,7 +75,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto dto){
+    public ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto dto) {
         // 不需支持该方法
         return ResponseEntity.notFound().build();
     }
@@ -93,24 +105,23 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @GetMapping(value = "/download/{uuid}")
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
-            throws IOException
-    {
+            throws IOException {
         Optional<StorageFileDto> optional = service.getByUuid(uuid);
-        if(!optional.isPresent()){
+        if (!optional.isPresent()) {
             return ResponseEntity.notFound()
-                    .headers(HeaderUtil.createFailureAlert("record not found",404,"record.not_found",entityName))
+                    .headers(HeaderUtil.createFailureAlert("record not found", 404, "record.not_found", entityName))
                     .build();
         } else {
             String fileAbsolutePath = optional.get().getFileAbsolutePath();
-            if(StringUtils.isBlank(fileAbsolutePath)){
+            if (StringUtils.isBlank(fileAbsolutePath)) {
                 return ResponseEntity.notFound()
-                        .headers(HeaderUtil.createFailureAlert("file path is empty",404,"file_path.empty",entityName))
+                        .headers(HeaderUtil.createFailureAlert("file path is empty", 404, "file_path.empty", entityName))
                         .build();
             } else {
                 File file = new File(fileAbsolutePath);
-                if(!file.exists()){
+                if (!file.exists()) {
                     return ResponseEntity.notFound()
-                            .headers(HeaderUtil.createFailureAlert("file not found",404,"file.not_found",entityName))
+                            .headers(HeaderUtil.createFailureAlert("file not found", 404, "file.not_found", entityName))
                             .build();
                 }
                 return ResponseEntity.ok()

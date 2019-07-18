@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String login) {
-        log.debug("Authenticating {}", login);
+        log.info("Authenticating {}", login);
         UserDetails userDetails = User.withDefaultPasswordEncoder()
                 .username("username")
                 .password("password")// 明文
