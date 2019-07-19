@@ -33,7 +33,7 @@
         <spring-boot.version>2.0.9.RELEASE</spring-boot.version>
         <spring-boot-admin.version>2.0.6</spring-boot-admin.version>
         <spring-data-releasetrain.version>Kay-SR14</spring-data-releasetrain.version>
-        <spring-cloud.version>Finchley.SR3</spring-cloud.version>
+        <spring-cloud.version>Finchley.SR4</spring-cloud.version>
 
         <org.projectlombok.version>1.16.20</org.projectlombok.version>
         <org.slf4j.version>1.7.25</org.slf4j.version>
