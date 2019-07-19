@@ -41,7 +41,8 @@ security:
             # header（放到Http Header里，默认）
             # none（未知）
             # client-authentication-scheme: header
-#            grantType: implicit,password,authorization_code,client_credentials
-#            grantType: client_credentials
+#            grant-type: implicit,password,authorization_code,client_credentials
+#            grant-type: implicit,password,authorization_code
+#            grant-type: client_credentials
             # 如果用户需要授权访问资源，则用户将被重定向到的uri。请注意，这并不总是需要，具体取决于支持哪个OAuth 2配置文件。
             user-authorization-uri: http://MICROSERVICE-UAA-SERVER/oauth/authorize

@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.storage.web.rest;
+package com.vinesmario.microservice.server.storage.web.rest.v1;
 
 import com.vinesmario.common.constant.FileExtension;
 import com.vinesmario.microservice.client.storage.dto.StorageImageDto;

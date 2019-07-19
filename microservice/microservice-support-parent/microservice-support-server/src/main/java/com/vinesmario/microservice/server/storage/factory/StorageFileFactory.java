@@ -5,7 +5,7 @@ import com.vinesmario.microservice.server.common.util.SpringContextUtil;
 import com.vinesmario.microservice.server.storage.service.StorageFileService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.StorageFileResource;
+import com.vinesmario.microservice.server.storage.web.rest.v1.StorageFileResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
