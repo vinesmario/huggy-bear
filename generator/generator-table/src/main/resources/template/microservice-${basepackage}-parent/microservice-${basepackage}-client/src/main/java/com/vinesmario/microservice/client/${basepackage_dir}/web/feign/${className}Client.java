@@ -1,7 +1,7 @@
 <#include "/java_copyright.include">
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
-package com.vinesmario.microservice.client.${basepackage}.web.client;
+package com.vinesmario.microservice.client.${basepackage}.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
