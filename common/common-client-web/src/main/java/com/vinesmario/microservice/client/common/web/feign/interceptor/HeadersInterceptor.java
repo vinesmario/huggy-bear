@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.client.common.web.feign.interceptor;//package com.vinesmario.microservice.client.common.web.feign.interceptor;
+//package com.vinesmario.microservice.client.common.web.feign.interceptor;
 //
 //import feign.RequestInterceptor;
 //import feign.RequestTemplate;
