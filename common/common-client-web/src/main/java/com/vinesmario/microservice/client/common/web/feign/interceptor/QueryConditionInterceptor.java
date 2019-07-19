@@ -12,9 +12,6 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * @Configuration 全局
- */
 @Slf4j
 @Configuration
 public class QueryConditionInterceptor implements RequestInterceptor {
