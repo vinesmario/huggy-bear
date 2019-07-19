@@ -22,7 +22,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * 在WebSecurityConfigurerAdapter不拦截oauth要开放的资源
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
