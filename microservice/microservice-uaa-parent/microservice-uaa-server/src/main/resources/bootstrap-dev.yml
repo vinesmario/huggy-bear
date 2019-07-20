@@ -34,11 +34,11 @@ security:
             client-id: internal
             client-secret: internal
             # 逗号分隔，允许访问的资源
-            resource-ids: resource-uaa,resource-support
+            resource-ids: resource-uaa,resource-support,resource-schedule
             # 逗号分隔
             scope: web-app,web-app
-            # Access Token is valid for 5 mins
-            access-token-validity-seconds: 300
+            # Access Token is valid for 60 mins
+            access-token-validity-seconds: 3600
             # Refresh Token is valid for 7 days
             refresh-token-validity-seconds: 604800
 

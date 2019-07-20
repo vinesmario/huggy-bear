@@ -1,0 +1,7 @@
+# 本地存储与云端存储共同配置时，使用本地存储
+storage:
+    # 本地存储。
+    local:
+        root: "E:"
+        bucketName: namespace
+

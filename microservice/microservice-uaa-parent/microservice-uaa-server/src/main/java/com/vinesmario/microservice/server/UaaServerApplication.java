@@ -7,6 +7,9 @@ import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
+/**
+ * 鉴权服务器应当不依赖与其他服务，不需要启用feign
+ */
 @SpringCloudApplication
 @ComponentScan(
         basePackages = {"com.vinesmario.microservice"},

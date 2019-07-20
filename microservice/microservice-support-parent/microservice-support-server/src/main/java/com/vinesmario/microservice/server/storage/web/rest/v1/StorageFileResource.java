@@ -119,24 +119,4 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
         }
     }
 
-//    @Autowired
-//    private ServiceTokenEndpointClient serviceTokenEndpointClient;
-//    @Autowired
-//    private OAuth2ClientContext oauth2ClientContext;
-//
-//    @PostConstruct
-//    public void init() {
-//        OAuth2AccessToken accessToken = serviceTokenEndpointClient.sendClentCredentialsGrant();
-//        log.info("AccessToken: " + accessToken.getValue());
-//        oauth2ClientContext.setAccessToken(accessToken);
-//    }
-//
-//    @Scheduled(cron = "0/10 * * * * ?")
-//    public void test() {
-//        UserAccountConditionDto conditionDto = new UserAccountConditionDto();
-//        conditionDto.setPageNumber(0);
-//        conditionDto.setPageSize(10);
-//        ResponseEntity<List<UserAccountDto>> responseEntity = userAccountClient.search(conditionDto);
-//        log.info("X-Total-Count: "+responseEntity.getHeaders().get("X-Total-Count").get(0));
-//    }
 }

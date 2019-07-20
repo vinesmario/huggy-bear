@@ -45,8 +45,6 @@ feign:
             default:
                 connectTimeout: 5000
                 readTimeout: 5000
-    # see org.springframework.cloud.netflix.feign.FeignAutoConfiguration
-    # see org.springframework.cloud.netflix.feign.ribbon.HttpClientFeignLoadBalancedConfiguration
     okhttp:
         enable: true
     hystrix:
@@ -59,18 +57,21 @@ feign:
         response:
             enabled: true
 
-#hystrix:
-#    command:
-#        default:
-#            execution:
-#                timeout:
-#                    enabled: false
-#                isolation:
-#                    strategy: SEMAPHORE
+# See https://github.com/Netflix/Hystrix/wiki/Configuration
+# See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
+hystrix:
+    command:
+        default:
+            execution:
+                timeout:
+                    enabled: false
+                isolation:
+                    strategy: SEMAPHORE
 #                    thread:
 #                        timeoutInMilliseconds: 5000
+    share-security-context: true
 
-# 在Hystrix Dashboard中监控单个应用的地址 http://uaa-hostname:port/actuator/hystrix.stream
+# 在Hystrix Dashboard中监控单个应用的地址 http://base-hostname:port/actuator/hystrix.stream
 management:
     endpoints:
         web:
