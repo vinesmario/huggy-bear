@@ -25,14 +25,17 @@ public class ${className}ConditionDto implements ConditionDto {
     /**
      * ID
      */
+	@ApiModelProperty(value = "ID")
     private Long id;
     /**
      * ID为空，true表示查询记录为空
      */
+	@ApiModelProperty(value = "空ID")
     private boolean idIsNull = false;
     /**
      * ID列表
      */
+	@ApiModelProperty(value = "ID列表")
     private List<Long> ids;
     <#list table.columns as column>
         <#if column.columnNameLower != 'id'
@@ -61,10 +64,20 @@ public class ${className}ConditionDto implements ConditionDto {
         </#if>
     </#list>
 
+	// 分页参数
 	/**
-	 * 分页参数
+	 * 页码
 	 */
+	@ApiModelProperty(value = "页码")
 	private Integer pageNumber;
+	/**
+	 * 每页页记录数
+	 */
+	@ApiModelProperty(value = "每页页记录数")
 	private Integer pageSize;
+	/**
+	 * 排序
+	 */
+	@ApiModelProperty(value = "排序")
 	private String[] sort;
 }

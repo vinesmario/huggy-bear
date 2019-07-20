@@ -1,11 +1,6 @@
 <#include "/java_copyright.include">
-<#assign className = table.className>   
-<#assign classNameLower = className?uncap_first> 
-package com.vinesmario.microservice.client.${basepackage}.web.client;
+package com.vinesmario.microservice.client.demo;
 
-import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
-import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
-import com.vinesmario.microservice.client.${basepackage}.web.feign.${className}Client;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,31 +14,31 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class ${className}FallbackFactory implements FallbackFactory<${className}Client>{
+public class ${basepackageCap}DemoFallbackFactory implements FallbackFactory<${basepackageCap}DemoClient>{
 
     @Override
-    public ${className}Client create(Throwable throwable){
-		return new ${className}Client() {
+    public ${basepackageCap}DemoClient create(Throwable throwable){
+		return new ${basepackageCap}DemoClient() {
             @Override
-			public ResponseEntity<List<${className}Dto>> search(${className}ConditionDto condition){
+			public ResponseEntity<List<${basepackageCap}DemoDto>> search(${basepackageCap}DemoConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${className}Dto>get(Long id){
+            public ResponseEntity<${basepackageCap}DemoDto>get(Long id){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${className}Dto>create(${className}Dto ${classNameLower}){
+            public ResponseEntity<${basepackageCap}DemoDto>create(${basepackageCap}DemoDto dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${className}Dto>modify(Long id, ${className}Dto ${classNameLower}){
+            public ResponseEntity<${basepackageCap}DemoDto>modify(Long id, ${basepackageCap}DemoDto dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -55,7 +50,7 @@ public class ${className}FallbackFactory implements FallbackFactory<${className}
             }
 
             @Override
-            public ResponseEntity<Void> delete(${className}ConditionDto condition){
+            public ResponseEntity<Void> delete(${basepackageCap}DemoConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
