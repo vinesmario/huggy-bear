@@ -1,9 +1,9 @@
-package com.vinesmario.microservice.server.security;
+package com.vinesmario.microservice.server.security.model;
 
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.server.common.security.SecurityAuthority;
-import com.vinesmario.microservice.server.common.security.SecurityUser;
+import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
+import com.vinesmario.microservice.server.security.exception.UserNotActivatedException;
+import com.vinesmario.microservice.server.security.exception.UserNotAssignedRolesException;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

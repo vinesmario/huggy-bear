@@ -1,5 +1,9 @@
-package com.vinesmario.microservice.server.common.security;
+package com.vinesmario.microservice.server.security;
 
+import com.vinesmario.microservice.server.security.model.AuthoritiesConstants;
+import com.vinesmario.microservice.server.security.model.SecurityAuthority;
+import com.vinesmario.microservice.server.security.model.SecurityClient;
+import com.vinesmario.microservice.server.security.model.SecurityUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

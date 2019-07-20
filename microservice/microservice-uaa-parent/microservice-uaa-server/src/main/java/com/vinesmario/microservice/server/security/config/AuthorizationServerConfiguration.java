@@ -1,5 +1,7 @@
-package com.vinesmario.microservice.server.security;
+package com.vinesmario.microservice.server.security.config;
 
+import com.vinesmario.microservice.server.security.model.ClientDetailsServiceImpl;
+import com.vinesmario.microservice.server.security.model.UserDetailsServiceImpl;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;

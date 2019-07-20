@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.security;
+package com.vinesmario.microservice.server.security.config;
 
-import com.vinesmario.microservice.server.common.security.AuthoritiesConstants;
+import com.vinesmario.microservice.server.security.model.AuthoritiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -61,7 +61,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         // 源码中默认resourceId为oauth2-resource
         // 在该服务的配置文件中配置security.oauth2.resource.id参数不起作用
-        resources.resourceId("resource-uaa").tokenStore(tokenStore());
+        resources.resourceId(resourceServerProperties.getResourceId()).tokenStore(tokenStore());
     }
 
     @Override

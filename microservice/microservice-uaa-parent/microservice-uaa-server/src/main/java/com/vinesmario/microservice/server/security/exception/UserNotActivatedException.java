@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.security;
+package com.vinesmario.microservice.server.security.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

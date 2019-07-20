@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.aop.logging;
+package com.vinesmario.microservice.server.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

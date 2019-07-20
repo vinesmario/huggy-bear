@@ -1,10 +1,7 @@
-package com.vinesmario.microservice.server.common.security;
+package com.vinesmario.microservice.server.security.model;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
-import org.springframework.util.Assert;
 
 import java.util.Set;
 
