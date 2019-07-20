@@ -1,5 +1,5 @@
 server:
-    port: 11103
+    port: 12101
 
 logging:
     level:
@@ -8,7 +8,7 @@ logging:
 spring:
     #设置服务名，不配置时默认使用spring.application.name
 #    service:
-#        name: microservice-industry-server
+#        name: microservice-schedule-server
     zipkin:
         # 使用http请求收集
         base-url: http://localhost:9411
@@ -28,7 +28,7 @@ spring:
         # HikariCP
 #        type: com.zaxxer.hikari.HikariDataSource
         ## 使用localhost，mysql 中 GRANT 命令单独配置
-        url: jdbc:mysql://127.0.0.1/industry?autoReconnect=true&useSSL=false&characterEncoding=utf-8
+        url: jdbc:mysql://127.0.0.1/schedule?autoReconnect=true&useSSL=false&characterEncoding=utf-8
         username: root
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
