@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>common-tools</module>
-        <module>common-server-web</module>
-        <module>common-client-web</module>
+        <module>common-microservice-client</module>
+        <module>common-microservice-server</module>
     </modules>
 
 
