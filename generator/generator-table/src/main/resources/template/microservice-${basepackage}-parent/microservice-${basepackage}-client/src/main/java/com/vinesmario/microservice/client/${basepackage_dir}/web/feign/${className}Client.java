@@ -30,11 +30,11 @@ public interface ${className}Client extends CrudClient<${className}Dto, ${classN
 	ResponseEntity<${className}Dto> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<${className}Dto> create(@RequestBody ${className}Dto ${classNameLower});
+	ResponseEntity<${className}Dto> create(@RequestBody ${className}Dto dto);
 
 	@PutMapping("/{id}")
 	ResponseEntity<${className}Dto> modify(@PathVariable("id") Long id,
-                           					@RequestBody ${className}Dto ${classNameLower});
+                           					@RequestBody ${className}Dto dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);
