@@ -56,11 +56,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         return accessTokenConverter;
     }
 
-
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        // 源码中默认resourceId为oauth2-resource
-        // 在该服务的配置文件中配置security.oauth2.resource.id参数不起作用
+        // 如果是在authorization server，
+        // 配置文件中的security.oauth2.resource.id参数不起作用
+        // 源码中默认resourceId为oauth2-resource，见ResourceServerSecurityConfigurer.class
+        // 需重写原方法
+        // 其他资源服务器配置可生效，不需重写。
         resources.resourceId(resourceServerProperties.getResourceId()).tokenStore(tokenStore());
     }
 

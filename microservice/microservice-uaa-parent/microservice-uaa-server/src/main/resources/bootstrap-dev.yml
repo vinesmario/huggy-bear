@@ -16,7 +16,8 @@ security:
             realm: realm_name
         # see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties.class
         resource:
-            # authorization server中，resource的id参数配置不起作用，源码中有默认值，需代码覆盖原配置，见ResourceServerConfiguration。
+            id: resource-uaa
+            # authorization server中，resource的id参数配置不会自行生效，源码中默认值为resource-uaa，需代码覆盖原配置，见ResourceServerConfiguration。
             # authorization server不依赖其他服务，resource的client-id和client-secret不需配置
             jwt:
                 # 对称加密
@@ -32,7 +33,7 @@ security:
             id: auto-increment
             client-id: internal
             client-secret: internal
-            # 逗号分隔
+            # 逗号分隔，允许访问的资源
             resource-ids: resource-uaa,resource-support
             # 逗号分隔
             scope: web-app,web-app
