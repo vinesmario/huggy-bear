@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>common-server-web</artifactId>
+            <artifactId>common-microservice-client</artifactId>
             <version>${project.common.version}</version>
         </dependency>
 

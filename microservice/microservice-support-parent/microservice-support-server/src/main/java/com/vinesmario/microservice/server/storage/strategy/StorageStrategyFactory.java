@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.strategy;
 
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
-import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import com.vinesmario.microservice.server.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.strategy.cloud.CloudStorageStrategyEnum;
 import com.vinesmario.microservice.server.storage.strategy.local.LocalStorageStrategy;
 import lombok.extern.slf4j.Slf4j;

@@ -16,6 +16,7 @@
         <module>microservice-industry-parent</module>
         <module>microservice-support-parent</module>
         <module>microservice-social-parent</module>
+        <module>microservice-schedule-parent</module>
     </modules>
 
     <dependencies>

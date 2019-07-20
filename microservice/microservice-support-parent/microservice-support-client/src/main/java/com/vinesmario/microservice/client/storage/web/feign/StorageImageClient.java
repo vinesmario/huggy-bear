@@ -27,10 +27,10 @@ public interface StorageImageClient extends CrudClient<StorageImageDto, StorageI
 	ResponseEntity<StorageImageDto> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<StorageImageDto> create(@RequestBody StorageImageDto storageImage);
+	ResponseEntity<StorageImageDto> create(@RequestBody StorageImageDto dto);
 
 	@PutMapping("/{id}")
-	ResponseEntity<StorageImageDto> modify(@PathVariable("id") Long id, @RequestBody StorageImageDto storageImage);
+	ResponseEntity<StorageImageDto> modify(@PathVariable("id") Long id, @RequestBody StorageImageDto dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);

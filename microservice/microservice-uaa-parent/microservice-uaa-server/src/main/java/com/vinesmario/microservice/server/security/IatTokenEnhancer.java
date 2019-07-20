@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.uaa.security;
+package com.vinesmario.microservice.server.security;
 
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

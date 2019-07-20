@@ -4,7 +4,7 @@ import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
-import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import com.vinesmario.microservice.server.config.StorageProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;

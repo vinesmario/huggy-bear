@@ -27,11 +27,11 @@ public interface StorageFileClient extends CrudClient<StorageFileDto, StorageFil
 	ResponseEntity<StorageFileDto> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto storageFile);
+	ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto dto);
 
 	@PutMapping("/{id}")
 	ResponseEntity<StorageFileDto> modify(@PathVariable("id") Long id,
-                                          @RequestBody StorageFileDto storageFile);
+                                          @RequestBody StorageFileDto dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);

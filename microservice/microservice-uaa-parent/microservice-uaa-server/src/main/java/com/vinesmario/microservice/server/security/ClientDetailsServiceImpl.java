@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.uaa.security;
+package com.vinesmario.microservice.server.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.provider.ClientDetails;

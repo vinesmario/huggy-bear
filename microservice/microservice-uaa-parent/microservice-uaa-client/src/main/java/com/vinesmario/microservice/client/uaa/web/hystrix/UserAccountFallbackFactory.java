@@ -30,13 +30,13 @@ public class UserAccountFallbackFactory implements FallbackFactory<UserAccountCl
             }
 
             @Override
-            public ResponseEntity<UserAccountDto> create(UserAccountDto userAccount) {
+            public ResponseEntity<UserAccountDto> create(UserAccountDto dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UserAccountDto> modify(Long id, UserAccountDto userAccount) {
+            public ResponseEntity<UserAccountDto> modify(Long id, UserAccountDto dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

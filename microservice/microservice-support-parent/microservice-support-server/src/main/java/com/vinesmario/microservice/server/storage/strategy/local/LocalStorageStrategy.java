@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.strategy.local;
 
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import com.vinesmario.microservice.server.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;

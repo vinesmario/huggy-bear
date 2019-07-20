@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.strategy.cloud;
 
-import com.vinesmario.microservice.server.storage.config.StorageProperties;
+import com.vinesmario.microservice.server.config.StorageProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,9 @@
-package com.vinesmario.microservice.server.storage.security;
+package com.vinesmario.microservice.server.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
 /**
  * As is typical of a Spring Security web application,
@@ -37,7 +35,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/test/**")
                 .antMatchers("/h2-console/**");
     }
-
-
 
 }

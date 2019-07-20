@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.uaa.security;
+package com.vinesmario.microservice.server.security;
 
 import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
 import com.vinesmario.common.constant.DictConstant;

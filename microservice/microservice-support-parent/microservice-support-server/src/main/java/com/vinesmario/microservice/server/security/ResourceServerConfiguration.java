@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.storage.security;
+package com.vinesmario.microservice.server.security;
 
 import com.vinesmario.microservice.server.common.security.AuthoritiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;

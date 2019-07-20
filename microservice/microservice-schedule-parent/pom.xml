@@ -3,19 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>microservice-uaa-parent</artifactId>
+        <artifactId>microservice</artifactId>
         <groupId>com.vinesmario</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>microservice-uaa-client</artifactId>
+    <artifactId>microservice-schedule-parent</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>microservice-schedule-server</module>
+        <module>microservice-schedule-client</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>common-microservice-client</artifactId>
-            <version>${project.common.version}</version>
-        </dependency>
-    </dependencies>
+
 </project>

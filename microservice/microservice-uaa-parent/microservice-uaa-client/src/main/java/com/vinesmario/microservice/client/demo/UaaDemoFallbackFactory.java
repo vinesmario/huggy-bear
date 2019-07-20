@@ -1,8 +1,5 @@
-package com.vinesmario.microservice.client.storage.web.hystrix;
+package com.vinesmario.microservice.client.demo;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
-import com.vinesmario.microservice.client.storage.web.feign.StorageFileClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,49 +7,45 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * @author
- * @date
- */
 @Slf4j
 @Component
-public class StorageFileFallbackFactory implements FallbackFactory<StorageFileClient>{
+public class UaaDemoFallbackFactory implements FallbackFactory<UaaDemoClient> {
 
     @Override
-    public StorageFileClient create(Throwable throwable){
-		return new StorageFileClient() {
+    public UaaDemoClient create(Throwable throwable) {
+        return new UaaDemoClient() {
             @Override
-			public ResponseEntity<List<StorageFileDto>> search(StorageFileConditionDto condition){
+            public ResponseEntity<List<UaaDemoDto>> search(UaaDemoConditionDto condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto>get(Long id){
+            public ResponseEntity<UaaDemoDto> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto>create(StorageFileDto dto){
+            public ResponseEntity<UaaDemoDto> create(UaaDemoDto dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto>modify(Long id, StorageFileDto dto){
+            public ResponseEntity<UaaDemoDto> modify(Long id, UaaDemoDto dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id){
+            public ResponseEntity<Void> delete(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(StorageFileConditionDto condition){
+            public ResponseEntity<Void> delete(UaaDemoConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

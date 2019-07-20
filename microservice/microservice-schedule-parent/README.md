@@ -1,0 +1,4 @@
+任务调度服务
+
+使用quartz   
+由资源服务器发起调度其他服务资源。client_credentials鉴权方式获取access_token

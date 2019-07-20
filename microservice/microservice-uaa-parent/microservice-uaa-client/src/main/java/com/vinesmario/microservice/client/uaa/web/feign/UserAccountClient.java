@@ -27,11 +27,11 @@ public interface UserAccountClient extends CrudClient<UserAccountDto, UserAccoun
     ResponseEntity<UserAccountDto> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<UserAccountDto> create(@RequestBody UserAccountDto userAccount);
+    ResponseEntity<UserAccountDto> create(@RequestBody UserAccountDto dto);
 
     @PutMapping("/{id}")
     ResponseEntity<UserAccountDto> modify(@PathVariable("id") Long id,
-                                          @RequestBody UserAccountDto userAccount);
+                                          @RequestBody UserAccountDto dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") Long id);

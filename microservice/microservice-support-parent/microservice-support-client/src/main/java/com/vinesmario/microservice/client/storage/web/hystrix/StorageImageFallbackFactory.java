@@ -34,13 +34,13 @@ public class StorageImageFallbackFactory implements FallbackFactory<StorageImage
             }
 
             @Override
-            public ResponseEntity<StorageImageDto>create(StorageImageDto storageImage){
+            public ResponseEntity<StorageImageDto>create(StorageImageDto dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageImageDto>modify(Long id, StorageImageDto storageImage){
+            public ResponseEntity<StorageImageDto>modify(Long id, StorageImageDto dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

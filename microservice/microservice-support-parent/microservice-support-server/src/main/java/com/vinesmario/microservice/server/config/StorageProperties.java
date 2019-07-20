@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.storage.config;
+package com.vinesmario.microservice.server.config;
 
 import com.vinesmario.microservice.server.storage.strategy.cloud.CloudStorageConfig;
 import com.vinesmario.microservice.server.storage.strategy.local.LocalStorageConfig;
