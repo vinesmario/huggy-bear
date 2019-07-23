@@ -1,15 +1,11 @@
 package com.vinesmario.microservice.server.storage.strategy.cloud;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 七牛云
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class QiniuCloudStorageConfig {
     /**
      * 七牛云绑定的域名

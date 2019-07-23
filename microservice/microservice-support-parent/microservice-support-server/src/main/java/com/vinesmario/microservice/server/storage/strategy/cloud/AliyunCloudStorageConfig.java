@@ -1,15 +1,11 @@
 package com.vinesmario.microservice.server.storage.strategy.cloud;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 阿里云
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class AliyunCloudStorageConfig {
     /**
      * 阿里云绑定的域名
