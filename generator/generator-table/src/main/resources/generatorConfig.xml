@@ -51,11 +51,12 @@
 
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
         <!--<table tableName="user_account" domainObjectName="UserAccount"/>-->
-        <!--<table tableName="face_recognition" domainObjectName="FaceRecognition"/>-->
-        <!--<table tableName="face_picture" domainObjectName="FacePicture"/>-->
-        <!--<table tableName="face_upgrade" domainObjectName="FaceUpgrade"/>-->
-        <!--<table tableName="picture_capture" domainObjectName="PictureCapture"/>-->
+        <table tableName="storage_file" domainObjectName="StorageFile"/>
         <table tableName="storage_image" domainObjectName="StorageImage"/>
+        <table tableName="storage_excel" domainObjectName="StorageExcel"/>
+        <table tableName="storage_pdf" domainObjectName="StoragePdf"/>
+        <table tableName="storage_pdf_splited" domainObjectName="StoragePdfSplited"/>
+        <table tableName="storage_template" domainObjectName="StorageTemplate"/>
 
     </context>
 </generatorConfiguration>

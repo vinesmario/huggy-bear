@@ -7,9 +7,7 @@ import com.vinesmario.microservice.client.common.dto.BaseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author
@@ -17,8 +15,6 @@ import lombok.NoArgsConstructor;
  */
 @ApiModel(value = "${className}Dto", description = "${className}数据传输对象")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ${className}Dto extends BaseDto<Long> {
 
     <#list table.columns as column>

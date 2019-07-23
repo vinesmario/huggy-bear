@@ -40,7 +40,7 @@
     -->  
           
     <!--<entry key="jdbc_url">jdbc:mysql://47.98.202.249:3306/product_db?useUnicode=true&amp;characterEncoding=UTF-8</entry>-->
-    <entry key="jdbc_url">jdbc:mysql://127.0.0.1:3306/support?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+    <entry key="jdbc_url">jdbc:mysql://127.0.0.1:3306/support?autoReconnect=true&amp;useSSL=false&amp;characterEncoding=utf-8</entry>
     <entry key="jdbc_driver">com.mysql.jdbc.Driver</entry>
 
     <entry key="jdbc_username">root</entry>

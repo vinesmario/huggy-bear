@@ -37,13 +37,13 @@ public class ${className}FallbackFactory implements FallbackFactory<${className}
             }
 
             @Override
-            public ResponseEntity<${className}Dto>create(${className}Dto ${classNameLower}){
+            public ResponseEntity<${className}Dto>create(${className}Dto dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${className}Dto>modify(Long id, ${className}Dto ${classNameLower}){
+            public ResponseEntity<${className}Dto>modify(Long id, ${className}Dto dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

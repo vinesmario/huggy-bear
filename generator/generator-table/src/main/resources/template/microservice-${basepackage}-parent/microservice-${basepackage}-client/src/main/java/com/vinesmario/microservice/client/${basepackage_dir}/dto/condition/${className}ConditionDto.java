@@ -6,9 +6,7 @@ package com.vinesmario.microservice.client.${basepackage}.dto.condition;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -18,8 +16,6 @@ import java.util.List;
  */
 @ApiModel(value = "${className}ConditionDto", description = "${className}筛选条件数据传输对象")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ${className}ConditionDto implements ConditionDto {
 
     /**
