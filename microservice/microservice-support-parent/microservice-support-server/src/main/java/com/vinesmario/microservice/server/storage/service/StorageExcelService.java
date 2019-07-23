@@ -2,13 +2,14 @@ package com.vinesmario.microservice.server.storage.service;
 
 import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StorageFile;
-import com.vinesmario.microservice.server.storage.mapper.StorageFileMapper;
-import com.vinesmario.microservice.server.storage.mapstruct.StorageFileMapStruct;
+import com.vinesmario.microservice.server.storage.entity.StorageExcel;
+import com.vinesmario.microservice.server.storage.mapper.StorageExcelMapper;
+import com.vinesmario.microservice.server.storage.mapstruct.StorageExcelMapStruct;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,13 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StorageFileService extends BaseService<StorageFileDto, StorageFile, Long> {
+public class StorageExcelService extends BaseService<StorageExcelDto, StorageExcel, Long> {
 
-    private final StorageFileMapper mapper;
-    private final StorageFileMapStruct mapStruct;
+    private final StorageExcelMapper mapper;
+    private final StorageExcelMapStruct mapStruct;
 
-    public StorageFileService(StorageFileMapper mapper,
-                              @Qualifier("storageFileMapStructImpl") StorageFileMapStruct mapStruct) {
+    public StorageExcelService(StorageExcelMapper mapper,
+                               @Qualifier("storageExcelMapStructImpl") StorageExcelMapStruct mapStruct) {
         super(mapper, mapStruct);
         this.mapper = mapper;
         this.mapStruct = mapStruct;
@@ -43,19 +44,19 @@ public class StorageFileService extends BaseService<StorageFileDto, StorageFile,
         criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
         if (!ObjectUtils.isEmpty(conditionDto)) {
-            StorageFileConditionDto storageFileConditionDto = (StorageFileConditionDto) conditionDto;
-            if (!ObjectUtils.isEmpty(storageFileConditionDto.getId())) {
-                criteria.andIdEqualTo(storageFileConditionDto.getId());
+            StorageExcelConditionDto storageExcelConditionDto = (StorageExcelConditionDto) conditionDto;
+            if (!ObjectUtils.isEmpty(storageExcelConditionDto.getId())) {
+                criteria.andIdEqualTo(storageExcelConditionDto.getId());
             }
-            if (!CollectionUtils.isEmpty(storageFileConditionDto.getIds())) {
-                criteria.andIdIn(storageFileConditionDto.getIds());
+            if (!CollectionUtils.isEmpty(storageExcelConditionDto.getIds())) {
+                criteria.andIdIn(storageExcelConditionDto.getIds());
             }
         }
         return example;
     }
 
     @Transactional(readOnly = true)
-    public Optional<StorageFileDto> getByUuid(String uuid) {
+    public Optional<StorageExcelDto> getByUuid(String uuid) {
         return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
     }
 

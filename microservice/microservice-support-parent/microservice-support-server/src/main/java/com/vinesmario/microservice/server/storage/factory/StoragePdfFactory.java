@@ -1,11 +1,11 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfDto;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
-import com.vinesmario.microservice.server.storage.service.StorageFileService;
+import com.vinesmario.microservice.server.storage.service.StoragePdfService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.v1.StorageFileResource;
+import com.vinesmario.microservice.server.storage.web.rest.v1.StoragePdfResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StorageFileFactory extends AbstractStorageFactory<StorageFileDto> {
+public class StoragePdfFactory extends AbstractStorageFactory<StoragePdfDto> {
 
     @Override
-    public StorageFileDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StoragePdfDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -31,37 +31,37 @@ public class StorageFileFactory extends AbstractStorageFactory<StorageFileDto> {
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StorageFileDto storageFileDto = new StorageFileDto();
-        storageFileDto.setTenantId(tenantId);
-        storageFileDto.setUuid(uuid);
-        storageFileDto.setFileExtension(extension);
-        storageFileDto.setFileName(fileName);
-        storageFileDto.setFileSize(multipartFile.getSize());
+        StoragePdfDto storagePdfDto = new StoragePdfDto();
+        storagePdfDto.setTenantId(tenantId);
+        storagePdfDto.setUuid(uuid);
+        storagePdfDto.setFileExtension(extension);
+        storagePdfDto.setFileName(fileName);
+        storagePdfDto.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageFileDto.setFileMd5Hex(md5Hex);
-        storageFileDto.setFileSha1Hex(sha1Hex);
+        storagePdfDto.setFileMd5Hex(md5Hex);
+        storagePdfDto.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storageFileDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storagePdfDto);
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storageFileDto.getFileAbsoluteUrl())) {
-            String url = StorageFileResource.class.getAnnotation(RequestMapping.class).value()[0];
-            url += StorageFileResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storageFileDto.setFileRelativeUrl(url.replace("{uuid}", storageFileDto.getUuid()));
-//            storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDto.getUuid()));
+        if (StringUtils.isBlank(storagePdfDto.getFileAbsoluteUrl())) {
+            String url = StoragePdfResource.class.getAnnotation(RequestMapping.class).value()[0];
+            url += StoragePdfResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
+            storagePdfDto.setFileRelativeUrl(url.replace("{uuid}", storagePdfDto.getUuid()));
+//            storagePdfDto.setFileRelativeUrl("/api/v1/storage_pdf/download/{uuid}".replace("{uuid}", storagePdfDto.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
-            StorageFileService service = SpringContextUtil.getBean(StorageFileService.class);
-            service.create(storageFileDto);
+            StoragePdfService service = SpringContextUtil.getBean(StoragePdfService.class);
+            service.create(storagePdfDto);
         }
 
-        storageFileDto.setFileAbsolutePath(null);
-        return storageFileDto;
+        storagePdfDto.setFileAbsolutePath(null);
+        return storagePdfDto;
     }
 
 }

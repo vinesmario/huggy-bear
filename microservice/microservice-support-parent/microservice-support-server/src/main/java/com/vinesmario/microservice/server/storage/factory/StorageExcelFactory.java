@@ -1,11 +1,11 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
-import com.vinesmario.microservice.server.storage.service.StorageFileService;
+import com.vinesmario.microservice.server.storage.service.StorageExcelService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.v1.StorageFileResource;
+import com.vinesmario.microservice.server.storage.web.rest.v1.StorageExcelResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StorageFileFactory extends AbstractStorageFactory<StorageFileDto> {
+public class StorageExcelFactory extends AbstractStorageFactory<StorageExcelDto> {
 
     @Override
-    public StorageFileDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StorageExcelDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -31,37 +31,38 @@ public class StorageFileFactory extends AbstractStorageFactory<StorageFileDto> {
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StorageFileDto storageFileDto = new StorageFileDto();
-        storageFileDto.setTenantId(tenantId);
-        storageFileDto.setUuid(uuid);
-        storageFileDto.setFileExtension(extension);
-        storageFileDto.setFileName(fileName);
-        storageFileDto.setFileSize(multipartFile.getSize());
+        StorageExcelDto storageExcelDto = new StorageExcelDto();
+        storageExcelDto.setTenantId(tenantId);
+        storageExcelDto.setUuid(uuid);
+        storageExcelDto.setFileExtension(extension);
+        storageExcelDto.setFileName(fileName);
+        storageExcelDto.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageFileDto.setFileMd5Hex(md5Hex);
-        storageFileDto.setFileSha1Hex(sha1Hex);
+        storageExcelDto.setFileMd5Hex(md5Hex);
+        storageExcelDto.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storageFileDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storageExcelDto);
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storageFileDto.getFileAbsoluteUrl())) {
-            String url = StorageFileResource.class.getAnnotation(RequestMapping.class).value()[0];
-            url += StorageFileResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storageFileDto.setFileRelativeUrl(url.replace("{uuid}", storageFileDto.getUuid()));
-//            storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDto.getUuid()));
-        }
-        // 文件记录持久化
-        if (storageStrategy.isPersistent()) {
-            StorageFileService service = SpringContextUtil.getBean(StorageFileService.class);
-            service.create(storageFileDto);
+        if (StringUtils.isBlank(storageExcelDto.getFileAbsoluteUrl())) {
+            String url = StorageExcelResource.class.getAnnotation(RequestMapping.class).value()[0];
+            url += StorageExcelResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
+            storageExcelDto.setFileRelativeUrl(url.replace("{uuid}", storageExcelDto.getUuid()));
+//            storageExcelDto.setFileRelativeUrl("/api/v1/storage_excel/download/{uuid}".replace("{uuid}", storageExcelDto.getUuid()));
         }
 
-        storageFileDto.setFileAbsolutePath(null);
-        return storageFileDto;
+        // 文件记录持久化
+        if (storageStrategy.isPersistent()) {
+            StorageExcelService service = SpringContextUtil.getBean(StorageExcelService.class);
+            service.create(storageExcelDto);
+        }
+
+        storageExcelDto.setFileAbsolutePath(null);
+        return storageExcelDto;
     }
 
 }

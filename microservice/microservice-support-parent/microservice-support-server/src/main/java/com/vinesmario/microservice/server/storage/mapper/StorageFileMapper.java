@@ -11,4 +11,5 @@ import com.vinesmario.microservice.server.storage.entity.StorageFile;
 public interface StorageFileMapper extends CrudMapper<StorageFile, Long> {
 
     StorageFile selectByUuid(String uuid);
+
 }

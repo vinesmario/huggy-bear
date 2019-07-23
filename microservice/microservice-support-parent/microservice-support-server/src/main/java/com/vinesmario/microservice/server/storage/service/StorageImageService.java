@@ -25,37 +25,38 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StorageImageService extends BaseService<StorageImageDto, StorageImage, Long>{
+public class StorageImageService extends BaseService<StorageImageDto, StorageImage, Long> {
 
-	private final StorageImageMapper mapper;
-	private final StorageImageMapStruct mapStruct;
+    private final StorageImageMapper mapper;
+    private final StorageImageMapStruct mapStruct;
 
-	public StorageImageService(StorageImageMapper mapper,
-								@Qualifier("storageImageMapStructImpl") StorageImageMapStruct mapStruct) {
-		super(mapper, mapStruct);
-		this.mapper = mapper;
-		this.mapStruct = mapStruct;
-	}
+    public StorageImageService(StorageImageMapper mapper,
+                               @Qualifier("storageImageMapStructImpl") StorageImageMapStruct mapStruct) {
+        super(mapper, mapStruct);
+        this.mapper = mapper;
+        this.mapStruct = mapStruct;
+    }
 
-	public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
-		BaseExample example = new BaseExample();
-		BaseExample.Criteria criteria = example.createCriteria();
-		criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
+    public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+        BaseExample example = new BaseExample();
+        BaseExample.Criteria criteria = example.createCriteria();
+        criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-		if (!ObjectUtils.isEmpty(conditionDto)) {
-			StorageImageConditionDto storageImageConditionDto = (StorageImageConditionDto) conditionDto;
-			if (!ObjectUtils.isEmpty(storageImageConditionDto.getId())) {
-				criteria.andIdEqualTo(storageImageConditionDto.getId());
-			}
-			if (!CollectionUtils.isEmpty(storageImageConditionDto.getIds())) {
+        if (!ObjectUtils.isEmpty(conditionDto)) {
+            StorageImageConditionDto storageImageConditionDto = (StorageImageConditionDto) conditionDto;
+            if (!ObjectUtils.isEmpty(storageImageConditionDto.getId())) {
+                criteria.andIdEqualTo(storageImageConditionDto.getId());
+            }
+            if (!CollectionUtils.isEmpty(storageImageConditionDto.getIds())) {
                 criteria.andIdIn(storageImageConditionDto.getIds());
             }
-		}
-		return example;
-	}
+        }
+        return example;
+    }
 
     @Transactional(readOnly = true)
     public Optional<StorageImageDto> getByUuid(String uuid) {
         return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
     }
+
 }

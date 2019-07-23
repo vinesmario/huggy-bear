@@ -2,13 +2,14 @@ package com.vinesmario.microservice.server.storage.service;
 
 import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfDto;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StorageFile;
-import com.vinesmario.microservice.server.storage.mapper.StorageFileMapper;
-import com.vinesmario.microservice.server.storage.mapstruct.StorageFileMapStruct;
+import com.vinesmario.microservice.server.storage.entity.StoragePdf;
+import com.vinesmario.microservice.server.storage.mapper.StoragePdfMapper;
+import com.vinesmario.microservice.server.storage.mapstruct.StoragePdfMapStruct;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,13 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StorageFileService extends BaseService<StorageFileDto, StorageFile, Long> {
+public class StoragePdfService extends BaseService<StoragePdfDto, StoragePdf, Long> {
 
-    private final StorageFileMapper mapper;
-    private final StorageFileMapStruct mapStruct;
+    private final StoragePdfMapper mapper;
+    private final StoragePdfMapStruct mapStruct;
 
-    public StorageFileService(StorageFileMapper mapper,
-                              @Qualifier("storageFileMapStructImpl") StorageFileMapStruct mapStruct) {
+    public StoragePdfService(StoragePdfMapper mapper,
+                             @Qualifier("storagePdfMapStructImpl") StoragePdfMapStruct mapStruct) {
         super(mapper, mapStruct);
         this.mapper = mapper;
         this.mapStruct = mapStruct;
@@ -43,19 +44,19 @@ public class StorageFileService extends BaseService<StorageFileDto, StorageFile,
         criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
         if (!ObjectUtils.isEmpty(conditionDto)) {
-            StorageFileConditionDto storageFileConditionDto = (StorageFileConditionDto) conditionDto;
-            if (!ObjectUtils.isEmpty(storageFileConditionDto.getId())) {
-                criteria.andIdEqualTo(storageFileConditionDto.getId());
+            StoragePdfConditionDto storagePdfConditionDto = (StoragePdfConditionDto) conditionDto;
+            if (!ObjectUtils.isEmpty(storagePdfConditionDto.getId())) {
+                criteria.andIdEqualTo(storagePdfConditionDto.getId());
             }
-            if (!CollectionUtils.isEmpty(storageFileConditionDto.getIds())) {
-                criteria.andIdIn(storageFileConditionDto.getIds());
+            if (!CollectionUtils.isEmpty(storagePdfConditionDto.getIds())) {
+                criteria.andIdIn(storagePdfConditionDto.getIds());
             }
         }
         return example;
     }
 
     @Transactional(readOnly = true)
-    public Optional<StorageFileDto> getByUuid(String uuid) {
+    public Optional<StoragePdfDto> getByUuid(String uuid) {
         return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
     }
 

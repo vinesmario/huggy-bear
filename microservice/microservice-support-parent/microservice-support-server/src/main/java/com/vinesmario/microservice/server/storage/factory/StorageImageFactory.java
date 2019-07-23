@@ -26,18 +26,18 @@ public class StorageImageFactory extends AbstractStorageFactory<StorageImageDto>
     public StorageImageDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-        String imageName = uuid + "." + extension;
-        String imageRelativePath = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
-                + "/" + imageName;
+        String fileName = uuid + "." + extension;
+        String fileRelativePath = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                + "/" + fileName;
         if (!ObjectUtils.isEmpty(tenantId)) {
-            imageRelativePath = tenantId + "/" + imageRelativePath;
+            fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
         StorageImageDto storageImageDto = new StorageImageDto();
         storageImageDto.setTenantId(tenantId);
         storageImageDto.setUuid(uuid);
         storageImageDto.setFileExtension(extension);
-        storageImageDto.setFileName(imageName);
+        storageImageDto.setFileName(fileName);
         storageImageDto.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
@@ -47,7 +47,7 @@ public class StorageImageFactory extends AbstractStorageFactory<StorageImageDto>
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, imageRelativePath, storageImageDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storageImageDto);
 
         // 图片高度、宽度
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());

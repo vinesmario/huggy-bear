@@ -13,12 +13,10 @@ import lombok.NoArgsConstructor;
  */
 @ApiModel(value = "StorageFileDto", description = "StorageFile数据传输对象")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class StorageFileDto extends BaseDto<Long> {
 
     /**
-     * 
+     *
      */
     @ApiModelProperty(value = "")
     private Long tenantId;

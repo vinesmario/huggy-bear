@@ -1,22 +1,20 @@
 package com.vinesmario.microservice.server.storage.web.rest.v1;
 
-import com.vinesmario.common.constant.FileExtension;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDto;
-import com.vinesmario.microservice.client.storage.web.feign.StorageImageClient;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
+import com.vinesmario.microservice.client.storage.web.feign.StorageExcelClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
 import com.vinesmario.microservice.server.storage.factory.AbstractStorageFactory;
-import com.vinesmario.microservice.server.storage.factory.StorageImageFactory;
-import com.vinesmario.microservice.server.storage.service.StorageImageService;
+import com.vinesmario.microservice.server.storage.factory.StorageExcelFactory;
+import com.vinesmario.microservice.server.storage.service.StorageExcelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,24 +30,23 @@ import java.util.Optional;
  * @author
  * @date
  */
-
-@Api(description = "StorageImageCRUD", tags = "StorageImageController", basePath = "/storage_image")
+@Api(description = "StorageExcelCRUD", tags = "StorageExcelController", basePath = "/storage_excel")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_image")
-public class StorageImageResource extends BaseResource<StorageImageDto, StorageImageConditionDto, Long>
-        implements StorageImageClient {
+@RequestMapping("/api/v1/storage_excel")
+public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageExcelConditionDto, Long>
+        implements StorageExcelClient {
 
-    private final StorageImageService service;
+    private final StorageExcelService service;
 
-    public StorageImageResource(StorageImageService service) {
+    public StorageExcelResource(StorageExcelService service) {
         super(service);
         this.service = service;
-        this.entityName = "StorageImage";
+        this.entityName = "StorageExcel";
     }
 
     @Override
-    public void preConditionDto(StorageImageConditionDto queryDto) {
+    public void preConditionDto(StorageExcelConditionDto queryDto) {
 
     }
 
@@ -57,28 +54,27 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/uuid/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageImageDto> getByUuid(@PathVariable("uuid") String uuid) {
-        Optional<StorageImageDto> dto = service.getByUuid(uuid);
+    public ResponseEntity<StorageExcelDto> getByUuid(@PathVariable("uuid") String uuid) {
+        Optional<StorageExcelDto> dto = service.getByUuid(uuid);
+
         return ResponseUtil.wrapOrNotFound(dto);
     }
 
     @ApiOperation(value = "添加", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
-    //    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    @Override
-    public ResponseEntity<StorageImageDto> create(@RequestBody StorageImageDto dto) {
+    public ResponseEntity<StorageExcelDto> create(@RequestBody StorageExcelDto dto) {
         // 不需支持该方法
         return ResponseEntity.notFound().build();
     }
 
-    @ApiOperation(value = "上传图片", httpMethod = "POST")
-    @ApiResponse(code = 200, message = "上传图片成功", response = String.class)
+    @ApiOperation(value = "上传Excel", httpMethod = "POST")
+    @ApiResponse(code = 200, message = "上传Excel成功", response = String.class)
 //    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StorageImageDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    public ResponseEntity<StorageExcelDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                   @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                   @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -86,25 +82,20 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
             throw new BadRequestAlertException("File cannot be empty",
                     null, "file.empty", entityName);
         }
-        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-        if (!FileExtension.IMAGE.contains(extension)) {
-            throw new BadRequestAlertException("Unsupported file extension",
-                    null, "image.extension.unsupported", entityName);
-        }
-        AbstractStorageFactory<StorageImageDto> storageFactory = new StorageImageFactory();
-        StorageImageDto storageImageDto = storageFactory.create(multipartFile, tenantId);
+        AbstractStorageFactory<StorageExcelDto> storageFactory = new StorageExcelFactory();
+        StorageExcelDto storageFileDto = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageImageDto.getAlertParam()))
-                .body(storageImageDto);
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
+                .body(storageFileDto);
     }
 
-    @ApiOperation(value = "下载图片", httpMethod = "GET")
-    @ApiResponse(code = 200, message = "下载图片成功", response = String.class)
+    @ApiOperation(value = "下载Excel", httpMethod = "GET")
+    @ApiResponse(code = 200, message = "下载Excel成功", response = String.class)
     @GetMapping(value = "/download/{uuid}")
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
             throws IOException {
-        Optional<StorageImageDto> optional = service.getByUuid(uuid);
+        Optional<StorageExcelDto> optional = service.getByUuid(uuid);
         if (!optional.isPresent()) {
             return ResponseEntity.notFound()
                     .headers(HeaderUtil.createFailureAlert("record not found", 404, "record.not_found", entityName))
@@ -113,7 +104,7 @@ public class StorageImageResource extends BaseResource<StorageImageDto, StorageI
             String fileAbsolutePath = optional.get().getFileAbsolutePath();
             if (StringUtils.isBlank(fileAbsolutePath)) {
                 return ResponseEntity.notFound()
-                        .headers(HeaderUtil.createFailureAlert("image path is empty", 404, "file_path.empty", entityName))
+                        .headers(HeaderUtil.createFailureAlert("file path is empty", 404, "file_path.empty", entityName))
                         .build();
             } else {
                 File file = new File(fileAbsolutePath);

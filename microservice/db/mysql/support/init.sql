@@ -1,3 +1,25 @@
+CREATE TABLE `storage_excel` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tenant_id` bigint(20) DEFAULT NULL,
+  `uuid` varchar(32) DEFAULT NULL COMMENT 'UUID',
+  `file_extension` varchar(10) DEFAULT NULL COMMENT '文件扩展名',
+  `file_name` varchar(50) DEFAULT NULL COMMENT '文件名称',
+  `file_absolute_path` varchar(255) DEFAULT NULL COMMENT '文件存储绝对路径',
+  `file_absolute_url` varchar(255) DEFAULT NULL COMMENT '文件访问绝对url',
+  `file_relative_url` varchar(255) DEFAULT NULL COMMENT '文件访问相对url',
+  `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小，单位B',
+  `file_md5_hex` varchar(64) DEFAULT NULL COMMENT '文件MD5算法哈希值',
+  `file_sha1_hex` varchar(64) DEFAULT NULL COMMENT '文件SHA1算法哈希值',
+  `created_by` bigint(20) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `last_modified_by` bigint(20) DEFAULT NULL,
+  `last_modified_date` datetime DEFAULT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  `deleted` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE `storage_file` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tenant_id` bigint(20) DEFAULT NULL,
@@ -57,7 +79,7 @@ CREATE TABLE `storage_pdf` (
   `file_md5_hex` varchar(64) DEFAULT NULL COMMENT '文件MD5算法哈希值',
   `file_sha1_hex` varchar(64) DEFAULT NULL COMMENT '文件SHA1算法哈希值',
   `pdf_page_count` int(11) DEFAULT NULL COMMENT '页数',
-  `splited` tinyint(4) DEFAULT 0 COMMENT '已拆分,0-否;1-是',
+  `splited` tinyint(4) DEFAULT '0' COMMENT '已拆分,0-否;1-是',
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `last_modified_by` bigint(20) DEFAULT NULL,
@@ -83,6 +105,28 @@ CREATE TABLE `storage_pdf_splited` (
   `origin_id` bigint(20) NOT NULL COMMENT '来源ID',
   `origin_uuid` varchar(32) DEFAULT NULL COMMENT '来源UUID',
   `pagination` int(11) DEFAULT NULL COMMENT '页码，从第1页开始',
+  `created_by` bigint(20) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `last_modified_by` bigint(20) DEFAULT NULL,
+  `last_modified_date` datetime DEFAULT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  `deleted` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `storage_template` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tenant_id` bigint(20) DEFAULT NULL,
+  `uuid` varchar(32) DEFAULT NULL COMMENT 'UUID',
+  `file_extension` varchar(10) DEFAULT NULL COMMENT '文件扩展名',
+  `file_name` varchar(50) DEFAULT NULL COMMENT '文件名称',
+  `file_absolute_path` varchar(255) DEFAULT NULL COMMENT '文件存储绝对路径',
+  `file_absolute_url` varchar(255) DEFAULT NULL COMMENT '文件访问绝对url',
+  `file_relative_url` varchar(255) DEFAULT NULL COMMENT '文件访问相对url',
+  `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小，单位B',
+  `file_md5_hex` varchar(64) DEFAULT NULL COMMENT '文件MD5算法哈希值',
+  `file_sha1_hex` varchar(64) DEFAULT NULL COMMENT '文件SHA1算法哈希值',
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `last_modified_by` bigint(20) DEFAULT NULL,

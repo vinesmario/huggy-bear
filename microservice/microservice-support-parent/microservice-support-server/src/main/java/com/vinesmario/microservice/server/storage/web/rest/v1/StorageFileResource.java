@@ -2,6 +2,7 @@ package com.vinesmario.microservice.server.storage.web.rest.v1;
 
 import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
 import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.storage.web.feign.StorageFileClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
@@ -34,7 +35,8 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/storage_file")
-public class StorageFileResource extends BaseResource<StorageFileDto, StorageFileConditionDto, Long> {
+public class StorageFileResource extends BaseResource<StorageFileDto, StorageFileConditionDto, Long>
+        implements StorageFileClient {
 
     private final StorageFileService service;
 
@@ -70,7 +72,6 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
 
     @ApiOperation(value = "上传文件", httpMethod = "POST")
     @ApiResponse(code = 200, message = "上传文件成功", response = String.class)
-//    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "/upload")
     @ResponseBody
     public ResponseEntity<StorageFileDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,

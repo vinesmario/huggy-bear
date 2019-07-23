@@ -29,7 +29,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.O
 @MapperScan("com.vinesmario.microservice.server")
 @EnableFeignClients("com.vinesmario.microservice")
 @EnableOAuth2Client
-//@EnableScheduling
 public class SupportServerApplication {
 
     public static void main(String[] args) {

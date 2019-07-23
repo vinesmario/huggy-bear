@@ -1,9 +1,7 @@
 package com.vinesmario.microservice.server.storage.entity;
 
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -14,8 +12,6 @@ import javax.persistence.Table;
  */
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "storage_file")
 public class StorageFile extends BaseEntity<Long> {
 

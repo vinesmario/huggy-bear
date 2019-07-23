@@ -1,15 +1,15 @@
 package com.vinesmario.microservice.client.storage.web.hystrix;
 
 import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDto;
-import com.vinesmario.microservice.client.storage.web.feign.StorageImageClient;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
+import com.vinesmario.microservice.client.storage.web.feign.StorageExcelClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -18,31 +18,31 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class StorageImageFallbackFactory implements FallbackFactory<StorageImageClient> {
+public class StorageExcelFallbackFactory implements FallbackFactory<StorageExcelClient> {
 
     @Override
-    public StorageImageClient create(Throwable throwable) {
-        return new StorageImageClient() {
+    public StorageExcelClient create(Throwable throwable) {
+        return new StorageExcelClient() {
             @Override
-            public ResponseEntity<List<StorageImageDto>> search(StorageImageConditionDto condition) {
+            public ResponseEntity<List<StorageExcelDto>> search(StorageExcelConditionDto condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageImageDto> get(Long id) {
+            public ResponseEntity<StorageExcelDto> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageImageDto> create(StorageImageDto dto) {
+            public ResponseEntity<StorageExcelDto> create(StorageExcelDto storageExcel) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageImageDto> modify(Long id, StorageImageDto dto) {
+            public ResponseEntity<StorageExcelDto> modify(Long id, StorageExcelDto storageExcel) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -54,13 +54,13 @@ public class StorageImageFallbackFactory implements FallbackFactory<StorageImage
             }
 
             @Override
-            public ResponseEntity<Void> delete(StorageImageConditionDto condition) {
+            public ResponseEntity<Void> delete(StorageExcelConditionDto condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageImageDto> upload(MultipartFile multipartFile,
+            public ResponseEntity<StorageExcelDto> upload(MultipartFile multipartFile,
                                                           Long tenantId, String memo) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();

@@ -8,7 +8,8 @@ import com.vinesmario.microservice.server.storage.entity.StorageImage;
  * @date
  */
 
-public interface StorageImageMapper extends CrudMapper<StorageImage, Long>{
+public interface StorageImageMapper extends CrudMapper<StorageImage, Long> {
 
     StorageImage selectByUuid(String uuid);
+
 }

@@ -1,7 +1,5 @@
 package com.vinesmario.microservice.client.storage.dto;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,8 +12,6 @@ import lombok.NoArgsConstructor;
  */
 @ApiModel(value = "StorageImageDto", description = "StorageImage数据传输对象")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class StorageImageDto extends StorageFileDto {
 
     /**
@@ -28,12 +24,5 @@ public class StorageImageDto extends StorageFileDto {
      */
     @ApiModelProperty(value = "图片宽")
     private Integer imageWidth;
-
-    /**
-     * alert param
-     */
-    public String getAlertParam() {
-        return getFileName();
-    }
 
 }
