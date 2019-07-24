@@ -42,13 +42,13 @@ public class UserAccountFallbackFactory implements FallbackFactory<UserAccountCl
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id) {
+            public ResponseEntity<Void> remove(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(UserAccountConditionDto condition){
+            public ResponseEntity<Void> remove(UserAccountConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

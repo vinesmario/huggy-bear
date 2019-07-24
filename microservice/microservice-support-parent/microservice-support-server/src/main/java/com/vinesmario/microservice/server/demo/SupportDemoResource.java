@@ -82,7 +82,7 @@ public class SupportDemoResource implements SupportDemoClient {
     @ApiResponse(code = 200, message = "删除成功", response = String.class)
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> delete(Long id) {
+    public ResponseEntity<Void> remove(Long id) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -93,7 +93,7 @@ public class SupportDemoResource implements SupportDemoClient {
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> delete(SupportDemoConditionDto conditionDto) {
+    public ResponseEntity<Void> remove(SupportDemoConditionDto conditionDto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());

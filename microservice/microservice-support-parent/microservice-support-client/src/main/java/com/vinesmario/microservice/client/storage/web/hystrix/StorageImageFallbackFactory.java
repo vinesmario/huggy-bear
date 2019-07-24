@@ -48,13 +48,13 @@ public class StorageImageFallbackFactory implements FallbackFactory<StorageImage
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id) {
+            public ResponseEntity<Void> remove(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(StorageImageConditionDto condition) {
+            public ResponseEntity<Void> remove(StorageImageConditionDto condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

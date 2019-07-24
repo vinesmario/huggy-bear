@@ -35,10 +35,10 @@ public interface StorageImageClient extends CrudClient<StorageImageDto, StorageI
     ResponseEntity<StorageImageDto> modify(@PathVariable("id") Long id, @RequestBody StorageImageDto dto);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody StorageImageConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StorageImageConditionDto condition);
 
     ResponseEntity<StorageImageDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                            @RequestParam(value = "tenantId", required = false) Long tenantId,

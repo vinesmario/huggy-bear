@@ -39,13 +39,13 @@ public class SupportDemoFallbackFactory implements FallbackFactory<SupportDemoCl
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id) {
+            public ResponseEntity<Void> remove(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(SupportDemoConditionDto condition){
+            public ResponseEntity<Void> remove(SupportDemoConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

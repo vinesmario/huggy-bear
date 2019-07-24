@@ -31,9 +31,9 @@ public interface SupportDemoClient extends CrudClient<SupportDemoDto, SupportDem
                                       @RequestBody SupportDemoDto dto);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody SupportDemoConditionDto conditionDto);
+    ResponseEntity<Void> remove(@RequestBody SupportDemoConditionDto conditionDto);
 
 }

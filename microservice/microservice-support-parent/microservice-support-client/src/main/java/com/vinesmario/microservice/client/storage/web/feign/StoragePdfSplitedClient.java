@@ -36,10 +36,10 @@ public interface StoragePdfSplitedClient extends CrudClient<StoragePdfSplitedDto
                                                 @RequestBody StoragePdfSplitedDto dto);
 
 	@DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody StoragePdfSplitedConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StoragePdfSplitedConditionDto condition);
 
 	ResponseEntity<StoragePdfSplitedDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
 										 @RequestParam(value = "tenantId", required = false) Long tenantId,

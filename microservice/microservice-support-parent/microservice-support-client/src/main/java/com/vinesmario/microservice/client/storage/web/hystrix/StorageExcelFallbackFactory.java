@@ -48,13 +48,13 @@ public class StorageExcelFallbackFactory implements FallbackFactory<StorageExcel
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id) {
+            public ResponseEntity<Void> remove(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(StorageExcelConditionDto condition) {
+            public ResponseEntity<Void> remove(StorageExcelConditionDto condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

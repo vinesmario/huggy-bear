@@ -6,9 +6,9 @@ public interface CrudService<T, PK> extends ReadOnlyService<T, PK> {
 
     void create(T t);
 
-    void delete(T t);
+    void remove(T t);
 
-    void delete(ConditionDto conditionDto);
+    void remove(ConditionDto conditionDto);
 
     void modify(T t);
 

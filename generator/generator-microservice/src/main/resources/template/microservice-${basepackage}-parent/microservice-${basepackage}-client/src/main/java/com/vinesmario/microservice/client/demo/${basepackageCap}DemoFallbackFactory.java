@@ -44,13 +44,13 @@ public class ${basepackageCap}DemoFallbackFactory implements FallbackFactory<${b
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id){
+            public ResponseEntity<Void> remove(Long id){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(${basepackageCap}DemoConditionDto condition){
+            public ResponseEntity<Void> remove(${basepackageCap}DemoConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

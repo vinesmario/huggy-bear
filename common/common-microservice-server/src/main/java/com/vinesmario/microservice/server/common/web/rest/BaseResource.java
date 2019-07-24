@@ -66,11 +66,11 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @ApiResponse(code = 200, message = "删除成功", response = String.class)
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> delete(@PathVariable("id") PK id) {
+    public ResponseEntity<Void> remove(@PathVariable("id") PK id) {
         Optional<DTO> optional = service.get(id);
         String alertParam = "";
         if (optional.isPresent()) {
-            service.delete(optional.get());
+            service.remove(optional.get());
             alertParam = optional.get().getAlertParam();
         }
         return ResponseEntity.ok()
@@ -82,9 +82,9 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> delete(@RequestBody CONDITION conditionDto) {
+    public ResponseEntity<Void> remove(@RequestBody CONDITION conditionDto) {
         preConditionDto(conditionDto);
-        service.delete(conditionDto);
+        service.remove(conditionDto);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionCollectionAlert(entityName))
                 .build();

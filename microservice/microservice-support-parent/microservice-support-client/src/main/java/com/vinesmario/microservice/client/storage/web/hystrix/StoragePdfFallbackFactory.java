@@ -48,13 +48,13 @@ public class StoragePdfFallbackFactory implements FallbackFactory<StoragePdfClie
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id) {
+            public ResponseEntity<Void> remove(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(StoragePdfConditionDto condition) {
+            public ResponseEntity<Void> remove(StoragePdfConditionDto condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

@@ -32,9 +32,9 @@ public interface ${basepackageCap}DemoClient extends CrudClient<${basepackageCap
                            					@RequestBody ${basepackageCap}DemoDto dto);
 
 	@DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody ${basepackageCap}DemoConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody ${basepackageCap}DemoConditionDto condition);
 	
 }

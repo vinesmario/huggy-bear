@@ -34,9 +34,9 @@ public interface UserAccountClient extends CrudClient<UserAccountDto, UserAccoun
                                           @RequestBody UserAccountDto dto);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody UserAccountConditionDto conditionDto);
+    ResponseEntity<Void> remove(@RequestBody UserAccountConditionDto conditionDto);
 
 }

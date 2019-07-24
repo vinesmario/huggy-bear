@@ -31,9 +31,9 @@ public interface UaaDemoClient extends CrudClient<UaaDemoDto, UaaDemoConditionDt
                                       @RequestBody UaaDemoDto dto);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody UaaDemoConditionDto conditionDto);
+    ResponseEntity<Void> remove(@RequestBody UaaDemoConditionDto conditionDto);
 
 }

@@ -25,8 +25,8 @@ public interface CrudClient<DTO extends BaseDto, C extends ConditionDto, PK exte
 
     ResponseEntity<DTO> modify(PK primaryKey, DTO dto);
 
-    ResponseEntity<Void> delete(PK primaryKey);
+    ResponseEntity<Void> remove(PK primaryKey);
 
-    ResponseEntity<Void> delete(C conditionDto);
+    ResponseEntity<Void> remove(C conditionDto);
 
 }

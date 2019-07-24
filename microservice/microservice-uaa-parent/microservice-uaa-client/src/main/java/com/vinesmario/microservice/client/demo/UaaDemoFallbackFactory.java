@@ -39,13 +39,13 @@ public class UaaDemoFallbackFactory implements FallbackFactory<UaaDemoClient> {
             }
 
             @Override
-            public ResponseEntity<Void> delete(Long id) {
+            public ResponseEntity<Void> remove(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<Void> delete(UaaDemoConditionDto condition){
+            public ResponseEntity<Void> remove(UaaDemoConditionDto condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

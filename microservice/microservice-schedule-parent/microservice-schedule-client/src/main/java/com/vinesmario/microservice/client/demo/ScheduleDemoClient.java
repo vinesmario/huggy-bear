@@ -31,9 +31,9 @@ public interface ScheduleDemoClient extends CrudClient<ScheduleDemoDto, Schedule
                                            @RequestBody ScheduleDemoDto dto);
 
 	@DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id);
+    ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> delete(@RequestBody ScheduleDemoConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody ScheduleDemoConditionDto condition);
 	
 }

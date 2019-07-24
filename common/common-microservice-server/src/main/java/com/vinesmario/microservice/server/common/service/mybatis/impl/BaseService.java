@@ -44,13 +44,13 @@ public abstract class BaseService<DTO extends BaseDto, T extends BaseEntity<PK>,
      *
      * @param dto
      */
-    public void delete(DTO dto) {
+    public void remove(DTO dto) {
         T entity = mapStruct.fromDto2Entity(dto);
         entity.setDeleted(DictConstant.BYTE_YES_NO_Y);
         mapper.updateByPrimaryKeySelective(entity);
     }
 
-    public void delete(ConditionDto conditionDto) {
+    public void remove(ConditionDto conditionDto) {
         BaseExample baseExample = fromConditionDto2Example(conditionDto);
         List<T> dbEntityList = mapper.selectByExample(baseExample);
         if (!CollectionUtils.isEmpty(dbEntityList)) {
