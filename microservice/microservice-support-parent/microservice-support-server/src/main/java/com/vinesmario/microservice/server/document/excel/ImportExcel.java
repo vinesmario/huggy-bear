@@ -15,7 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.vinesmario.common.kit.ReflectionKit;
-import com.vinesmario.microservice.server.document.excel.annotation.ExcelField;
+import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
+import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -212,7 +213,7 @@ public class ImportExcel {
 		// Get annotation field 
 		Field[] fs = cls.getDeclaredFields();
 		for (Field f : fs){
-			ExcelField ef = f.getAnnotation(ExcelField.class);
+			ExcelColumn ef = f.getAnnotation(ExcelColumn.class);
 			if (ef != null && (ef.type()==0 || ef.type()==2)){
 				if (groups!=null && groups.length>0){
 					boolean inGroup = false;
@@ -236,7 +237,7 @@ public class ImportExcel {
 		// Get annotation method
 		Method[] ms = cls.getDeclaredMethods();
 		for (Method m : ms){
-			ExcelField ef = m.getAnnotation(ExcelField.class);
+			ExcelColumn ef = m.getAnnotation(ExcelColumn.class);
 			if (ef != null && (ef.type()==0 || ef.type()==2)){
 				if (groups!=null && groups.length>0){
 					boolean inGroup = false;
@@ -260,8 +261,8 @@ public class ImportExcel {
 		// Field sorting
 		Collections.sort(annotationList, new Comparator<Object[]>() {
 			public int compare(Object[] o1, Object[] o2) {
-				return new Integer(((ExcelField)o1[0]).sort()).compareTo(
-						new Integer(((ExcelField)o2[0]).sort()));
+				return new Integer(((ExcelColumn)o1[0]).sort()).compareTo(
+						new Integer(((ExcelColumn)o2[0]).sort()));
 			};
 		});
 		//log.debug("Import column count:"+annotationList.size());
@@ -275,7 +276,7 @@ public class ImportExcel {
 			for (Object[] os : annotationList){
 				Object val = this.getCellValue(row, column++);
 				if (val != null){
-					ExcelField ef = (ExcelField)os[0];
+					ExcelColumn ef = (ExcelColumn)os[0];
 					// If is dict type, get dict value
 //					if (StringUtils.isNotBlank(ef.dictType())){
 //						val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
