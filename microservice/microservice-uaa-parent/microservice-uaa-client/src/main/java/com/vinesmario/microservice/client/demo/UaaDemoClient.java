@@ -15,25 +15,25 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-uaa-server", path = "/api/v1/uaa_demo", fallbackFactory = UaaDemoFallbackFactory.class)
-public interface UaaDemoClient extends CrudClient<UaaDemoDto, UaaDemoConditionDto, Long> {
+public interface UaaDemoClient extends CrudClient<UaaDemoDTO, UaaDemoConditionDTO, Long> {
 
     @GetMapping("")
-    ResponseEntity<List<UaaDemoDto>> search(@ModelAttribute UaaDemoConditionDto condition);
+    ResponseEntity<List<UaaDemoDTO>> search(@ModelAttribute UaaDemoConditionDTO condition);
 
     @GetMapping("/{id}")
-    ResponseEntity<UaaDemoDto> get(@PathVariable("id") Long id);
+    ResponseEntity<UaaDemoDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<UaaDemoDto> create(@RequestBody UaaDemoDto dto);
+    ResponseEntity<UaaDemoDTO> create(@RequestBody UaaDemoDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<UaaDemoDto> modify(@PathVariable("id") Long id,
-                                      @RequestBody UaaDemoDto dto);
+    ResponseEntity<UaaDemoDTO> modify(@PathVariable("id") Long id,
+                                      @RequestBody UaaDemoDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody UaaDemoConditionDto conditionDto);
+    ResponseEntity<Void> remove(@RequestBody UaaDemoConditionDTO conditionDTO);
 
 }

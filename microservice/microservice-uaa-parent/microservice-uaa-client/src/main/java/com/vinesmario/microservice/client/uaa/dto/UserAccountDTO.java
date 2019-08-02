@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.uaa.dto;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -10,9 +10,9 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "UserAccountDto", description = "UserAccountDto")
+@ApiModel(value = "UserAccountDTO", description = "UserAccountDTO")
 @Data
-public class UserAccountDto extends BaseDto<Long> {
+public class UserAccountDTO extends BaseDTO<Long> {
 
     /**
      * 用户名
@@ -38,7 +38,7 @@ public class UserAccountDto extends BaseDto<Long> {
     /**
      * 角色列表
      */
-    private List<AuthorityDto> authorityList;
+    private List<AuthorityDTO> authorityList;
 
     @Override
     public String getAlertParam() {

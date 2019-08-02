@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.uaa.mapstruct;
 
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
+import com.vinesmario.microservice.client.uaa.dto.UserAccountDTO;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
 import org.mapstruct.Mapper;
 
@@ -11,6 +11,6 @@ import org.mapstruct.Mapper;
  */
 
 @Mapper(componentModel = "spring")
-public interface UserAccountMapStruct extends BaseMapStruct<UserAccount, UserAccountDto> {
+public interface UserAccountMapStruct extends BaseMapStruct<UserAccount, UserAccountDTO> {
 
 }

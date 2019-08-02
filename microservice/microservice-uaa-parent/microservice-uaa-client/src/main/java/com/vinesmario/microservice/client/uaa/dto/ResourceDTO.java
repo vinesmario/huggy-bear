@@ -1,10 +1,10 @@
 package com.vinesmario.microservice.client.uaa.dto;
 
-import com.vinesmario.microservice.client.common.dto.TreeDto;
+import com.vinesmario.microservice.client.common.dto.TreeDTO;
 import lombok.Data;
 
 @Data
-public class ResourceDto extends TreeDto<ResourceDto> {
+public class ResourceDTO extends TreeDTO<ResourceDTO> {
 
     /**
      * 类型

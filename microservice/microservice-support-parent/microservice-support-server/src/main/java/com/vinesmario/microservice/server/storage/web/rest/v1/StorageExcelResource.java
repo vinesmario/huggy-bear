@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.web.rest.v1;
 
-import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDTO;
 import com.vinesmario.microservice.client.storage.web.feign.StorageExcelClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
@@ -34,7 +34,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/storage_excel")
-public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageExcelConditionDto, Long>
+public class StorageExcelResource extends BaseResource<StorageExcelDTO, StorageExcelConditionDTO, Long>
         implements StorageExcelClient {
 
     private final StorageExcelService service;
@@ -46,7 +46,7 @@ public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageE
     }
 
     @Override
-    public void preConditionDto(StorageExcelConditionDto queryDto) {
+    public void preConditionDTO(StorageExcelConditionDTO queryDTO) {
 
     }
 
@@ -54,8 +54,8 @@ public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageE
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/uuid/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageExcelDto> getByUuid(@PathVariable("uuid") String uuid) {
-        Optional<StorageExcelDto> dto = service.getByUuid(uuid);
+    public ResponseEntity<StorageExcelDTO> getByUuid(@PathVariable("uuid") String uuid) {
+        Optional<StorageExcelDTO> dto = service.getByUuid(uuid);
 
         return ResponseUtil.wrapOrNotFound(dto);
     }
@@ -64,7 +64,7 @@ public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageE
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageExcelDto> create(@RequestBody StorageExcelDto dto) {
+    public ResponseEntity<StorageExcelDTO> create(@RequestBody StorageExcelDTO dto) {
         // 不需支持该方法
         return ResponseEntity.notFound().build();
     }
@@ -74,7 +74,7 @@ public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageE
 //    @PreAuthorize("hasPermission(Object target, Object permission)")
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StorageExcelDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    public ResponseEntity<StorageExcelDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                   @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                   @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -82,11 +82,11 @@ public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageE
             throw new BadRequestAlertException("File cannot be empty",
                     null, "file.empty", entityName);
         }
-        AbstractStorageFactory<StorageExcelDto> storageFactory = new StorageExcelFactory();
-        StorageExcelDto storageFileDto = storageFactory.create(multipartFile, tenantId);
+        AbstractStorageFactory<StorageExcelDTO> storageFactory = new StorageExcelFactory();
+        StorageExcelDTO storageFileDTO = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
-                .body(storageFileDto);
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDTO.getAlertParam()))
+                .body(storageFileDTO);
     }
 
     @ApiOperation(value = "下载Excel", httpMethod = "GET")
@@ -95,7 +95,7 @@ public class StorageExcelResource extends BaseResource<StorageExcelDto, StorageE
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
             throws IOException {
-        Optional<StorageExcelDto> optional = service.getByUuid(uuid);
+        Optional<StorageExcelDTO> optional = service.getByUuid(uuid);
         if (!optional.isPresent()) {
             return ResponseEntity.notFound()
                     .headers(HeaderUtil.createFailureAlert("record not found", 404, "record.not_found", entityName))

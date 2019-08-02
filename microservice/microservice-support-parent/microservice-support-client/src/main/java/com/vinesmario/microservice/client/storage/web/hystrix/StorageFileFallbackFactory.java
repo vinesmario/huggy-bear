@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.hystrix;
 
-import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDTO;
 import com.vinesmario.microservice.client.storage.web.feign.StorageFileClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -24,25 +24,25 @@ public class StorageFileFallbackFactory implements FallbackFactory<StorageFileCl
     public StorageFileClient create(Throwable throwable) {
         return new StorageFileClient() {
             @Override
-            public ResponseEntity<List<StorageFileDto>> search(StorageFileConditionDto condition) {
+            public ResponseEntity<List<StorageFileDTO>> search(StorageFileConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto> get(Long id) {
+            public ResponseEntity<StorageFileDTO> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto> create(StorageFileDto dto) {
+            public ResponseEntity<StorageFileDTO> create(StorageFileDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto> modify(Long id, StorageFileDto dto) {
+            public ResponseEntity<StorageFileDTO> modify(Long id, StorageFileDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -54,13 +54,13 @@ public class StorageFileFallbackFactory implements FallbackFactory<StorageFileCl
             }
 
             @Override
-            public ResponseEntity<Void> remove(StorageFileConditionDto condition) {
+            public ResponseEntity<Void> remove(StorageFileConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageFileDto> upload(MultipartFile multipartFile,
+            public ResponseEntity<StorageFileDTO> upload(MultipartFile multipartFile,
                                                          Long tenantId, String memo) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();

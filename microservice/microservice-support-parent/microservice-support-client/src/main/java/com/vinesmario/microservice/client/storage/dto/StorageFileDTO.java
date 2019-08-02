@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.storage.dto;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
  * @author
  * @date
  */
-@ApiModel(value = "StorageFileDto", description = "StorageFile数据传输对象")
+@ApiModel(value = "StorageFileDTO", description = "StorageFile数据传输对象")
 @Data
-public class StorageFileDto extends BaseDto<Long> {
+public class StorageFileDTO extends BaseDTO<Long> {
 
     /**
      *
@@ -51,9 +51,9 @@ public class StorageFileDto extends BaseDto<Long> {
     @ApiModelProperty(value = "文件访问相对url")
     private String fileRelativeUrl;
     /**
-     * 文件大小，单位B
+     * 文件大小，单位byte(B)
      */
-    @ApiModelProperty(value = "文件大小，单位B")
+    @ApiModelProperty(value = "文件大小，单位byte(B)")
     private Long fileSize;
     /**
      * 文件MD5算法哈希值

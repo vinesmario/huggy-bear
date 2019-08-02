@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.strategy;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
+import com.vinesmario.microservice.client.storage.dto.StorageImageDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -22,7 +22,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract <T extends StorageFileDto> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception;
+    public abstract <T extends StorageFileDTO> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
@@ -31,7 +31,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract <T extends StorageFileDto> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception;
+    public abstract <T extends StorageFileDTO> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
@@ -40,7 +40,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract <T extends StorageFileDto> void upload(byte[] data, String fileRelativePath, T dto) throws Exception;
+    public abstract <T extends StorageFileDTO> void upload(byte[] data, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传

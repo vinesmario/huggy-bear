@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.server.demo;
 
 import com.vinesmario.microservice.client.demo.UaaDemoClient;
-import com.vinesmario.microservice.client.demo.UaaDemoConditionDto;
-import com.vinesmario.microservice.client.demo.UaaDemoDto;
+import com.vinesmario.microservice.client.demo.UaaDemoConditionDTO;
+import com.vinesmario.microservice.client.demo.UaaDemoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -32,7 +32,7 @@ public class UaaDemoResource implements UaaDemoClient {
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<List<UaaDemoDto>> search(UaaDemoConditionDto condition) {
+    public ResponseEntity<List<UaaDemoDTO>> search(UaaDemoConditionDTO condition) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -43,7 +43,7 @@ public class UaaDemoResource implements UaaDemoClient {
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<UaaDemoDto> get(Long id) {
+    public ResponseEntity<UaaDemoDTO> get(Long id) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -54,7 +54,7 @@ public class UaaDemoResource implements UaaDemoClient {
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<UaaDemoDto> create(UaaDemoDto dto) {
+    public ResponseEntity<UaaDemoDTO> create(UaaDemoDTO dto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -65,7 +65,7 @@ public class UaaDemoResource implements UaaDemoClient {
     @ApiResponse(code = 200, message = "更新成功", response = String.class)
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<UaaDemoDto> modify(Long id, UaaDemoDto dto) {
+    public ResponseEntity<UaaDemoDTO> modify(Long id, UaaDemoDTO dto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -87,7 +87,7 @@ public class UaaDemoResource implements UaaDemoClient {
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> remove(UaaDemoConditionDto conditionDto) {
+    public ResponseEntity<Void> remove(UaaDemoConditionDTO conditionDTO) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());

@@ -15,25 +15,25 @@ public class UaaDemoFallbackFactory implements FallbackFactory<UaaDemoClient> {
     public UaaDemoClient create(Throwable throwable) {
         return new UaaDemoClient() {
             @Override
-            public ResponseEntity<List<UaaDemoDto>> search(UaaDemoConditionDto condition) {
+            public ResponseEntity<List<UaaDemoDTO>> search(UaaDemoConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UaaDemoDto> get(Long id) {
+            public ResponseEntity<UaaDemoDTO> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UaaDemoDto> create(UaaDemoDto dto) {
+            public ResponseEntity<UaaDemoDTO> create(UaaDemoDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UaaDemoDto> modify(Long id, UaaDemoDto dto) {
+            public ResponseEntity<UaaDemoDTO> modify(Long id, UaaDemoDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -45,7 +45,7 @@ public class UaaDemoFallbackFactory implements FallbackFactory<UaaDemoClient> {
             }
 
             @Override
-            public ResponseEntity<Void> remove(UaaDemoConditionDto condition){
+            public ResponseEntity<Void> remove(UaaDemoConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

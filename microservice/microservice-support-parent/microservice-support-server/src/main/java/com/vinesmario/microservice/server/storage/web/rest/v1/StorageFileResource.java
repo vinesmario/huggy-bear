@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.web.rest.v1;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDTO;
 import com.vinesmario.microservice.client.storage.web.feign.StorageFileClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
@@ -35,7 +35,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/storage_file")
-public class StorageFileResource extends BaseResource<StorageFileDto, StorageFileConditionDto, Long>
+public class StorageFileResource extends BaseResource<StorageFileDTO, StorageFileConditionDTO, Long>
         implements StorageFileClient {
 
     private final StorageFileService service;
@@ -47,7 +47,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     }
 
     @Override
-    public void preConditionDto(StorageFileConditionDto queryDto) {
+    public void preConditionDTO(StorageFileConditionDTO queryDTO) {
 
     }
 
@@ -55,8 +55,8 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/uuid/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageFileDto> getByUuid(@PathVariable("uuid") String uuid) {
-        Optional<StorageFileDto> dto = service.getByUuid(uuid);
+    public ResponseEntity<StorageFileDTO> getByUuid(@PathVariable("uuid") String uuid) {
+        Optional<StorageFileDTO> dto = service.getByUuid(uuid);
 
         return ResponseUtil.wrapOrNotFound(dto);
     }
@@ -65,7 +65,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto dto) {
+    public ResponseEntity<StorageFileDTO> create(@RequestBody StorageFileDTO dto) {
         // 不需支持该方法
         return ResponseEntity.notFound().build();
     }
@@ -74,7 +74,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @ApiResponse(code = 200, message = "上传文件成功", response = String.class)
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StorageFileDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    public ResponseEntity<StorageFileDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                  @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                  @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -82,11 +82,11 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
             throw new BadRequestAlertException("File cannot be empty",
                     null, "image.empty", entityName);
         }
-        AbstractStorageFactory<StorageFileDto> storageFactory = new StorageFileFactory();
-        StorageFileDto storageFileDto = storageFactory.create(multipartFile, tenantId);
+        AbstractStorageFactory<StorageFileDTO> storageFactory = new StorageFileFactory();
+        StorageFileDTO storageFileDTO = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
-                .body(storageFileDto);
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDTO.getAlertParam()))
+                .body(storageFileDTO);
     }
 
     @ApiOperation(value = "下载文件", httpMethod = "GET")
@@ -95,7 +95,7 @@ public class StorageFileResource extends BaseResource<StorageFileDto, StorageFil
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
             throws IOException {
-        Optional<StorageFileDto> optional = service.getByUuid(uuid);
+        Optional<StorageFileDTO> optional = service.getByUuid(uuid);
         if (!optional.isPresent()) {
             return ResponseEntity.notFound()
                     .headers(HeaderUtil.createFailureAlert("record not found", 404, "record.not_found", entityName))

@@ -19,25 +19,25 @@ public class ScheduleDemoFallbackFactory implements FallbackFactory<ScheduleDemo
     public ScheduleDemoClient create(Throwable throwable){
 		return new ScheduleDemoClient() {
             @Override
-			public ResponseEntity<List<ScheduleDemoDto>> search(ScheduleDemoConditionDto condition){
+			public ResponseEntity<List<ScheduleDemoDTO>> search(ScheduleDemoConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<ScheduleDemoDto>get(Long id){
+            public ResponseEntity<ScheduleDemoDTO>get(Long id){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<ScheduleDemoDto>create(ScheduleDemoDto dto){
+            public ResponseEntity<ScheduleDemoDTO>create(ScheduleDemoDTO dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<ScheduleDemoDto>modify(Long id, ScheduleDemoDto dto){
+            public ResponseEntity<ScheduleDemoDTO>modify(Long id, ScheduleDemoDTO dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -49,7 +49,7 @@ public class ScheduleDemoFallbackFactory implements FallbackFactory<ScheduleDemo
             }
 
             @Override
-            public ResponseEntity<Void> remove(ScheduleDemoConditionDto condition){
+            public ResponseEntity<Void> remove(ScheduleDemoConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

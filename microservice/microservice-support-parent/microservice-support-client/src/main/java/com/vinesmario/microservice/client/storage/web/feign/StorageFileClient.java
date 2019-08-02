@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDTO;
 import com.vinesmario.microservice.client.storage.web.hystrix.StorageFileFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -20,28 +20,28 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/storage_file", fallbackFactory = StorageFileFallbackFactory.class)
-public interface StorageFileClient extends CrudClient<StorageFileDto, StorageFileConditionDto, Long> {
+public interface StorageFileClient extends CrudClient<StorageFileDTO, StorageFileConditionDTO, Long> {
 
     @GetMapping("")
-    ResponseEntity<List<StorageFileDto>> search(@ModelAttribute StorageFileConditionDto condition);
+    ResponseEntity<List<StorageFileDTO>> search(@ModelAttribute StorageFileConditionDTO condition);
 
     @GetMapping("/{id}")
-    ResponseEntity<StorageFileDto> get(@PathVariable("id") Long id);
+    ResponseEntity<StorageFileDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<StorageFileDto> create(@RequestBody StorageFileDto dto);
+    ResponseEntity<StorageFileDTO> create(@RequestBody StorageFileDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<StorageFileDto> modify(@PathVariable("id") Long id,
-                                          @RequestBody StorageFileDto dto);
+    ResponseEntity<StorageFileDTO> modify(@PathVariable("id") Long id,
+                                          @RequestBody StorageFileDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody StorageFileConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StorageFileConditionDTO condition);
 
-    ResponseEntity<StorageFileDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    ResponseEntity<StorageFileDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                           @RequestParam(value = "tenantId", required = false) Long tenantId,
                                           @RequestParam(value = "memo", required = false) String memo)
             throws Exception;

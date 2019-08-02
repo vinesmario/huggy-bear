@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.storage.dto.StoragePdfDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfConditionDTO;
 import com.vinesmario.microservice.client.storage.web.hystrix.StoragePdfFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -20,28 +20,28 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/storage_pdf", fallbackFactory = StoragePdfFallbackFactory.class)
-public interface StoragePdfClient extends CrudClient<StoragePdfDto, StoragePdfConditionDto, Long> {
+public interface StoragePdfClient extends CrudClient<StoragePdfDTO, StoragePdfConditionDTO, Long> {
 
     @GetMapping("")
-    ResponseEntity<List<StoragePdfDto>> search(@ModelAttribute StoragePdfConditionDto condition);
+    ResponseEntity<List<StoragePdfDTO>> search(@ModelAttribute StoragePdfConditionDTO condition);
 
     @GetMapping("/{id}")
-    ResponseEntity<StoragePdfDto> get(@PathVariable("id") Long id);
+    ResponseEntity<StoragePdfDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<StoragePdfDto> create(@RequestBody StoragePdfDto dto);
+    ResponseEntity<StoragePdfDTO> create(@RequestBody StoragePdfDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<StoragePdfDto> modify(@PathVariable("id") Long id,
-                                         @RequestBody StoragePdfDto dto);
+    ResponseEntity<StoragePdfDTO> modify(@PathVariable("id") Long id,
+                                         @RequestBody StoragePdfDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody StoragePdfConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StoragePdfConditionDTO condition);
 
-    ResponseEntity<StoragePdfDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    ResponseEntity<StoragePdfDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                          @RequestParam(value = "tenantId", required = false) Long tenantId,
                                          @RequestParam(value = "memo", required = false) String memo)
             throws Exception;

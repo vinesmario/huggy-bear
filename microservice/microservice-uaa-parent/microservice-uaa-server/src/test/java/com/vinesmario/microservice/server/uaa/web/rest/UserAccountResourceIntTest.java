@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.uaa.web.rest;
 
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
+import com.vinesmario.microservice.client.uaa.dto.UserAccountDTO;
 import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.web.rest.TestUtil;
 import com.vinesmario.microservice.server.common.web.rest.errors.ExceptionTranslator;
@@ -79,14 +79,14 @@ public class UserAccountResourceIntTest {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which has a required relationship to the entity.
      */
-    public static UserAccountDto create() {
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setUsername(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setPassword(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setMobile(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setEmail(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setActivated(DictConstant.BYTE_YES_NO_N);
-        return userAccountDto;
+    public static UserAccountDTO create() {
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setUsername(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setPassword(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setMobile(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setEmail(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setActivated(DictConstant.BYTE_YES_NO_N);
+        return userAccountDTO;
     }
 
     @Test
@@ -95,21 +95,21 @@ public class UserAccountResourceIntTest {
         int databaseSizeBeforeCreate = userAccountService.list(null).size();
 
         // Create the object
-        UserAccountDto oneDto = create();
+        UserAccountDTO oneDTO = create();
         restUserAccountMockMvc.perform(post("/api/v1/user_account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(oneDto)))
+                .content(TestUtil.convertObjectToJsonBytes(oneDTO)))
                 .andExpect(status().isOk());
 
         // Validate the User in the database
-        List<UserAccountDto> userAccountDtoList = userAccountService.list(null);
-        assertThat(userAccountDtoList).hasSize(databaseSizeBeforeCreate + 1);
-        UserAccountDto testDto = userAccountDtoList.get(userAccountDtoList.size() - 1);
-        assertThat(testDto.getUsername()).isEqualTo(oneDto.getUsername());
-        assertThat(testDto.getPassword()).isEqualTo(oneDto.getPassword());
-        assertThat(testDto.getMobile()).isEqualTo(oneDto.getMobile());
-        assertThat(testDto.getEmail()).isEqualTo(oneDto.getEmail());
-        assertThat(testDto.getActivated()).isEqualTo(oneDto.getActivated());
+        List<UserAccountDTO> userAccountDTOList = userAccountService.list(null);
+        assertThat(userAccountDTOList).hasSize(databaseSizeBeforeCreate + 1);
+        UserAccountDTO testDTO = userAccountDTOList.get(userAccountDTOList.size() - 1);
+        assertThat(testDTO.getUsername()).isEqualTo(oneDTO.getUsername());
+        assertThat(testDTO.getPassword()).isEqualTo(oneDTO.getPassword());
+        assertThat(testDTO.getMobile()).isEqualTo(oneDTO.getMobile());
+        assertThat(testDTO.getEmail()).isEqualTo(oneDTO.getEmail());
+        assertThat(testDTO.getActivated()).isEqualTo(oneDTO.getActivated());
     }
 
     @Test
@@ -117,41 +117,41 @@ public class UserAccountResourceIntTest {
     public void testCreateWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = userAccountService.list(null).size();
 
-        UserAccountDto oneDto = create();
-        oneDto.setId(DEFAULT_ID);
+        UserAccountDTO oneDTO = create();
+        oneDTO.setId(DEFAULT_ID);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserAccountMockMvc.perform(post("/api/v1/user_account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(oneDto)))
+                .content(TestUtil.convertObjectToJsonBytes(oneDTO)))
                 .andExpect(status().isBadRequest());
 
         // Validate the object in the database
-        List<UserAccountDto> userAccountDtoList = userAccountService.list(null);
-        assertThat(userAccountDtoList).hasSize(databaseSizeBeforeCreate);
+        List<UserAccountDTO> userAccountDTOList = userAccountService.list(null);
+        assertThat(userAccountDTOList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
     @Transactional
     public void testCreateWithExistingUsername() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
         int databaseSizeBeforeCreate = userAccountService.list(null).size();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setUsername(oneDto.getUsername());// this username should already be used
-        userAccountDto.setPassword(RandomStringUtils.random(64));
-        userAccountDto.setActivated(DictConstant.BYTE_YES_NO_N);
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setUsername(oneDTO.getUsername());// this username should already be used
+        userAccountDTO.setPassword(RandomStringUtils.random(64));
+        userAccountDTO.setActivated(DictConstant.BYTE_YES_NO_N);
 
         // Create the object
         restUserAccountMockMvc.perform(post("/api/v1/user_account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isBadRequest());
 
         // Validate the object in the database
-        List<UserAccountDto> userList = userAccountService.list(null);
+        List<UserAccountDTO> userList = userAccountService.list(null);
         assertThat(userList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -159,24 +159,24 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testCreateWithExistingMobile() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
         int databaseSizeBeforeCreate = userAccountService.list(null).size();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setUsername(DEFAULT_USERNAME + RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setPassword(RandomStringUtils.random(64));
-        userAccountDto.setMobile(oneDto.getMobile());// this mobile should already be used
-        userAccountDto.setActivated(DictConstant.BYTE_YES_NO_N);
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setUsername(DEFAULT_USERNAME + RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setPassword(RandomStringUtils.random(64));
+        userAccountDTO.setMobile(oneDTO.getMobile());// this mobile should already be used
+        userAccountDTO.setActivated(DictConstant.BYTE_YES_NO_N);
 
         // Create the object
         restUserAccountMockMvc.perform(post("/api/v1/user_account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isBadRequest());
 
         // Validate the object in the database
-        List<UserAccountDto> userList = userAccountService.list(null);
+        List<UserAccountDTO> userList = userAccountService.list(null);
         assertThat(userList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -184,33 +184,33 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testCreateWithExistingEmail() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
         int databaseSizeBeforeCreate = userAccountService.list(null).size();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setUsername(DEFAULT_USERNAME + RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setPassword(RandomStringUtils.random(64));
-        userAccountDto.setEmail(oneDto.getEmail());// this email should already be used
-        userAccountDto.setActivated(DictConstant.BYTE_YES_NO_N);
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setUsername(DEFAULT_USERNAME + RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setPassword(RandomStringUtils.random(64));
+        userAccountDTO.setEmail(oneDTO.getEmail());// this email should already be used
+        userAccountDTO.setActivated(DictConstant.BYTE_YES_NO_N);
 
         // Create the object
         restUserAccountMockMvc.perform(post("/api/v1/user_account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isBadRequest());
 
         // Validate the object in the database
-        List<UserAccountDto> userAccountDtoList = userAccountService.list(null);
-        assertThat(userAccountDtoList).hasSize(databaseSizeBeforeCreate);
+        List<UserAccountDTO> userAccountDTOList = userAccountService.list(null);
+        assertThat(userAccountDTOList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
     @Transactional
     public void testSearch() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
 
         // Get all the objects
         restUserAccountMockMvc.perform(get("/api/v1/user_account")
@@ -221,11 +221,11 @@ public class UserAccountResourceIntTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].username").value(hasItem(oneDto.getUsername())))
-                .andExpect(jsonPath("$.[*].password").value(hasItem(oneDto.getPassword())))
-                .andExpect(jsonPath("$.[*].mobile").value(hasItem(oneDto.getMobile())))
-                .andExpect(jsonPath("$.[*].email").value(hasItem(oneDto.getEmail())))
-                .andExpect(jsonPath("$.[*].activated").value(hasItem(Integer.valueOf(oneDto.getActivated()))))
+                .andExpect(jsonPath("$.[*].username").value(hasItem(oneDTO.getUsername())))
+                .andExpect(jsonPath("$.[*].password").value(hasItem(oneDTO.getPassword())))
+                .andExpect(jsonPath("$.[*].mobile").value(hasItem(oneDTO.getMobile())))
+                .andExpect(jsonPath("$.[*].email").value(hasItem(oneDTO.getEmail())))
+                .andExpect(jsonPath("$.[*].activated").value(hasItem(Integer.valueOf(oneDTO.getActivated()))))
         ;
     }
 
@@ -233,18 +233,18 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testGet() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
 
         // Get the object
-        restUserAccountMockMvc.perform(get("/api/v1/user_account/{id}", oneDto.getId()))
+        restUserAccountMockMvc.perform(get("/api/v1/user_account/{id}", oneDTO.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.username").value(oneDto.getUsername()))
-                .andExpect(jsonPath("$.password").value(oneDto.getPassword()))
-                .andExpect(jsonPath("$.mobile").value(oneDto.getMobile()))
-                .andExpect(jsonPath("$.email").value(oneDto.getEmail()))
-                .andExpect(jsonPath("$.activated").value(Integer.valueOf(oneDto.getActivated())))
+                .andExpect(jsonPath("$.username").value(oneDTO.getUsername()))
+                .andExpect(jsonPath("$.password").value(oneDTO.getPassword()))
+                .andExpect(jsonPath("$.mobile").value(oneDTO.getMobile()))
+                .andExpect(jsonPath("$.email").value(oneDTO.getEmail()))
+                .andExpect(jsonPath("$.activated").value(Integer.valueOf(oneDTO.getActivated())))
         ;
     }
 
@@ -259,38 +259,38 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testModify() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
         int databaseSizeBeforeUpdate = userAccountService.list(null).size();
 
         // Update the object
-        UserAccountDto updatedDto = userAccountService.get(oneDto.getId()).get();
+        UserAccountDTO updatedDTO = userAccountService.get(oneDTO.getId()).get();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setId(updatedDto.getId());
-        userAccountDto.setUsername(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setPassword(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setMobile(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setEmail(RandomStringUtils.randomAlphabetic(5));
-        userAccountDto.setActivated(DictConstant.BYTE_YES_NO_N);
-        userAccountDto.setCreatedBy(updatedDto.getCreatedBy());
-        userAccountDto.setLastModifiedBy(updatedDto.getLastModifiedBy());
-        userAccountDto.setDeleted(DictConstant.BYTE_YES_NO_N);
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setId(updatedDTO.getId());
+        userAccountDTO.setUsername(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setPassword(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setMobile(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setEmail(RandomStringUtils.randomAlphabetic(5));
+        userAccountDTO.setActivated(DictConstant.BYTE_YES_NO_N);
+        userAccountDTO.setCreatedBy(updatedDTO.getCreatedBy());
+        userAccountDTO.setLastModifiedBy(updatedDTO.getLastModifiedBy());
+        userAccountDTO.setDeleted(DictConstant.BYTE_YES_NO_N);
 
-        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDto.getId())
+        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDTO.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isOk());
 
         // Validate the object in the database
-        List<UserAccountDto> userList = userAccountService.list(null);
+        List<UserAccountDTO> userList = userAccountService.list(null);
         assertThat(userList).hasSize(databaseSizeBeforeUpdate);
-        UserAccountDto testDto = userList.get(userList.size() - 1);
-        assertThat(testDto.getUsername()).isEqualTo(userAccountDto.getUsername());
-        assertThat(testDto.getPassword()).isEqualTo(userAccountDto.getPassword());
-        assertThat(testDto.getMobile()).isEqualTo(userAccountDto.getMobile());
-        assertThat(testDto.getEmail()).isEqualTo(userAccountDto.getEmail());
-        assertThat(testDto.getActivated()).isEqualTo(userAccountDto.getActivated());
+        UserAccountDTO testDTO = userList.get(userList.size() - 1);
+        assertThat(testDTO.getUsername()).isEqualTo(userAccountDTO.getUsername());
+        assertThat(testDTO.getPassword()).isEqualTo(userAccountDTO.getPassword());
+        assertThat(testDTO.getMobile()).isEqualTo(userAccountDTO.getMobile());
+        assertThat(testDTO.getEmail()).isEqualTo(userAccountDTO.getEmail());
+        assertThat(testDTO.getActivated()).isEqualTo(userAccountDTO.getActivated());
 
     }
 
@@ -298,28 +298,28 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testModifyExistingUsername() throws Exception {
         // Initialize the database with 2 objects
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
 
-        UserAccountDto anotherDto = create();
-        userAccountService.create(anotherDto);
+        UserAccountDTO anotherDTO = create();
+        userAccountService.create(anotherDTO);
 
         // Update the object
-        UserAccountDto updatedDto = userAccountService.get(oneDto.getId()).get();
+        UserAccountDTO updatedDTO = userAccountService.get(oneDTO.getId()).get();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setId(updatedDto.getId());
-        userAccountDto.setUsername(anotherDto.getUsername());// this username should already be used by anotherDto
-        userAccountDto.setPassword(updatedDto.getPassword());
-        userAccountDto.setMobile(updatedDto.getMobile());
-        userAccountDto.setEmail(updatedDto.getEmail());
-        userAccountDto.setActivated(updatedDto.getActivated());
-        userAccountDto.setCreatedBy(updatedDto.getCreatedBy());
-        userAccountDto.setLastModifiedBy(updatedDto.getLastModifiedBy());
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setId(updatedDTO.getId());
+        userAccountDTO.setUsername(anotherDTO.getUsername());// this username should already be used by anotherDTO
+        userAccountDTO.setPassword(updatedDTO.getPassword());
+        userAccountDTO.setMobile(updatedDTO.getMobile());
+        userAccountDTO.setEmail(updatedDTO.getEmail());
+        userAccountDTO.setActivated(updatedDTO.getActivated());
+        userAccountDTO.setCreatedBy(updatedDTO.getCreatedBy());
+        userAccountDTO.setLastModifiedBy(updatedDTO.getLastModifiedBy());
 
-        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDto.getId())
+        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDTO.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -327,28 +327,28 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testModifyExistingMobile() throws Exception {
         // Initialize the database with 2 objects
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
 
-        UserAccountDto anotherDto = create();
-        userAccountService.create(anotherDto);
+        UserAccountDTO anotherDTO = create();
+        userAccountService.create(anotherDTO);
 
         // Update the object
-        UserAccountDto updatedDto = userAccountService.get(oneDto.getId()).get();
+        UserAccountDTO updatedDTO = userAccountService.get(oneDTO.getId()).get();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setId(updatedDto.getId());
-        userAccountDto.setUsername(updatedDto.getUsername());
-        userAccountDto.setPassword(updatedDto.getPassword());
-        userAccountDto.setMobile(anotherDto.getMobile());// this mobile should already be used by another
-        userAccountDto.setEmail(updatedDto.getEmail());
-        userAccountDto.setActivated(updatedDto.getActivated());
-        userAccountDto.setCreatedBy(updatedDto.getCreatedBy());
-        userAccountDto.setLastModifiedBy(updatedDto.getLastModifiedBy());
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setId(updatedDTO.getId());
+        userAccountDTO.setUsername(updatedDTO.getUsername());
+        userAccountDTO.setPassword(updatedDTO.getPassword());
+        userAccountDTO.setMobile(anotherDTO.getMobile());// this mobile should already be used by another
+        userAccountDTO.setEmail(updatedDTO.getEmail());
+        userAccountDTO.setActivated(updatedDTO.getActivated());
+        userAccountDTO.setCreatedBy(updatedDTO.getCreatedBy());
+        userAccountDTO.setLastModifiedBy(updatedDTO.getLastModifiedBy());
 
-        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDto.getId())
+        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDTO.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -356,28 +356,28 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testModifyExistingEmail() throws Exception {
         // Initialize the database with 2 objects
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
 
-        UserAccountDto anotherDto = create();
-        userAccountService.create(anotherDto);
+        UserAccountDTO anotherDTO = create();
+        userAccountService.create(anotherDTO);
 
         // Update the object
-        UserAccountDto updatedDto = userAccountService.get(oneDto.getId()).get();
+        UserAccountDTO updatedDTO = userAccountService.get(oneDTO.getId()).get();
 
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setId(updatedDto.getId());
-        userAccountDto.setUsername(updatedDto.getUsername());
-        userAccountDto.setPassword(updatedDto.getPassword());
-        userAccountDto.setMobile(updatedDto.getMobile());
-        userAccountDto.setEmail(anotherDto.getEmail());// this email should already be used by another
-        userAccountDto.setActivated(updatedDto.getActivated());
-        userAccountDto.setCreatedBy(updatedDto.getCreatedBy());
-        userAccountDto.setLastModifiedBy(updatedDto.getLastModifiedBy());
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setId(updatedDTO.getId());
+        userAccountDTO.setUsername(updatedDTO.getUsername());
+        userAccountDTO.setPassword(updatedDTO.getPassword());
+        userAccountDTO.setMobile(updatedDTO.getMobile());
+        userAccountDTO.setEmail(anotherDTO.getEmail());// this email should already be used by another
+        userAccountDTO.setActivated(updatedDTO.getActivated());
+        userAccountDTO.setCreatedBy(updatedDTO.getCreatedBy());
+        userAccountDTO.setLastModifiedBy(updatedDTO.getLastModifiedBy());
 
-        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDto.getId())
+        restUserAccountMockMvc.perform(put("/api/v1/user_account/{id}", userAccountDTO.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userAccountDto)))
+                .content(TestUtil.convertObjectToJsonBytes(userAccountDTO)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -385,27 +385,27 @@ public class UserAccountResourceIntTest {
     @Transactional
     public void testDelete() throws Exception {
         // Initialize the database
-        UserAccountDto oneDto = create();
-        userAccountService.create(oneDto);
+        UserAccountDTO oneDTO = create();
+        userAccountService.create(oneDTO);
         int databaseSizeBeforeDelete = userAccountService.list(null).size();
 
         // Delete the object
-        restUserAccountMockMvc.perform(delete("/api/v1/user_account/{id}", oneDto.getId())
+        restUserAccountMockMvc.perform(delete("/api/v1/user_account/{id}", oneDTO.getId())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<UserAccountDto> userList = userAccountService.list(null);
+        List<UserAccountDTO> userList = userAccountService.list(null);
         assertThat(userList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
     @Transactional
     public void testEquals() throws Exception {
-        TestUtil.equalsVerifier(UserAccountDto.class);
-        UserAccountDto user1 = new UserAccountDto();
+        TestUtil.equalsVerifier(UserAccountDTO.class);
+        UserAccountDTO user1 = new UserAccountDTO();
         user1.setUsername(DEFAULT_USERNAME + RandomStringUtils.randomAlphabetic(5));
-        UserAccountDto user2 = new UserAccountDto();
+        UserAccountDTO user2 = new UserAccountDTO();
         user2.setUsername(user1.getUsername());
         assertThat(user1).isEqualTo(user2);
         user2.setUsername(DEFAULT_USERNAME + RandomStringUtils.randomAlphabetic(5));
@@ -415,8 +415,8 @@ public class UserAccountResourceIntTest {
     }
 
     @Test
-    public void testDto2Entity() {
-        UserAccountDto dto = new UserAccountDto();
+    public void testDTO2Entity() {
+        UserAccountDTO dto = new UserAccountDTO();
         dto.setId(Long.parseLong(RandomStringUtils.randomNumeric(8)));
         dto.setUsername(RandomStringUtils.randomAlphabetic(5));
         dto.setPassword(RandomStringUtils.randomAlphabetic(5));
@@ -430,7 +430,7 @@ public class UserAccountResourceIntTest {
         dto.setMemo(RandomStringUtils.randomAlphabetic(5));
         dto.setDeleted(DictConstant.BYTE_YES_NO_N);
 
-        UserAccount entity = userAccountMapStruct.fromDto2Entity(dto);
+        UserAccount entity = userAccountMapStruct.fromDTO2Entity(dto);
 
         assertThat(entity.getId()).isEqualTo(dto.getId());
         assertThat(entity.getUsername()).isEqualTo(dto.getUsername());
@@ -448,7 +448,7 @@ public class UserAccountResourceIntTest {
     }
 
     @Test
-    public void testEntityToDto() {
+    public void testEntityToDTO() {
         UserAccount entity = new UserAccount();
         entity.setId(Long.parseLong(RandomStringUtils.randomNumeric(8)));
         entity.setUsername(RandomStringUtils.randomAlphabetic(5));
@@ -463,7 +463,7 @@ public class UserAccountResourceIntTest {
         entity.setMemo(RandomStringUtils.randomAlphabetic(5));
         entity.setDeleted(DictConstant.BYTE_YES_NO_N);
 
-        UserAccountDto dto = userAccountMapStruct.fromEntity2Dto(entity);
+        UserAccountDTO dto = userAccountMapStruct.fromEntity2DTO(entity);
 
         assertThat(dto.getId()).isEqualTo(entity.getId());
         assertThat(dto.getUsername()).isEqualTo(entity.getUsername());

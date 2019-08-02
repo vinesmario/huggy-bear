@@ -8,9 +8,9 @@ import lombok.Data;
  * @author
  * @date
  */
-@ApiModel(value = "StorageImageConditionDto", description = "StorageImage筛选条件数据传输对象")
+@ApiModel(value = "StorageImageConditionDTO", description = "StorageImage筛选条件数据传输对象")
 @Data
-public class StorageImageConditionDto extends StorageFileConditionDto {
+public class StorageImageConditionDTO extends StorageFileConditionDTO {
 
     /**
      * 图片高度

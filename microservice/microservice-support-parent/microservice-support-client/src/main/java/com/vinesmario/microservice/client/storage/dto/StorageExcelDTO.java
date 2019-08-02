@@ -7,8 +7,8 @@ import lombok.Data;
  * @author
  * @date
  */
-@ApiModel(value = "StorageExcelDto", description = "StorageExcel数据传输对象")
+@ApiModel(value = "StorageExcelDTO", description = "StorageExcel数据传输对象")
 @Data
-public class StorageExcelDto extends StorageFileDto {
+public class StorageExcelDTO extends StorageFileDTO {
 
 }

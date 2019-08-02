@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.server.storage.service;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplitedConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplitedConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.storage.entity.StoragePdf;
@@ -27,7 +27,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StoragePdfSplitedService extends BaseService<StoragePdfSplitedDto, StoragePdfSplited, Long>{
+public class StoragePdfSplitedService extends BaseService<StoragePdfSplitedDTO, StoragePdfSplited, Long>{
 
 	private final StoragePdfSplitedMapper mapper;
 	private final StoragePdfSplitedMapStruct mapStruct;
@@ -39,26 +39,26 @@ public class StoragePdfSplitedService extends BaseService<StoragePdfSplitedDto, 
 		this.mapStruct = mapStruct;
 	}
 
-	public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+	public BaseExample fromConditionDTO2Example(ConditionDTO conditionDTO) {
 		BaseExample example = new BaseExample();
 		BaseExample.Criteria criteria = example.createCriteria();
 		criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-		if (!ObjectUtils.isEmpty(conditionDto)) {
-			StoragePdfSplitedConditionDto storagePdfSplitedConditionDto = (StoragePdfSplitedConditionDto) conditionDto;
-			if (!ObjectUtils.isEmpty(storagePdfSplitedConditionDto.getId())) {
-				criteria.andIdEqualTo(storagePdfSplitedConditionDto.getId());
+		if (!ObjectUtils.isEmpty(conditionDTO)) {
+			StoragePdfSplitedConditionDTO storagePdfSplitedConditionDTO = (StoragePdfSplitedConditionDTO) conditionDTO;
+			if (!ObjectUtils.isEmpty(storagePdfSplitedConditionDTO.getId())) {
+				criteria.andIdEqualTo(storagePdfSplitedConditionDTO.getId());
 			}
-			if (!CollectionUtils.isEmpty(storagePdfSplitedConditionDto.getIds())) {
-                criteria.andIdIn(storagePdfSplitedConditionDto.getIds());
+			if (!CollectionUtils.isEmpty(storagePdfSplitedConditionDTO.getIds())) {
+                criteria.andIdIn(storagePdfSplitedConditionDTO.getIds());
             }
 		}
 		return example;
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<StoragePdfSplitedDto> getByUuid(String uuid) {
-		return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
+	public Optional<StoragePdfSplitedDTO> getByUuid(String uuid) {
+		return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
 	}
   
 }

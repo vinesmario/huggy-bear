@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.server.storage.service;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.StorageImageDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.storage.entity.StorageImage;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StorageImageService extends BaseService<StorageImageDto, StorageImage, Long> {
+public class StorageImageService extends BaseService<StorageImageDTO, StorageImage, Long> {
 
     private final StorageImageMapper mapper;
     private final StorageImageMapStruct mapStruct;
@@ -37,26 +37,26 @@ public class StorageImageService extends BaseService<StorageImageDto, StorageIma
         this.mapStruct = mapStruct;
     }
 
-    public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+    public BaseExample fromConditionDTO2Example(ConditionDTO conditionDTO) {
         BaseExample example = new BaseExample();
         BaseExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-        if (!ObjectUtils.isEmpty(conditionDto)) {
-            StorageImageConditionDto storageImageConditionDto = (StorageImageConditionDto) conditionDto;
-            if (!ObjectUtils.isEmpty(storageImageConditionDto.getId())) {
-                criteria.andIdEqualTo(storageImageConditionDto.getId());
+        if (!ObjectUtils.isEmpty(conditionDTO)) {
+            StorageImageConditionDTO storageImageConditionDTO = (StorageImageConditionDTO) conditionDTO;
+            if (!ObjectUtils.isEmpty(storageImageConditionDTO.getId())) {
+                criteria.andIdEqualTo(storageImageConditionDTO.getId());
             }
-            if (!CollectionUtils.isEmpty(storageImageConditionDto.getIds())) {
-                criteria.andIdIn(storageImageConditionDto.getIds());
+            if (!CollectionUtils.isEmpty(storageImageConditionDTO.getIds())) {
+                criteria.andIdIn(storageImageConditionDTO.getIds());
             }
         }
         return example;
     }
 
     @Transactional(readOnly = true)
-    public Optional<StorageImageDto> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
+    public Optional<StorageImageDTO> getByUuid(String uuid) {
+        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

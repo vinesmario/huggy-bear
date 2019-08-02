@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
  * @author
  * @date
  */
-@ApiModel(value = "StoragePdfSplitedDto", description = "StoragePdfSplited数据传输对象")
+@ApiModel(value = "StoragePdfSplitedDTO", description = "StoragePdfSplited数据传输对象")
 @Data
-public class StoragePdfSplitedDto extends StorageFileDto {
+public class StoragePdfSplitedDTO extends StorageFileDTO {
 
     /**
      * 来源ID

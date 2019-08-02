@@ -15,25 +15,25 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-schedule-server", path = "/api/v1/schedule_demo", fallbackFactory = ScheduleDemoFallbackFactory.class)
-public interface ScheduleDemoClient extends CrudClient<ScheduleDemoDto, ScheduleDemoConditionDto, Long>{
+public interface ScheduleDemoClient extends CrudClient<ScheduleDemoDTO, ScheduleDemoConditionDTO, Long>{
 
 	@GetMapping("")
-	ResponseEntity<List<ScheduleDemoDto>> search(@ModelAttribute ScheduleDemoConditionDto condition);
+	ResponseEntity<List<ScheduleDemoDTO>> search(@ModelAttribute ScheduleDemoConditionDTO condition);
 
 	@GetMapping("/{id}")
-	ResponseEntity<ScheduleDemoDto> get(@PathVariable("id") Long id);
+	ResponseEntity<ScheduleDemoDTO> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<ScheduleDemoDto> create(@RequestBody ScheduleDemoDto dto);
+	ResponseEntity<ScheduleDemoDTO> create(@RequestBody ScheduleDemoDTO dto);
 
 	@PutMapping("/{id}")
-	ResponseEntity<ScheduleDemoDto> modify(@PathVariable("id") Long id,
-                                           @RequestBody ScheduleDemoDto dto);
+	ResponseEntity<ScheduleDemoDTO> modify(@PathVariable("id") Long id,
+                                           @RequestBody ScheduleDemoDTO dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody ScheduleDemoConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody ScheduleDemoConditionDTO condition);
 	
 }

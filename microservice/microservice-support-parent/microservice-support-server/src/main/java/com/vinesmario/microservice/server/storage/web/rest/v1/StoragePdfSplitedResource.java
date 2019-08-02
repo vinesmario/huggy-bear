@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.server.storage.web.rest.v1;
 
-import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplitedConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplitedConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
 import com.vinesmario.microservice.client.storage.web.feign.StoragePdfClient;
 import com.vinesmario.microservice.client.storage.web.feign.StoragePdfSplitedClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
@@ -38,7 +38,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/storage_pdf_splited")
-public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto, StoragePdfSplitedConditionDto, Long>
+public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDTO, StoragePdfSplitedConditionDTO, Long>
         implements StoragePdfSplitedClient {
 
     private final StoragePdfSplitedService service;
@@ -50,7 +50,7 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto
     }
 
     @Override
-    public void preConditionDto(StoragePdfSplitedConditionDto queryDto) {
+    public void preConditionDTO(StoragePdfSplitedConditionDTO queryDTO) {
 
     }
 
@@ -58,8 +58,8 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/uuid/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StoragePdfSplitedDto> getByUuid(@PathVariable("uuid") String uuid) {
-        Optional<StoragePdfSplitedDto> dto = service.getByUuid(uuid);
+    public ResponseEntity<StoragePdfSplitedDTO> getByUuid(@PathVariable("uuid") String uuid) {
+        Optional<StoragePdfSplitedDTO> dto = service.getByUuid(uuid);
 
         return ResponseUtil.wrapOrNotFound(dto);
     }
@@ -68,7 +68,7 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StoragePdfSplitedDto> create(@RequestBody StoragePdfSplitedDto dto) {
+    public ResponseEntity<StoragePdfSplitedDTO> create(@RequestBody StoragePdfSplitedDTO dto) {
         // 不需支持该方法
         return ResponseEntity.notFound().build();
     }
@@ -77,7 +77,7 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto
     @ApiResponse(code = 200, message = "上传文件成功", response = String.class)
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StoragePdfSplitedDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    public ResponseEntity<StoragePdfSplitedDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                  @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                  @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -85,11 +85,11 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto
             throw new BadRequestAlertException("File cannot be empty",
                     null, "image.empty", entityName);
         }
-        AbstractStorageFactory<StoragePdfSplitedDto> storageFactory = new StoragePdfSplitedFactory();
-        StoragePdfSplitedDto storageFileDto = storageFactory.create(multipartFile, tenantId);
+        AbstractStorageFactory<StoragePdfSplitedDTO> storageFactory = new StoragePdfSplitedFactory();
+        StoragePdfSplitedDTO storageFileDTO = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
-                .body(storageFileDto);
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDTO.getAlertParam()))
+                .body(storageFileDTO);
     }
 
     @ApiOperation(value = "下载文件", httpMethod = "GET")
@@ -98,7 +98,7 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDto
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
             throws IOException {
-        Optional<StoragePdfSplitedDto> optional = service.getByUuid(uuid);
+        Optional<StoragePdfSplitedDTO> optional = service.getByUuid(uuid);
         if (!optional.isPresent()) {
             return ResponseEntity.notFound()
                     .headers(HeaderUtil.createFailureAlert("record not found", 404, "record.not_found", entityName))

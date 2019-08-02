@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.web.rest.v1;
 
-import com.vinesmario.microservice.client.storage.dto.StoragePdfDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfConditionDTO;
 import com.vinesmario.microservice.client.storage.web.feign.StoragePdfClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
@@ -34,7 +34,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/storage_pdf")
-public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfConditionDto, Long>
+public class StoragePdfResource extends BaseResource<StoragePdfDTO, StoragePdfConditionDTO, Long>
         implements StoragePdfClient {
 
     private final StoragePdfService service;
@@ -46,7 +46,7 @@ public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfCo
     }
 
     @Override
-    public void preConditionDto(StoragePdfConditionDto queryDto) {
+    public void preConditionDTO(StoragePdfConditionDTO queryDTO) {
 
     }
 
@@ -54,8 +54,8 @@ public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfCo
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/uuid/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StoragePdfDto> getByUuid(@PathVariable("uuid") String uuid) {
-        Optional<StoragePdfDto> dto = service.getByUuid(uuid);
+    public ResponseEntity<StoragePdfDTO> getByUuid(@PathVariable("uuid") String uuid) {
+        Optional<StoragePdfDTO> dto = service.getByUuid(uuid);
 
         return ResponseUtil.wrapOrNotFound(dto);
     }
@@ -64,7 +64,7 @@ public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfCo
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<StoragePdfDto> create(@RequestBody StoragePdfDto dto) {
+    public ResponseEntity<StoragePdfDTO> create(@RequestBody StoragePdfDTO dto) {
         // 不需支持该方法
         return ResponseEntity.notFound().build();
     }
@@ -73,7 +73,7 @@ public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfCo
     @ApiResponse(code = 200, message = "上传PDF成功", response = String.class)
     @PostMapping(value = "/upload")
     @ResponseBody
-    public ResponseEntity<StoragePdfDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    public ResponseEntity<StoragePdfDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                                 @RequestParam(value = "tenantId", required = false) Long tenantId,
                                                 @RequestParam(value = "memo", required = false) String memo)
             throws Exception {
@@ -81,11 +81,11 @@ public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfCo
             throw new BadRequestAlertException("File cannot be empty",
                     null, "image.empty", entityName);
         }
-        AbstractStorageFactory<StoragePdfDto> storageFactory = new StoragePdfFactory();
-        StoragePdfDto storageFileDto = storageFactory.create(multipartFile, tenantId);
+        AbstractStorageFactory<StoragePdfDTO> storageFactory = new StoragePdfFactory();
+        StoragePdfDTO storageFileDTO = storageFactory.create(multipartFile, tenantId);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDto.getAlertParam()))
-                .body(storageFileDto);
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, storageFileDTO.getAlertParam()))
+                .body(storageFileDTO);
     }
 
     @ApiOperation(value = "下载PDF", httpMethod = "GET")
@@ -94,7 +94,7 @@ public class StoragePdfResource extends BaseResource<StoragePdfDto, StoragePdfCo
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)
             throws IOException {
-        Optional<StoragePdfDto> optional = service.getByUuid(uuid);
+        Optional<StoragePdfDTO> optional = service.getByUuid(uuid);
         if (!optional.isPresent()) {
             return ResponseEntity.notFound()
                     .headers(HeaderUtil.createFailureAlert("record not found", 404, "record.not_found", entityName))

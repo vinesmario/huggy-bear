@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.server.storage.service;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageFileConditionDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.storage.entity.StorageFile;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StorageFileService extends BaseService<StorageFileDto, StorageFile, Long> {
+public class StorageFileService extends BaseService<StorageFileDTO, StorageFile, Long> {
 
     private final StorageFileMapper mapper;
     private final StorageFileMapStruct mapStruct;
@@ -37,26 +37,26 @@ public class StorageFileService extends BaseService<StorageFileDto, StorageFile,
         this.mapStruct = mapStruct;
     }
 
-    public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+    public BaseExample fromConditionDTO2Example(ConditionDTO conditionDTO) {
         BaseExample example = new BaseExample();
         BaseExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-        if (!ObjectUtils.isEmpty(conditionDto)) {
-            StorageFileConditionDto storageFileConditionDto = (StorageFileConditionDto) conditionDto;
-            if (!ObjectUtils.isEmpty(storageFileConditionDto.getId())) {
-                criteria.andIdEqualTo(storageFileConditionDto.getId());
+        if (!ObjectUtils.isEmpty(conditionDTO)) {
+            StorageFileConditionDTO storageFileConditionDTO = (StorageFileConditionDTO) conditionDTO;
+            if (!ObjectUtils.isEmpty(storageFileConditionDTO.getId())) {
+                criteria.andIdEqualTo(storageFileConditionDTO.getId());
             }
-            if (!CollectionUtils.isEmpty(storageFileConditionDto.getIds())) {
-                criteria.andIdIn(storageFileConditionDto.getIds());
+            if (!CollectionUtils.isEmpty(storageFileConditionDTO.getIds())) {
+                criteria.andIdIn(storageFileConditionDTO.getIds());
             }
         }
         return example;
     }
 
     @Transactional(readOnly = true)
-    public Optional<StorageFileDto> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
+    public Optional<StorageFileDTO> getByUuid(String uuid) {
+        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

@@ -51,7 +51,7 @@ public class StorageFile extends BaseEntity<Long> {
     @Column(name = "FILE_RELATIVE_URL")
     private String fileRelativeUrl;
     /**
-     * 文件大小，单位B
+     * 文件大小，单位byte(B)
      */
     @Column(name = "FILE_SIZE")
     private Long fileSize;

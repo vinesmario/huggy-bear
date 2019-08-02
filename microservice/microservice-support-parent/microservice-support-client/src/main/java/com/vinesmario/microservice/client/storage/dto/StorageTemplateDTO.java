@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
  * @author
  * @date
  */
-@ApiModel(value = "StorageTemplateDto", description = "StorageTemplate数据传输对象")
+@ApiModel(value = "StorageTemplateDTO", description = "StorageTemplate数据传输对象")
 @Data
-public class StorageTemplateDto extends StorageFileDto {
+public class StorageTemplateDTO extends StorageFileDTO {
 
 }

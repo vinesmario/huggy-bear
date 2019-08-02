@@ -1,19 +1,16 @@
 package com.vinesmario.microservice.client.demo;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.vinesmario.microservice.client.uaa.dto.AuthorityDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @author
  * @date
  */
-@ApiModel(value = "UaaDemoDto", description = "UaaDemoDto")
+@ApiModel(value = "SupportDemoDTO", description = "SupportDemoDTO")
 @Data
-public class UaaDemoDto extends BaseDto<Long> {
+public class SupportDemoDTO extends BaseDTO<Long> {
 
     /**
      * 用户名

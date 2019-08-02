@@ -15,25 +15,25 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/support_demo", fallbackFactory = SupportDemoFallbackFactory.class)
-public interface SupportDemoClient extends CrudClient<SupportDemoDto, SupportDemoConditionDto, Long> {
+public interface SupportDemoClient extends CrudClient<SupportDemoDTO, SupportDemoConditionDTO, Long> {
 
     @GetMapping("")
-    ResponseEntity<List<SupportDemoDto>> search(@ModelAttribute SupportDemoConditionDto condition);
+    ResponseEntity<List<SupportDemoDTO>> search(@ModelAttribute SupportDemoConditionDTO condition);
 
     @GetMapping("/{id}")
-    ResponseEntity<SupportDemoDto> get(@PathVariable("id") Long id);
+    ResponseEntity<SupportDemoDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<SupportDemoDto> create(@RequestBody SupportDemoDto dto);
+    ResponseEntity<SupportDemoDTO> create(@RequestBody SupportDemoDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<SupportDemoDto> modify(@PathVariable("id") Long id,
-                                      @RequestBody SupportDemoDto dto);
+    ResponseEntity<SupportDemoDTO> modify(@PathVariable("id") Long id,
+                                      @RequestBody SupportDemoDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody SupportDemoConditionDto conditionDto);
+    ResponseEntity<Void> remove(@RequestBody SupportDemoConditionDTO conditionDTO);
 
 }

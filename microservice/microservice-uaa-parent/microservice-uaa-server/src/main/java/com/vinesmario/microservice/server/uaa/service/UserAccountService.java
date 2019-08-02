@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.server.uaa.service;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
-import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
+import com.vinesmario.microservice.client.uaa.dto.UserAccountDTO;
+import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.uaa.entity.UserAccount;
@@ -22,7 +22,7 @@ import java.util.Optional;
  * @date 2018-01-18
  */
 @Service
-public class UserAccountService extends BaseService<UserAccountDto, UserAccount, Long> {
+public class UserAccountService extends BaseService<UserAccountDTO, UserAccount, Long> {
 
     private final UserAccountMapper mapper;
     private final UserAccountMapStruct mapStruct;
@@ -34,55 +34,55 @@ public class UserAccountService extends BaseService<UserAccountDto, UserAccount,
         this.mapStruct = mapStruct;
     }
 
-    public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+    public BaseExample fromConditionDTO2Example(ConditionDTO conditionDTO) {
         BaseExample example = new BaseExample();
         BaseExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-        if (!ObjectUtils.isEmpty(conditionDto)) {
-            UserAccountConditionDto userAccountConditionDto = (UserAccountConditionDto) conditionDto;
-            if (!ObjectUtils.isEmpty(userAccountConditionDto.getId())) {
-                criteria.andIdEqualTo(userAccountConditionDto.getId());
+        if (!ObjectUtils.isEmpty(conditionDTO)) {
+            UserAccountConditionDTO userAccountConditionDTO = (UserAccountConditionDTO) conditionDTO;
+            if (!ObjectUtils.isEmpty(userAccountConditionDTO.getId())) {
+                criteria.andIdEqualTo(userAccountConditionDTO.getId());
             }
-            if (!CollectionUtils.isEmpty(userAccountConditionDto.getIds())) {
-                criteria.andIdIn(userAccountConditionDto.getIds());
+            if (!CollectionUtils.isEmpty(userAccountConditionDTO.getIds())) {
+                criteria.andIdIn(userAccountConditionDTO.getIds());
             }
         }
         return example;
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserAccountDto> getByUsername(String username) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByUsername(username)));
+    public Optional<UserAccountDTO> getByUsername(String username) {
+        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByUsername(username)));
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserAccountDto> getByMobile(String mobile) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByMobile(mobile)));
+    public Optional<UserAccountDTO> getByMobile(String mobile) {
+        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByMobile(mobile)));
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserAccountDto> getByEmail(String email) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByEmail(email)));
+    public Optional<UserAccountDTO> getByEmail(String email) {
+        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByEmail(email)));
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserAccountDto> getWithAuthoritiesByUsername(String username) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByUsername(username)));
+    public Optional<UserAccountDTO> getWithAuthoritiesByUsername(String username) {
+        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByUsername(username)));
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserAccountDto> getWithAuthoritiesByMobile(String mobile) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByMobile(mobile)));
+    public Optional<UserAccountDTO> getWithAuthoritiesByMobile(String mobile) {
+        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByMobile(mobile)));
     }
 
     @Transactional(readOnly = true)
-    public Optional<UserAccountDto> getWithAuthoritiesByEmail(String email) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2Dto(this.mapper.selectByEmail(email)));
+    public Optional<UserAccountDTO> getWithAuthoritiesByEmail(String email) {
+        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByEmail(email)));
     }
 
-    public void create(UserAccountDto dto) {
-        UserAccount entity = mapStruct.fromDto2Entity(dto);
+    public void create(UserAccountDTO dto) {
+        UserAccount entity = mapStruct.fromDTO2Entity(dto);
         this.mapper.insert(entity);
         dto.setId(entity.getId());
         // 初始化用户角色

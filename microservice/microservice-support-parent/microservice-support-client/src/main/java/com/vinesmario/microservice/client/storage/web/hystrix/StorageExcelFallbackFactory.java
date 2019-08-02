@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.client.storage.web.hystrix;
 
-import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDTO;
 import com.vinesmario.microservice.client.storage.web.feign.StorageExcelClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -24,25 +24,25 @@ public class StorageExcelFallbackFactory implements FallbackFactory<StorageExcel
     public StorageExcelClient create(Throwable throwable) {
         return new StorageExcelClient() {
             @Override
-            public ResponseEntity<List<StorageExcelDto>> search(StorageExcelConditionDto condition) {
+            public ResponseEntity<List<StorageExcelDTO>> search(StorageExcelConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageExcelDto> get(Long id) {
+            public ResponseEntity<StorageExcelDTO> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageExcelDto> create(StorageExcelDto storageExcel) {
+            public ResponseEntity<StorageExcelDTO> create(StorageExcelDTO storageExcel) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageExcelDto> modify(Long id, StorageExcelDto storageExcel) {
+            public ResponseEntity<StorageExcelDTO> modify(Long id, StorageExcelDTO storageExcel) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -54,13 +54,13 @@ public class StorageExcelFallbackFactory implements FallbackFactory<StorageExcel
             }
 
             @Override
-            public ResponseEntity<Void> remove(StorageExcelConditionDto condition) {
+            public ResponseEntity<Void> remove(StorageExcelConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<StorageExcelDto> upload(MultipartFile multipartFile,
+            public ResponseEntity<StorageExcelDTO> upload(MultipartFile multipartFile,
                                                           Long tenantId, String memo) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();

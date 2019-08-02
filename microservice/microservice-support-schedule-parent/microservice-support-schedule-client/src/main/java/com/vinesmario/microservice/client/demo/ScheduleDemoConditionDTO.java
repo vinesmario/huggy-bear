@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.demo;
 
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,11 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "ScheduleDemoConditionDto", description = "ScheduleDemo筛选条件数据传输对象")
+@ApiModel(value = "ScheduleDemoConditionDTO", description = "ScheduleDemo筛选条件数据传输对象")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScheduleDemoConditionDto implements ConditionDto {
+public class ScheduleDemoConditionDTO implements ConditionDTO {
 
     /**
      * ID

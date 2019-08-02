@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.demo;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
  * @author
  * @date
  */
-@ApiModel(value = "ScheduleDemoDto", description = "ScheduleDemo数据传输对象")
+@ApiModel(value = "ScheduleDemoDTO", description = "ScheduleDemo数据传输对象")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScheduleDemoDto extends BaseDto<Long> {
+public class ScheduleDemoDTO extends BaseDTO<Long> {
 
     /**
      * 名称

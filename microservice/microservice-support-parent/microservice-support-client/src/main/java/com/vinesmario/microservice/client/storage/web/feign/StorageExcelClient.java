@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDTO;
 import com.vinesmario.microservice.client.storage.web.hystrix.StorageExcelFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -20,28 +20,28 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/storage_excel", fallbackFactory = StorageExcelFallbackFactory.class)
-public interface StorageExcelClient extends CrudClient<StorageExcelDto, StorageExcelConditionDto, Long>{
+public interface StorageExcelClient extends CrudClient<StorageExcelDTO, StorageExcelConditionDTO, Long>{
 
 	@GetMapping("")
-	ResponseEntity<List<StorageExcelDto>> search(@ModelAttribute StorageExcelConditionDto condition);
+	ResponseEntity<List<StorageExcelDTO>> search(@ModelAttribute StorageExcelConditionDTO condition);
 
 	@GetMapping("/{id}")
-	ResponseEntity<StorageExcelDto> get(@PathVariable("id") Long id);
+	ResponseEntity<StorageExcelDTO> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<StorageExcelDto> create(@RequestBody StorageExcelDto dto);
+	ResponseEntity<StorageExcelDTO> create(@RequestBody StorageExcelDTO dto);
 
 	@PutMapping("/{id}")
-	ResponseEntity<StorageExcelDto> modify(@PathVariable("id") Long id,
-                                           @RequestBody StorageExcelDto dto);
+	ResponseEntity<StorageExcelDTO> modify(@PathVariable("id") Long id,
+                                           @RequestBody StorageExcelDTO dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody StorageExcelConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StorageExcelConditionDTO condition);
 
-	ResponseEntity<StorageExcelDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+	ResponseEntity<StorageExcelDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
 										   @RequestParam(value = "tenantId", required = false) Long tenantId,
 										   @RequestParam(value = "memo", required = false) String memo)
 			throws Exception;

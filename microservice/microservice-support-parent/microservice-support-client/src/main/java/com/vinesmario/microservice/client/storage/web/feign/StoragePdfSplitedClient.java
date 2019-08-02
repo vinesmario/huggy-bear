@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplitedConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplitedConditionDTO;
 import com.vinesmario.microservice.client.storage.web.hystrix.StoragePdfSplitedFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -20,28 +20,28 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/storage_pdf_splited", fallbackFactory = StoragePdfSplitedFallbackFactory.class)
-public interface StoragePdfSplitedClient extends CrudClient<StoragePdfSplitedDto, StoragePdfSplitedConditionDto, Long>{
+public interface StoragePdfSplitedClient extends CrudClient<StoragePdfSplitedDTO, StoragePdfSplitedConditionDTO, Long>{
 
 	@GetMapping("")
-	ResponseEntity<List<StoragePdfSplitedDto>> search(@ModelAttribute StoragePdfSplitedConditionDto condition);
+	ResponseEntity<List<StoragePdfSplitedDTO>> search(@ModelAttribute StoragePdfSplitedConditionDTO condition);
 
 	@GetMapping("/{id}")
-	ResponseEntity<StoragePdfSplitedDto> get(@PathVariable("id") Long id);
+	ResponseEntity<StoragePdfSplitedDTO> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<StoragePdfSplitedDto> create(@RequestBody StoragePdfSplitedDto dto);
+	ResponseEntity<StoragePdfSplitedDTO> create(@RequestBody StoragePdfSplitedDTO dto);
 
 	@PutMapping("/{id}")
-	ResponseEntity<StoragePdfSplitedDto> modify(@PathVariable("id") Long id,
-                                                @RequestBody StoragePdfSplitedDto dto);
+	ResponseEntity<StoragePdfSplitedDTO> modify(@PathVariable("id") Long id,
+                                                @RequestBody StoragePdfSplitedDTO dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody StoragePdfSplitedConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StoragePdfSplitedConditionDTO condition);
 
-	ResponseEntity<StoragePdfSplitedDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+	ResponseEntity<StoragePdfSplitedDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
 										 @RequestParam(value = "tenantId", required = false) Long tenantId,
 										 @RequestParam(value = "memo", required = false) String memo)
 			throws Exception;

@@ -15,25 +15,25 @@ public class SupportDemoFallbackFactory implements FallbackFactory<SupportDemoCl
     public SupportDemoClient create(Throwable throwable) {
         return new SupportDemoClient() {
             @Override
-            public ResponseEntity<List<SupportDemoDto>> search(SupportDemoConditionDto condition) {
+            public ResponseEntity<List<SupportDemoDTO>> search(SupportDemoConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<SupportDemoDto> get(Long id) {
+            public ResponseEntity<SupportDemoDTO> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<SupportDemoDto> create(SupportDemoDto dto) {
+            public ResponseEntity<SupportDemoDTO> create(SupportDemoDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<SupportDemoDto> modify(Long id, SupportDemoDto dto) {
+            public ResponseEntity<SupportDemoDTO> modify(Long id, SupportDemoDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -45,7 +45,7 @@ public class SupportDemoFallbackFactory implements FallbackFactory<SupportDemoCl
             }
 
             @Override
-            public ResponseEntity<Void> remove(SupportDemoConditionDto condition){
+            public ResponseEntity<Void> remove(SupportDemoConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

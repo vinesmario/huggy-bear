@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
  * @author
  * @date
  */
-@ApiModel(value = "StorageImageDto", description = "StorageImage数据传输对象")
+@ApiModel(value = "StorageImageDTO", description = "StorageImage数据传输对象")
 @Data
-public class StorageImageDto extends StorageFileDto {
+public class StorageImageDTO extends StorageFileDTO {
 
     /**
      * 图片高度

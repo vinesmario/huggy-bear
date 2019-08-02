@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
 import com.vinesmario.microservice.server.storage.service.StorageExcelService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StorageExcelFactory extends AbstractStorageFactory<StorageExcelDto> {
+public class StorageExcelFactory extends AbstractStorageFactory<StorageExcelDTO> {
 
     @Override
-    public StorageExcelDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StorageExcelDTO create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -31,38 +31,38 @@ public class StorageExcelFactory extends AbstractStorageFactory<StorageExcelDto>
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StorageExcelDto storageExcelDto = new StorageExcelDto();
-        storageExcelDto.setTenantId(tenantId);
-        storageExcelDto.setUuid(uuid);
-        storageExcelDto.setFileExtension(extension);
-        storageExcelDto.setFileName(fileName);
-        storageExcelDto.setFileSize(multipartFile.getSize());
+        StorageExcelDTO storageExcelDTO = new StorageExcelDTO();
+        storageExcelDTO.setTenantId(tenantId);
+        storageExcelDTO.setUuid(uuid);
+        storageExcelDTO.setFileExtension(extension);
+        storageExcelDTO.setFileName(fileName);
+        storageExcelDTO.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageExcelDto.setFileMd5Hex(md5Hex);
-        storageExcelDto.setFileSha1Hex(sha1Hex);
+        storageExcelDTO.setFileMd5Hex(md5Hex);
+        storageExcelDTO.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storageExcelDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storageExcelDTO);
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storageExcelDto.getFileAbsoluteUrl())) {
+        if (StringUtils.isBlank(storageExcelDTO.getFileAbsoluteUrl())) {
             String url = StorageExcelResource.class.getAnnotation(RequestMapping.class).value()[0];
             url += StorageExcelResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storageExcelDto.setFileRelativeUrl(url.replace("{uuid}", storageExcelDto.getUuid()));
-//            storageExcelDto.setFileRelativeUrl("/api/v1/storage_excel/download/{uuid}".replace("{uuid}", storageExcelDto.getUuid()));
+            storageExcelDTO.setFileRelativeUrl(url.replace("{uuid}", storageExcelDTO.getUuid()));
+//            storageExcelDTO.setFileRelativeUrl("/api/v1/storage_excel/download/{uuid}".replace("{uuid}", storageExcelDTO.getUuid()));
         }
 
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
             StorageExcelService service = SpringContextUtil.getBean(StorageExcelService.class);
-            service.create(storageExcelDto);
+            service.create(storageExcelDTO);
         }
 
-        storageExcelDto.setFileAbsolutePath(null);
-        return storageExcelDto;
+        storageExcelDTO.setFileAbsolutePath(null);
+        return storageExcelDTO;
     }
 
 }

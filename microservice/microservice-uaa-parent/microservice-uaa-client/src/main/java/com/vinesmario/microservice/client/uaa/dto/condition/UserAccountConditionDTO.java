@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.uaa.dto.condition;
 
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -10,9 +10,9 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "UserAccountConditionDto", description = "UserAccountConditionDto")
+@ApiModel(value = "UserAccountConditionDTO", description = "UserAccountConditionDTO")
 @Data
-public class UserAccountConditionDto implements ConditionDto {
+public class UserAccountConditionDTO implements ConditionDTO {
 
     /**
      * ID

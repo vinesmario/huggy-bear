@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
 import com.vinesmario.microservice.server.storage.service.StorageFileService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StorageFileFactory extends AbstractStorageFactory<StorageFileDto> {
+public class StorageFileFactory extends AbstractStorageFactory<StorageFileDTO> {
 
     @Override
-    public StorageFileDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StorageFileDTO create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -31,37 +31,37 @@ public class StorageFileFactory extends AbstractStorageFactory<StorageFileDto> {
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StorageFileDto storageFileDto = new StorageFileDto();
-        storageFileDto.setTenantId(tenantId);
-        storageFileDto.setUuid(uuid);
-        storageFileDto.setFileExtension(extension);
-        storageFileDto.setFileName(fileName);
-        storageFileDto.setFileSize(multipartFile.getSize());
+        StorageFileDTO storageFileDTO = new StorageFileDTO();
+        storageFileDTO.setTenantId(tenantId);
+        storageFileDTO.setUuid(uuid);
+        storageFileDTO.setFileExtension(extension);
+        storageFileDTO.setFileName(fileName);
+        storageFileDTO.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageFileDto.setFileMd5Hex(md5Hex);
-        storageFileDto.setFileSha1Hex(sha1Hex);
+        storageFileDTO.setFileMd5Hex(md5Hex);
+        storageFileDTO.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storageFileDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storageFileDTO);
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storageFileDto.getFileAbsoluteUrl())) {
+        if (StringUtils.isBlank(storageFileDTO.getFileAbsoluteUrl())) {
             String url = StorageFileResource.class.getAnnotation(RequestMapping.class).value()[0];
             url += StorageFileResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storageFileDto.setFileRelativeUrl(url.replace("{uuid}", storageFileDto.getUuid()));
-//            storageFileDto.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDto.getUuid()));
+            storageFileDTO.setFileRelativeUrl(url.replace("{uuid}", storageFileDTO.getUuid()));
+//            storageFileDTO.setFileRelativeUrl("/api/v1/storage_file/download/{uuid}".replace("{uuid}", storageFileDTO.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
             StorageFileService service = SpringContextUtil.getBean(StorageFileService.class);
-            service.create(storageFileDto);
+            service.create(storageFileDTO);
         }
 
-        storageFileDto.setFileAbsolutePath(null);
-        return storageFileDto;
+        storageFileDTO.setFileAbsolutePath(null);
+        return storageFileDTO;
     }
 
 }

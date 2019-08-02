@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
  * @author
  * @date
  */
-@ApiModel(value = "StoragePdfDto", description = "StoragePdf数据传输对象")
+@ApiModel(value = "StoragePdfDTO", description = "StoragePdf数据传输对象")
 @Data
-public class StoragePdfDto extends StorageFileDto {
+public class StoragePdfDTO extends StorageFileDTO {
 
     /**
      * 页数

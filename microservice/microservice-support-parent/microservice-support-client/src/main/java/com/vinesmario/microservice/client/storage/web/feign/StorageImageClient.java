@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageImageDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDTO;
 import com.vinesmario.microservice.client.storage.web.hystrix.StorageImageFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +20,27 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/storage_image", fallbackFactory = StorageImageFallbackFactory.class)
-public interface StorageImageClient extends CrudClient<StorageImageDto, StorageImageConditionDto, Long> {
+public interface StorageImageClient extends CrudClient<StorageImageDTO, StorageImageConditionDTO, Long> {
 
     @GetMapping("")
-    ResponseEntity<List<StorageImageDto>> search(@ModelAttribute StorageImageConditionDto condition);
+    ResponseEntity<List<StorageImageDTO>> search(@ModelAttribute StorageImageConditionDTO condition);
 
     @GetMapping("/{id}")
-    ResponseEntity<StorageImageDto> get(@PathVariable("id") Long id);
+    ResponseEntity<StorageImageDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<StorageImageDto> create(@RequestBody StorageImageDto dto);
+    ResponseEntity<StorageImageDTO> create(@RequestBody StorageImageDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<StorageImageDto> modify(@PathVariable("id") Long id, @RequestBody StorageImageDto dto);
+    ResponseEntity<StorageImageDTO> modify(@PathVariable("id") Long id, @RequestBody StorageImageDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody StorageImageConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StorageImageConditionDTO condition);
 
-    ResponseEntity<StorageImageDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    ResponseEntity<StorageImageDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                            @RequestParam(value = "tenantId", required = false) Long tenantId,
                                            @RequestParam(value = "memo", required = false) String memo)
             throws Exception;

@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StorageTemplateDto;
+import com.vinesmario.microservice.client.storage.dto.StorageTemplateDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
 import com.vinesmario.microservice.server.storage.service.StorageTemplateService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StorageTemplateFactory extends AbstractStorageFactory<StorageTemplateDto> {
+public class StorageTemplateFactory extends AbstractStorageFactory<StorageTemplateDTO> {
 
     @Override
-    public StorageTemplateDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StorageTemplateDTO create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -31,37 +31,37 @@ public class StorageTemplateFactory extends AbstractStorageFactory<StorageTempla
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StorageTemplateDto storageTemplateDto = new StorageTemplateDto();
-        storageTemplateDto.setTenantId(tenantId);
-        storageTemplateDto.setUuid(uuid);
-        storageTemplateDto.setFileExtension(extension);
-        storageTemplateDto.setFileName(fileName);
-        storageTemplateDto.setFileSize(multipartFile.getSize());
+        StorageTemplateDTO storageTemplateDTO = new StorageTemplateDTO();
+        storageTemplateDTO.setTenantId(tenantId);
+        storageTemplateDTO.setUuid(uuid);
+        storageTemplateDTO.setFileExtension(extension);
+        storageTemplateDTO.setFileName(fileName);
+        storageTemplateDTO.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageTemplateDto.setFileMd5Hex(md5Hex);
-        storageTemplateDto.setFileSha1Hex(sha1Hex);
+        storageTemplateDTO.setFileMd5Hex(md5Hex);
+        storageTemplateDTO.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storageTemplateDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storageTemplateDTO);
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storageTemplateDto.getFileAbsoluteUrl())) {
+        if (StringUtils.isBlank(storageTemplateDTO.getFileAbsoluteUrl())) {
             String url = StorageTemplateResource.class.getAnnotation(RequestMapping.class).value()[0];
             url += StorageTemplateResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storageTemplateDto.setFileRelativeUrl(url.replace("{uuid}", storageTemplateDto.getUuid()));
-//            storageTemplateDto.setFileRelativeUrl("/api/v1/storage_template/download/{uuid}".replace("{uuid}", storageTemplateDto.getUuid()));
+            storageTemplateDTO.setFileRelativeUrl(url.replace("{uuid}", storageTemplateDTO.getUuid()));
+//            storageTemplateDTO.setFileRelativeUrl("/api/v1/storage_template/download/{uuid}".replace("{uuid}", storageTemplateDTO.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
             StorageTemplateService service = SpringContextUtil.getBean(StorageTemplateService.class);
-            service.create(storageTemplateDto);
+            service.create(storageTemplateDTO);
         }
 
-        storageTemplateDto.setFileAbsolutePath(null);
-        return storageTemplateDto;
+        storageTemplateDTO.setFileAbsolutePath(null);
+        return storageTemplateDTO;
     }
 
 }

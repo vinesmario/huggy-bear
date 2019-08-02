@@ -7,8 +7,8 @@ import lombok.Data;
  * @author
  * @date
  */
-@ApiModel(value = "StorageExcelConditionDto", description = "StorageExcel筛选条件数据传输对象")
+@ApiModel(value = "StorageExcelConditionDTO", description = "StorageExcel筛选条件数据传输对象")
 @Data
-public class StorageExcelConditionDto extends StorageFileConditionDto {
+public class StorageExcelConditionDTO extends StorageFileConditionDTO {
 
 }

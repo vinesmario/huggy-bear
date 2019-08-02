@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StorageImageDto;
+import com.vinesmario.microservice.client.storage.dto.StorageImageDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
 import com.vinesmario.microservice.server.storage.service.StorageImageService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
@@ -20,10 +20,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StorageImageFactory extends AbstractStorageFactory<StorageImageDto> {
+public class StorageImageFactory extends AbstractStorageFactory<StorageImageDTO> {
 
     @Override
-    public StorageImageDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StorageImageDTO create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -33,43 +33,43 @@ public class StorageImageFactory extends AbstractStorageFactory<StorageImageDto>
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StorageImageDto storageImageDto = new StorageImageDto();
-        storageImageDto.setTenantId(tenantId);
-        storageImageDto.setUuid(uuid);
-        storageImageDto.setFileExtension(extension);
-        storageImageDto.setFileName(fileName);
-        storageImageDto.setFileSize(multipartFile.getSize());
+        StorageImageDTO storageImageDTO = new StorageImageDTO();
+        storageImageDTO.setTenantId(tenantId);
+        storageImageDTO.setUuid(uuid);
+        storageImageDTO.setFileExtension(extension);
+        storageImageDTO.setFileName(fileName);
+        storageImageDTO.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storageImageDto.setFileMd5Hex(md5Hex);
-        storageImageDto.setFileSha1Hex(sha1Hex);
+        storageImageDTO.setFileMd5Hex(md5Hex);
+        storageImageDTO.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storageImageDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storageImageDTO);
 
         // 图片高度、宽度
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
-        storageImageDto.setImageWidth(bufferedImage.getWidth());
-        storageImageDto.setImageHeight(bufferedImage.getHeight());
+        storageImageDTO.setImageWidth(bufferedImage.getWidth());
+        storageImageDTO.setImageHeight(bufferedImage.getHeight());
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storageImageDto.getFileAbsoluteUrl())) {
+        if (StringUtils.isBlank(storageImageDTO.getFileAbsoluteUrl())) {
             String url = StorageImageResource.class.getAnnotation(RequestMapping.class).value()[0];
             url += StorageImageResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storageImageDto.setFileRelativeUrl(url.replace("{uuid}", storageImageDto.getUuid()));
-//            storageImageDto.setFileRelativeUrl("/api/v1/storage_image/download/{uuid}".replace("{uuid}", storageImageDto.getUuid()));
+            storageImageDTO.setFileRelativeUrl(url.replace("{uuid}", storageImageDTO.getUuid()));
+//            storageImageDTO.setFileRelativeUrl("/api/v1/storage_image/download/{uuid}".replace("{uuid}", storageImageDTO.getUuid()));
         }
 
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
             StorageImageService service = SpringContextUtil.getBean(StorageImageService.class);
-            service.create(storageImageDto);
+            service.create(storageImageDTO);
         }
 
-        storageImageDto.setFileAbsolutePath(null);
-        return storageImageDto;
+        storageImageDTO.setFileAbsolutePath(null);
+        return storageImageDTO;
     }
 
 }

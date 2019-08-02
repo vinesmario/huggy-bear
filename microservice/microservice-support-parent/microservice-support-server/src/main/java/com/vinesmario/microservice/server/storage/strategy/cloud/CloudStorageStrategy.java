@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.strategy.cloud;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDto;
+import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -16,17 +16,17 @@ import java.io.InputStream;
 public abstract class CloudStorageStrategy extends StorageStrategy {
 
     @Override
-    public <T extends StorageFileDto> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception {
+    public <T extends StorageFileDTO> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception {
         dto.setFileAbsoluteUrl(upload(multipartFile.getInputStream(), fileRelativePath));
     }
 
     @Override
-    public <T extends StorageFileDto> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception {
+    public <T extends StorageFileDTO> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception {
         dto.setFileAbsoluteUrl(upload(inputStream, fileRelativePath));
     }
 
     @Override
-    public <T extends StorageFileDto> void upload(byte[] data, String fileRelativePath, T dto) throws Exception {
+    public <T extends StorageFileDTO> void upload(byte[] data, String fileRelativePath, T dto) throws Exception {
         dto.setFileAbsoluteUrl(upload(new ByteArrayInputStream(data), fileRelativePath));
     }
 

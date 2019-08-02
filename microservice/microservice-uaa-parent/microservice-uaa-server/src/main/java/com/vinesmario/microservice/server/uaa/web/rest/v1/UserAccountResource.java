@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.server.uaa.web.rest.v1;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDto;
-import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDto;
+import com.vinesmario.microservice.client.uaa.dto.UserAccountDTO;
+import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDTO;
 import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
@@ -38,7 +38,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/user_account")
-public class UserAccountResource extends BaseResource<UserAccountDto, UserAccountConditionDto, Long>
+public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccountConditionDTO, Long>
         implements UserAccountClient {
 
     private final UserAccountService service;
@@ -50,7 +50,7 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     }
 
     @Override
-    public void preConditionDto(UserAccountConditionDto queryDto) {
+    public void preConditionDTO(UserAccountConditionDTO queryDTO) {
 
     }
 
@@ -58,23 +58,23 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<List<UserAccountDto>> search(@ModelAttribute UserAccountConditionDto conditionDto) {
-        preConditionDto(conditionDto);
+    public ResponseEntity<List<UserAccountDTO>> search(@ModelAttribute UserAccountConditionDTO conditionDTO) {
+        preConditionDTO(conditionDTO);
         // 创建分页对象PageRequest
-        String[] directionParameter = conditionDto.getSort();
+        String[] directionParameter = conditionDTO.getSort();
         Sort sort = null;
         if (!ObjectUtils.isEmpty(directionParameter)) {
             sort = parseParameterIntoSort(directionParameter, DEFAULT_PROPERTY_DELIMITER);
         }
 
-        if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
-                || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
+        if (ObjectUtils.isEmpty(conditionDTO.getPageNumber())
+                || ObjectUtils.isEmpty(conditionDTO.getPageSize())) {
             // 分页参数不全
-            List<UserAccountDto> list = service.list(conditionDto, sort);
+            List<UserAccountDTO> list = service.list(conditionDTO, sort);
             return ResponseEntity.ok().body(list);
         } else {
-            Pageable pageable = PageRequest.of(conditionDto.getPageNumber(), conditionDto.getPageSize(), sort);
-            Page<UserAccountDto> page = service.page(conditionDto, pageable);
+            Pageable pageable = PageRequest.of(conditionDTO.getPageNumber(), conditionDTO.getPageSize(), sort);
+            Page<UserAccountDTO> page = service.page(conditionDTO, pageable);
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
@@ -86,7 +86,7 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @Override
-    public ResponseEntity<UserAccountDto> create(@RequestBody UserAccountDto dto) {
+    public ResponseEntity<UserAccountDTO> create(@RequestBody UserAccountDTO dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
             throw new BadRequestAlertException("A new " + entityName + " cannot already have an ID",
                     null, "id.exists", entityName);
@@ -108,9 +108,9 @@ public class UserAccountResource extends BaseResource<UserAccountDto, UserAccoun
     @ApiResponse(code = 200, message = "更新成功", response = String.class)
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<UserAccountDto> modify(@PathVariable("id") Long id,
-                                                 @RequestBody UserAccountDto dto) {
-        Optional<UserAccountDto> optional = service.getByUsername(dto.getUsername());
+    public ResponseEntity<UserAccountDTO> modify(@PathVariable("id") Long id,
+                                                 @RequestBody UserAccountDTO dto) {
+        Optional<UserAccountDTO> optional = service.getByUsername(dto.getUsername());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
             throw new UsernameAlreadyUsedException(entityName);
         }

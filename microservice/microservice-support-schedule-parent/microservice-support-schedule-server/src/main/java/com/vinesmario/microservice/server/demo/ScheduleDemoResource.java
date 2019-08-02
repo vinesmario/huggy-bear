@@ -38,15 +38,15 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<List<ScheduleDemoDto>> search(ScheduleDemoConditionDto condition) {
+    public ResponseEntity<List<ScheduleDemoDTO>> search(ScheduleDemoConditionDTO condition) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
-        UaaDemoConditionDto conditionDto = new UaaDemoConditionDto();
-        conditionDto.setPageNumber(0);
-        conditionDto.setPageSize(10);
+        UaaDemoConditionDTO conditionDTO = new UaaDemoConditionDTO();
+        conditionDTO.setPageNumber(0);
+        conditionDTO.setPageSize(10);
         // 坑①：在controller中接受并处理request请求的方法中，以feign的方式调用外部接口，并不会透传access_token
-        uaaDemoClient.search(conditionDto);
+        uaaDemoClient.search(conditionDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -54,7 +54,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<ScheduleDemoDto> get(Long id) {
+    public ResponseEntity<ScheduleDemoDTO> get(Long id) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -65,7 +65,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<ScheduleDemoDto> create(ScheduleDemoDto dto) {
+    public ResponseEntity<ScheduleDemoDTO> create(ScheduleDemoDTO dto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -76,7 +76,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @ApiResponse(code = 200, message = "更新成功", response = String.class)
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<ScheduleDemoDto> modify(Long id, ScheduleDemoDto dto) {
+    public ResponseEntity<ScheduleDemoDTO> modify(Long id, ScheduleDemoDTO dto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -98,7 +98,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> remove(ScheduleDemoConditionDto conditionDto) {
+    public ResponseEntity<Void> remove(ScheduleDemoConditionDTO conditionDTO) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -128,10 +128,10 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @Scheduled(cron = "0 * * * * ?")
     public void job() {
         log.info("AccessToken: " + oauth2ClientContext.getAccessToken().getValue());
-        UaaDemoConditionDto conditionDto = new UaaDemoConditionDto();
-        conditionDto.setPageNumber(0);
-        conditionDto.setPageSize(10);
-        ResponseEntity<List<UaaDemoDto>> responseEntity = uaaDemoClient.search(conditionDto);
+        UaaDemoConditionDTO conditionDTO = new UaaDemoConditionDTO();
+        conditionDTO.setPageNumber(0);
+        conditionDTO.setPageSize(10);
+        ResponseEntity<List<UaaDemoDTO>> responseEntity = uaaDemoClient.search(conditionDTO);
         log.info("StatusCodeValue: " + responseEntity.getStatusCodeValue());
     }
 

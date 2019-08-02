@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.storage.web.feign;
 
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.storage.dto.StorageTemplateDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageTemplateConditionDto;
+import com.vinesmario.microservice.client.storage.dto.StorageTemplateDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageTemplateConditionDTO;
 import com.vinesmario.microservice.client.storage.web.hystrix.StorageTemplateFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -20,28 +20,28 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-support-server", path = "/api/v1/storage_template", fallbackFactory = StorageTemplateFallbackFactory.class)
-public interface StorageTemplateClient extends CrudClient<StorageTemplateDto, StorageTemplateConditionDto, Long> {
+public interface StorageTemplateClient extends CrudClient<StorageTemplateDTO, StorageTemplateConditionDTO, Long> {
 
     @GetMapping("")
-    ResponseEntity<List<StorageTemplateDto>> search(@ModelAttribute StorageTemplateConditionDto condition);
+    ResponseEntity<List<StorageTemplateDTO>> search(@ModelAttribute StorageTemplateConditionDTO condition);
 
     @GetMapping("/{id}")
-    ResponseEntity<StorageTemplateDto> get(@PathVariable("id") Long id);
+    ResponseEntity<StorageTemplateDTO> get(@PathVariable("id") Long id);
 
     @PostMapping("")
-    ResponseEntity<StorageTemplateDto> create(@RequestBody StorageTemplateDto dto);
+    ResponseEntity<StorageTemplateDTO> create(@RequestBody StorageTemplateDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<StorageTemplateDto> modify(@PathVariable("id") Long id,
-                                              @RequestBody StorageTemplateDto dto);
+    ResponseEntity<StorageTemplateDTO> modify(@PathVariable("id") Long id,
+                                              @RequestBody StorageTemplateDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
     @DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody StorageTemplateConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody StorageTemplateConditionDTO condition);
 
-    ResponseEntity<StorageTemplateDto> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    ResponseEntity<StorageTemplateDTO> upload(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                               @RequestParam(value = "tenantId", required = false) Long tenantId,
                                               @RequestParam(value = "memo", required = false) String memo)
             throws Exception;

@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.server.storage.service;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDto;
-import com.vinesmario.microservice.client.storage.dto.StorageExcelDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelConditionDTO;
+import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.storage.entity.StorageExcel;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-public class StorageExcelService extends BaseService<StorageExcelDto, StorageExcel, Long> {
+public class StorageExcelService extends BaseService<StorageExcelDTO, StorageExcel, Long> {
 
     private final StorageExcelMapper mapper;
     private final StorageExcelMapStruct mapStruct;
@@ -38,26 +38,26 @@ public class StorageExcelService extends BaseService<StorageExcelDto, StorageExc
         this.mapStruct = mapStruct;
     }
 
-    public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+    public BaseExample fromConditionDTO2Example(ConditionDTO conditionDTO) {
         BaseExample example = new BaseExample();
         BaseExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-        if (!ObjectUtils.isEmpty(conditionDto)) {
-            StorageExcelConditionDto storageExcelConditionDto = (StorageExcelConditionDto) conditionDto;
-            if (!ObjectUtils.isEmpty(storageExcelConditionDto.getId())) {
-                criteria.andIdEqualTo(storageExcelConditionDto.getId());
+        if (!ObjectUtils.isEmpty(conditionDTO)) {
+            StorageExcelConditionDTO storageExcelConditionDTO = (StorageExcelConditionDTO) conditionDTO;
+            if (!ObjectUtils.isEmpty(storageExcelConditionDTO.getId())) {
+                criteria.andIdEqualTo(storageExcelConditionDTO.getId());
             }
-            if (!CollectionUtils.isEmpty(storageExcelConditionDto.getIds())) {
-                criteria.andIdIn(storageExcelConditionDto.getIds());
+            if (!CollectionUtils.isEmpty(storageExcelConditionDTO.getIds())) {
+                criteria.andIdIn(storageExcelConditionDTO.getIds());
             }
         }
         return example;
     }
 
     @Transactional(readOnly = true)
-    public Optional<StorageExcelDto> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByUuid(uuid)));
+    public Optional<StorageExcelDTO> getByUuid(String uuid) {
+        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

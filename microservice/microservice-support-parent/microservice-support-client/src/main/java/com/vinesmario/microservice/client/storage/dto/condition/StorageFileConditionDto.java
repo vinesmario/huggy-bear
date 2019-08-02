@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.storage.dto.condition;
 
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,9 +11,9 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "StorageFileConditionDto", description = "StorageFile筛选条件数据传输对象")
+@ApiModel(value = "StorageFileConditionDTO", description = "StorageFile筛选条件数据传输对象")
 @Data
-public class StorageFileConditionDto implements ConditionDto {
+public class StorageFileConditionDTO implements ConditionDTO {
 
     /**
      * ID

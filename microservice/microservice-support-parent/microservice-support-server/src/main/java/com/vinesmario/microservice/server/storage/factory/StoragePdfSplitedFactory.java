@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.storage.factory;
 
-import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDto;
+import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
 import com.vinesmario.microservice.server.storage.service.StoragePdfSplitedService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class StoragePdfSplitedFactory extends AbstractStorageFactory<StoragePdfSplitedDto> {
+public class StoragePdfSplitedFactory extends AbstractStorageFactory<StoragePdfSplitedDTO> {
 
     @Override
-    public StoragePdfSplitedDto create(MultipartFile multipartFile, Long tenantId) throws Exception {
+    public StoragePdfSplitedDTO create(MultipartFile multipartFile, Long tenantId) throws Exception {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String fileName = uuid + "." + extension;
@@ -31,37 +31,37 @@ public class StoragePdfSplitedFactory extends AbstractStorageFactory<StoragePdfS
             fileRelativePath = tenantId + "/" + fileRelativePath;
         }
 
-        StoragePdfSplitedDto storagePdfSplitedDto = new StoragePdfSplitedDto();
-        storagePdfSplitedDto.setTenantId(tenantId);
-        storagePdfSplitedDto.setUuid(uuid);
-        storagePdfSplitedDto.setFileExtension(extension);
-        storagePdfSplitedDto.setFileName(fileName);
-        storagePdfSplitedDto.setFileSize(multipartFile.getSize());
+        StoragePdfSplitedDTO storagePdfSplitedDTO = new StoragePdfSplitedDTO();
+        storagePdfSplitedDTO.setTenantId(tenantId);
+        storagePdfSplitedDTO.setUuid(uuid);
+        storagePdfSplitedDTO.setFileExtension(extension);
+        storagePdfSplitedDTO.setFileName(fileName);
+        storagePdfSplitedDTO.setFileSize(multipartFile.getSize());
         // 文件MD5、SHA1
         String md5Hex = DigestUtils.md5Hex(multipartFile.getInputStream());
         String sha1Hex = DigestUtils.sha1Hex(multipartFile.getInputStream());
-        storagePdfSplitedDto.setFileMd5Hex(md5Hex);
-        storagePdfSplitedDto.setFileSha1Hex(sha1Hex);
+        storagePdfSplitedDTO.setFileMd5Hex(md5Hex);
+        storagePdfSplitedDTO.setFileSha1Hex(sha1Hex);
 
         // 选择文件上传策略
         StorageStrategy storageStrategy = StorageStrategyFactory.build();
-        storageStrategy.upload(multipartFile, fileRelativePath, storagePdfSplitedDto);
+        storageStrategy.upload(multipartFile, fileRelativePath, storagePdfSplitedDTO);
 
         // 文件访问绝对url为空，补充文件访问相对url
-        if (StringUtils.isBlank(storagePdfSplitedDto.getFileAbsoluteUrl())) {
+        if (StringUtils.isBlank(storagePdfSplitedDTO.getFileAbsoluteUrl())) {
             String url = StoragePdfSplitedResource.class.getAnnotation(RequestMapping.class).value()[0];
             url += StoragePdfSplitedResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
-            storagePdfSplitedDto.setFileRelativeUrl(url.replace("{uuid}", storagePdfSplitedDto.getUuid()));
-//            storagePdfSplitedDto.setFileRelativeUrl("/api/v1/storage_pdf_splited/download/{uuid}".replace("{uuid}", storagePdfSplitedDto.getUuid()));
+            storagePdfSplitedDTO.setFileRelativeUrl(url.replace("{uuid}", storagePdfSplitedDTO.getUuid()));
+//            storagePdfSplitedDTO.setFileRelativeUrl("/api/v1/storage_pdf_splited/download/{uuid}".replace("{uuid}", storagePdfSplitedDTO.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
             StoragePdfSplitedService service = SpringContextUtil.getBean(StoragePdfSplitedService.class);
-            service.create(storagePdfSplitedDto);
+            service.create(storagePdfSplitedDTO);
         }
 
-        storagePdfSplitedDto.setFileAbsolutePath(null);
-        return storagePdfSplitedDto;
+        storagePdfSplitedDTO.setFileAbsolutePath(null);
+        return storagePdfSplitedDTO;
     }
 
 }
