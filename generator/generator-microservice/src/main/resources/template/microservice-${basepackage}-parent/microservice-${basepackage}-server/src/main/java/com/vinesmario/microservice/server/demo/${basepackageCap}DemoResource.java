@@ -34,14 +34,14 @@ public class ${basepackageCap}DemoResource implements ${basepackageCap}DemoClien
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<List<${basepackageCap}DemoDto>> search(${basepackageCap}DemoConditionDto condition) {
+    public ResponseEntity<List<${basepackageCap}DemoDTO>> search(${basepackageCap}DemoConditionDTO condition) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
-        UaaDemoConditionDto conditionDto = new UaaDemoConditionDto();
-        conditionDto.setPageNumber(0);
-        conditionDto.setPageSize(10);
-        uaaDemoClient.search(conditionDto);
+        UaaDemoConditionDTO conditionDTO = new UaaDemoConditionDTO();
+        conditionDTO.setPageNumber(0);
+        conditionDTO.setPageSize(10);
+        uaaDemoClient.search(conditionDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -49,7 +49,7 @@ public class ${basepackageCap}DemoResource implements ${basepackageCap}DemoClien
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<${basepackageCap}DemoDto> get(Long id) {
+    public ResponseEntity<${basepackageCap}DemoDTO> get(Long id) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -60,7 +60,7 @@ public class ${basepackageCap}DemoResource implements ${basepackageCap}DemoClien
     @ApiResponse(code = 200, message = "添加成功", response = String.class)
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<${basepackageCap}DemoDto> create(${basepackageCap}DemoDto dto) {
+    public ResponseEntity<${basepackageCap}DemoDTO> create(${basepackageCap}DemoDTO dto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -71,7 +71,7 @@ public class ${basepackageCap}DemoResource implements ${basepackageCap}DemoClien
     @ApiResponse(code = 200, message = "更新成功", response = String.class)
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<${basepackageCap}DemoDto> modify(Long id, ${basepackageCap}DemoDto dto) {
+    public ResponseEntity<${basepackageCap}DemoDTO> modify(Long id, ${basepackageCap}DemoDTO dto) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());
@@ -93,7 +93,7 @@ public class ${basepackageCap}DemoResource implements ${basepackageCap}DemoClien
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> remove(${basepackageCap}DemoConditionDto conditionDto) {
+    public ResponseEntity<Void> remove(${basepackageCap}DemoConditionDTO conditionDTO) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         log.info("AccessToken: " + ((OAuth2AuthenticationDetails) authentication.getDetails()).getTokenValue());

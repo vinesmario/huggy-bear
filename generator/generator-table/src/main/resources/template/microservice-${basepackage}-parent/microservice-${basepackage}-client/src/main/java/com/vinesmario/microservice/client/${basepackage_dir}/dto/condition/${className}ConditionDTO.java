@@ -3,7 +3,7 @@
 <#assign classNameLower = className?uncap_first>
 package com.vinesmario.microservice.client.${basepackage}.dto.condition;
 
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,9 +14,9 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "${className}ConditionDto", description = "${className}筛选条件数据传输对象")
+@ApiModel(value = "${className}ConditionDTO", description = "${className}筛选条件数据传输对象")
 @Data
-public class ${className}ConditionDto implements ConditionDto {
+public class ${className}ConditionDTO implements ConditionDTO {
 
     /**
      * ID

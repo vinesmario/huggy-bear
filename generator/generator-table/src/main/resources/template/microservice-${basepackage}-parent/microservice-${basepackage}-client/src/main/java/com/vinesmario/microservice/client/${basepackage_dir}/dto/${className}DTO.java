@@ -3,7 +3,7 @@
 <#assign classNameLower = className?uncap_first> 
 package com.vinesmario.microservice.client.${basepackage}.dto;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,9 +13,9 @@ import lombok.Data;
  * @author
  * @date
  */
-@ApiModel(value = "${className}Dto", description = "${className}数据传输对象")
+@ApiModel(value = "${className}DTO", description = "${className}数据传输对象")
 @Data
-public class ${className}Dto extends BaseDto<Long> {
+public class ${className}DTO extends BaseDTO<Long> {
 
     <#list table.columns as column>
         <#if column.columnNameLower != 'id'

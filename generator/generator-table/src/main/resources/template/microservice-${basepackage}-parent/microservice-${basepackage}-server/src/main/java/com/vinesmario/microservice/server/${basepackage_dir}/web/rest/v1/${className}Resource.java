@@ -3,8 +3,8 @@
 <#assign classNameLower = className?uncap_first>
 package com.vinesmario.microservice.server.${basepackage}.web.rest;
 
-import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
-import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
+import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDTO;
+import com.vinesmario.microservice.client.${basepackage}.dto.${className}DTO;
 import com.vinesmario.microservice.client.${basepackage}.web.feign.${className}Client;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.${basepackage}.service.${className}Service;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/${table.sqlName}")
-public class ${className}Resource extends BaseResource<${className}Dto, ${className}ConditionDto, Long>{
+public class ${className}Resource extends BaseResource<${className}DTO, ${className}ConditionDTO, Long>{
 
     private final ${className}Service service;
 
@@ -34,7 +34,7 @@ public class ${className}Resource extends BaseResource<${className}Dto, ${classN
     }
 
     @Override
-    public void preConditionDto(${className}ConditionDto queryDto) {
+    public void preConditionDTO(${className}ConditionDTO queryDTO) {
 
     }
 

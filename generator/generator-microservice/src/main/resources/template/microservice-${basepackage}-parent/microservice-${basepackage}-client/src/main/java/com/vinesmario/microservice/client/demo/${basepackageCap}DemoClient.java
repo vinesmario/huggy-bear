@@ -16,25 +16,25 @@ import java.util.List;
  * @date
  */
 @FeignClient(name = "microservice-${basepackage}-server", path = "/api/v1/${basepackage}_demo", fallbackFactory = ${basepackageCap}DemoFallbackFactory.class)
-public interface ${basepackageCap}DemoClient extends CrudClient<${basepackageCap}DemoDto, ${basepackageCap}DemoConditionDto, Long>{
+public interface ${basepackageCap}DemoClient extends CrudClient<${basepackageCap}DemoDTO, ${basepackageCap}DemoConditionDTO, Long>{
 
 	@GetMapping("")
-	ResponseEntity<List<${basepackageCap}DemoDto>> search(@ModelAttribute ${basepackageCap}DemoConditionDto condition);
+	ResponseEntity<List<${basepackageCap}DemoDTO>> search(@ModelAttribute ${basepackageCap}DemoConditionDTO condition);
 
 	@GetMapping("/{id}")
-	ResponseEntity<${basepackageCap}DemoDto> get(@PathVariable("id") Long id);
+	ResponseEntity<${basepackageCap}DemoDTO> get(@PathVariable("id") Long id);
 
 	@PostMapping("")
-	ResponseEntity<${basepackageCap}DemoDto> create(@RequestBody ${basepackageCap}DemoDto dto);
+	ResponseEntity<${basepackageCap}DemoDTO> create(@RequestBody ${basepackageCap}DemoDTO dto);
 
 	@PutMapping("/{id}")
-	ResponseEntity<${basepackageCap}DemoDto> modify(@PathVariable("id") Long id,
-                           					@RequestBody ${basepackageCap}DemoDto dto);
+	ResponseEntity<${basepackageCap}DemoDTO> modify(@PathVariable("id") Long id,
+                           					@RequestBody ${basepackageCap}DemoDTO dto);
 
 	@DeleteMapping("/{id}")
     ResponseEntity<Void> remove(@PathVariable("id") Long id);
 
 	@DeleteMapping("")
-    ResponseEntity<Void> remove(@RequestBody ${basepackageCap}DemoConditionDto condition);
+    ResponseEntity<Void> remove(@RequestBody ${basepackageCap}DemoConditionDTO condition);
 	
 }

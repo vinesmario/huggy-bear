@@ -20,25 +20,25 @@ public class ${basepackageCap}DemoFallbackFactory implements FallbackFactory<${b
     public ${basepackageCap}DemoClient create(Throwable throwable){
 		return new ${basepackageCap}DemoClient() {
             @Override
-			public ResponseEntity<List<${basepackageCap}DemoDto>> search(${basepackageCap}DemoConditionDto condition){
+			public ResponseEntity<List<${basepackageCap}DemoDTO>> search(${basepackageCap}DemoConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${basepackageCap}DemoDto>get(Long id){
+            public ResponseEntity<${basepackageCap}DemoDTO>get(Long id){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${basepackageCap}DemoDto>create(${basepackageCap}DemoDto dto){
+            public ResponseEntity<${basepackageCap}DemoDTO>create(${basepackageCap}DemoDTO dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<${basepackageCap}DemoDto>modify(Long id, ${basepackageCap}DemoDto dto){
+            public ResponseEntity<${basepackageCap}DemoDTO>modify(Long id, ${basepackageCap}DemoDTO dto){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -50,7 +50,7 @@ public class ${basepackageCap}DemoFallbackFactory implements FallbackFactory<${b
             }
 
             @Override
-            public ResponseEntity<Void> remove(${basepackageCap}DemoConditionDto condition){
+            public ResponseEntity<Void> remove(${basepackageCap}DemoConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

@@ -4,9 +4,9 @@
 package ${basepackage}.service;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
-import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDto;
-import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
+import com.vinesmario.microservice.client.${basepackage}.dto.condition.${className}ConditionDTO;
+import com.vinesmario.microservice.client.${basepackage}.dto.${className}DTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
 import com.vinesmario.microservice.server.${basepackage}.entity.${className};
@@ -27,7 +27,7 @@ import org.springframework.util.ObjectUtils;
 @Slf4j
 @Service
 @Transactional
-public class ${className}Service extends BaseService<${className}Dto, ${className}, Long>{
+public class ${className}Service extends BaseService<${className}DTO, ${className}, Long>{
 
 	private final ${className}Mapper mapper;
 	private final ${className}MapStruct mapStruct;
@@ -39,18 +39,18 @@ public class ${className}Service extends BaseService<${className}Dto, ${classNam
 		this.mapStruct = mapStruct;
 	}
 
-	public BaseExample fromConditionDto2Example(ConditionDto conditionDto) {
+	public BaseExample fromConditionDTO2Example(ConditionDTO conditionDTO) {
 		BaseExample example = new BaseExample();
 		BaseExample.Criteria criteria = example.createCriteria();
 		criteria.andDeletedEqualTo(DictConstant.BYTE_YES_NO_N);
 
-		if (!ObjectUtils.isEmpty(conditionDto)) {
-			${className}ConditionDto ${classNameLower}ConditionDto = (${className}ConditionDto) conditionDto;
-			if (!ObjectUtils.isEmpty(${classNameLower}ConditionDto.getId())) {
-				criteria.andIdEqualTo(${classNameLower}ConditionDto.getId());
+		if (!ObjectUtils.isEmpty(conditionDTO)) {
+			${className}ConditionDTO ${classNameLower}ConditionDTO = (${className}ConditionDTO) conditionDTO;
+			if (!ObjectUtils.isEmpty(${classNameLower}ConditionDTO.getId())) {
+				criteria.andIdEqualTo(${classNameLower}ConditionDTO.getId());
 			}
-			if (!CollectionUtils.isEmpty(${classNameLower}ConditionDto.getIds())) {
-                criteria.andIdIn(${classNameLower}ConditionDto.getIds());
+			if (!CollectionUtils.isEmpty(${classNameLower}ConditionDTO.getIds())) {
+                criteria.andIdIn(${classNameLower}ConditionDTO.getIds());
             }
 		}
 		return example;

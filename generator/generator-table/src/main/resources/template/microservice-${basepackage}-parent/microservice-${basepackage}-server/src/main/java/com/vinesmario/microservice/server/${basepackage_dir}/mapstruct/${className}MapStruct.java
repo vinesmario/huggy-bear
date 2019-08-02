@@ -4,7 +4,7 @@
 package com.vinesmario.microservice.server.${basepackage}.mapstruct;
 
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
-import com.vinesmario.microservice.client.${basepackage}.dto.${className}Dto;
+import com.vinesmario.microservice.client.${basepackage}.dto.${className}DTO;
 import com.vinesmario.microservice.server.${basepackage}.entity.${className};
 import org.mapstruct.Mapper;
 
@@ -13,6 +13,6 @@ import org.mapstruct.Mapper;
  * @date
  */
 @Mapper(componentModel = "spring")
-public interface ${className}MapStruct extends BaseMapStruct<${className}, ${className}Dto> {
+public interface ${className}MapStruct extends BaseMapStruct<${className}, ${className}DTO> {
 
 }
