@@ -1,8 +1,9 @@
 package com.vinesmario.microservice.server.document.excel;
 
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
+import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 
@@ -38,18 +39,45 @@ import java.util.List;
  * @author
  */
 public class Excel2003 {
-    //显示的导出表的标题
-    private String title;
-    //导出表的列名
-    private String[] rowName;
 
-    private List<Object[]> dataList = new ArrayList<Object[]>();
+    /**
+     * 是否远程调用
+     */
+    private boolean remote = false;
 
-    //构造方法，传入要导出的数据
-    public Excel2003(String title, String[] rowName, List<Object[]> dataList) {
+    private ExcelConfig config;
+
+    private Class<? extends BaseDTO> clazz;
+
+    private List<Object[]> dataList = new ArrayList<>();
+
+    private CrudClient client;
+
+    public Excel2003(Class<? extends BaseDTO> clazz, List<Object[]> dataList) {
+        this.config = getConfig(clazz);
         this.dataList = dataList;
-        this.rowName = rowName;
-        this.title = title;
+    }
+
+    public Excel2003(ExcelConfig config, List<Object[]> dataList) {
+        this.config = config;
+        this.dataList = dataList;
+    }
+
+    public Excel2003(Class<? extends BaseDTO> clazz, CrudClient client) {
+        this.config = getConfig(clazz);
+        this.client = client;
+        this.remote = true;
+    }
+
+    public Excel2003(ExcelConfig config, CrudClient client) {
+        this.config = config;
+        this.client = client;
+        this.remote = true;
+    }
+
+    private ExcelConfig getConfig(Class<? extends BaseDTO> clazz) {
+        //TODO
+        return null;
     }
 
     /*
@@ -58,7 +86,8 @@ public class Excel2003 {
     public void export() throws Exception {
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();                        // 创建工作簿对象
-            HSSFSheet sheet = workbook.createSheet(title);                     // 创建工作表
+            HSSFSheet sheet = workbook.createSheet(config.getSheetName());                     // 创建工作表
+            int columnNum = config.getColumnConfigList().size();
 
             // 产生表格标题行
             HSSFRow rowm = sheet.createRow(0);
@@ -68,19 +97,18 @@ public class Excel2003 {
             HSSFCellStyle columnTopStyle = this.getColumnTopStyle(workbook);//获取列头样式对象
             HSSFCellStyle style = this.getStyle(workbook);                    //单元格样式对象
 
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, (rowName.length - 1)));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, (columnNum - 1)));
             cellTiltle.setCellStyle(columnTopStyle);
-            cellTiltle.setCellValue(title);
+            cellTiltle.setCellValue(config.getTiltle());
 
             // 定义所需列数
-            int columnNum = rowName.length;
             HSSFRow rowRowName = sheet.createRow(2);                // 在索引2的位置创建行(最顶端的行开始的第二行)
 
             // 将列头设置到sheet的单元格中
             for (int n = 0; n < columnNum; n++) {
                 HSSFCell cellRowName = rowRowName.createCell(n);                //创建列头对应个数的单元格
                 cellRowName.setCellType(CellType.STRING);                //设置列头单元格的数据类型
-                HSSFRichTextString text = new HSSFRichTextString(rowName[n]);
+                HSSFRichTextString text = new HSSFRichTextString(config.getColumnConfigList().get(n).getTitle());
                 cellRowName.setCellValue(text);                                    //设置列头单元格的值
                 cellRowName.setCellStyle(columnTopStyle);                        //设置列头单元格样式
             }

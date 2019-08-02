@@ -38,14 +38,14 @@ public @interface ExcelColumn {
     int sort() default 0;
 
     /**
-     * 如果是字典类型，请设置字典的type值
+     * 如果是字典类型，根据字典的catalog值及fieldName取得value
      */
-    String dictType() default "";
+    String dictCatalog() default "";
 
     /**
-     * 反射类型
+     * 如果是其他反射类型，根据字典的class及fieldName，反射取得value
      */
-    Class<?> fieldType() default Class.class;
+    Class<?> fieldTypeClass() default Class.class;
 
     /**
      * @see org.apache.poi.ss.usermodel.CellType
