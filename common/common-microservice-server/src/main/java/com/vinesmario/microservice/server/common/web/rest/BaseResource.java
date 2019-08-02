@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.server.common.web.rest;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 import com.vinesmario.microservice.server.common.service.mybatis.CrudService;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class BaseResource<DTO extends BaseDto, CONDITION extends ConditionDto, PK extends Serializable>
+public abstract class BaseResource<DTO extends BaseDTO, CONDITION extends ConditionDTO, PK extends Serializable>
         extends SimpleResource<DTO, CONDITION, PK>
         implements CrudClient<DTO, CONDITION, PK> {
 
@@ -46,6 +46,27 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityCreationAlert(entityName, dto.getAlertParam()))
                 .body(dto);
+    }
+
+    @ApiOperation(value = "批量添加", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiResponse(code = 200, message = "批量添加成功", response = String.class)
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseEntity<Void> create(@RequestBody List<DTO> dtoList) {
+        if (CollectionUtils.isEmpty(dtoList)) {
+            throw new BadRequestAlertException("Collection " + entityName + " cannot be empty",
+                    null, "collection.empty", entityName);
+        }
+        for (DTO dto : dtoList) {
+            if (!ObjectUtils.isEmpty(dto.getId())) {
+                throw new BadRequestAlertException("A new " + entityName + " cannot already have an ID",
+                        null, "id.exists", entityName);
+            }
+            service.create(dto);
+        }
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityCreationAlert(entityName, null))
+                .build();
     }
 
     @ApiOperation(value = "更新", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -82,9 +103,9 @@ public abstract class BaseResource<DTO extends BaseDto, CONDITION extends Condit
     @ApiResponse(code = 200, message = "批量删除成功", response = String.class)
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Void> remove(@RequestBody CONDITION conditionDto) {
-        preConditionDto(conditionDto);
-        service.remove(conditionDto);
+    public ResponseEntity<Void> remove(@RequestBody CONDITION conditionDTO) {
+        preConditionDTO(conditionDTO);
+        service.remove(conditionDTO);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionCollectionAlert(entityName))
                 .build();

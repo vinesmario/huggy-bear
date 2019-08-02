@@ -4,8 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.vinesmario.common.kit.StringKit;
-import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional
-public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK>, PK extends Serializable>
+public abstract class SimpleService<DTO extends BaseDTO, T extends BaseEntity<PK>, PK extends Serializable>
         implements ReadOnlyService<DTO, PK> {
 
     private final ReadOnlyMapper<T, PK> mapper;
@@ -38,19 +38,19 @@ public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK
         this.mapStruct = mapStruct;
     }
 
-    public abstract BaseExample fromConditionDto2Example(ConditionDto condition);
+    public abstract BaseExample fromConditionDTO2Example(ConditionDTO condition);
 
     @Transactional(readOnly = true)
-    public Integer count(ConditionDto conditionDto) {
-        BaseExample example = fromConditionDto2Example(conditionDto);
+    public Integer count(ConditionDTO conditionDTO) {
+        BaseExample example = fromConditionDTO2Example(conditionDTO);
         return mapper.countByExample(example);
     }
 
     @Transactional(readOnly = true)
-    public Page<DTO> page(ConditionDto conditionDto, Pageable pageable) {
+    public Page<DTO> page(ConditionDTO conditionDTO, Pageable pageable) {
         // 超过最大pageNum数，返回空。
         PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize(), true, false, false);
-        BaseExample example = fromConditionDto2Example(conditionDto);
+        BaseExample example = fromConditionDTO2Example(conditionDTO);
 
         if (!ObjectUtils.isEmpty(pageable.getSort())
                 && pageable.getSort().isSorted()) {
@@ -76,17 +76,17 @@ public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK
 
         // 转换为org.springframework.data.domain.PageImpl对象
         // 以便于在不修改前端和controller层的情况下能够快速切换到JPA
-        return new PageImpl<>(mapStruct.fromEntities2Dtos(pageInfo.getList()), pageable, pageInfo.getTotal());
+        return new PageImpl<>(mapStruct.fromEntities2DTOs(pageInfo.getList()), pageable, pageInfo.getTotal());
     }
 
     @Transactional(readOnly = true)
-    public List<DTO> list(ConditionDto conditionDto) {
-        return list(conditionDto, null);
+    public List<DTO> list(ConditionDTO conditionDTO) {
+        return list(conditionDTO, null);
     }
 
     @Transactional(readOnly = true)
-    public List<DTO> list(ConditionDto conditionDto, Sort sort) {
-        BaseExample example = fromConditionDto2Example(conditionDto);
+    public List<DTO> list(ConditionDTO conditionDTO, Sort sort) {
+        BaseExample example = fromConditionDTO2Example(conditionDTO);
 
         if (!ObjectUtils.isEmpty(sort) && sort.isSorted()) {
             List<String> orderByClauseList = Lists.newArrayList();
@@ -106,12 +106,12 @@ public abstract class SimpleService<DTO extends BaseDto, T extends BaseEntity<PK
             }
         }
 
-        return mapStruct.fromEntities2Dtos(mapper.selectByExample(example));
+        return mapStruct.fromEntities2DTOs(mapper.selectByExample(example));
     }
 
     @Transactional(readOnly = true)
     public Optional<DTO> get(PK primaryKey) {
-        return Optional.ofNullable(mapStruct.fromEntity2Dto(mapper.selectByPrimaryKey(primaryKey)));
+        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByPrimaryKey(primaryKey)));
     }
 
 }

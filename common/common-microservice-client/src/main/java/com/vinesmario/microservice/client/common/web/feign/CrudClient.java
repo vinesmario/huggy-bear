@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.client.common.web.feign;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
@@ -15,9 +15,9 @@ import java.util.List;
  * @param <C>
  * @param <PK>
  */
-public interface CrudClient<DTO extends BaseDto, C extends ConditionDto, PK extends Serializable> {
+public interface CrudClient<DTO extends BaseDTO, C extends ConditionDTO, PK extends Serializable> {
 
-    ResponseEntity<List<DTO>> search(C conditionDto);
+    ResponseEntity<List<DTO>> search(C conditionDTO);
 
     ResponseEntity<DTO> get(PK primaryKey);
 
@@ -27,6 +27,6 @@ public interface CrudClient<DTO extends BaseDto, C extends ConditionDto, PK exte
 
     ResponseEntity<Void> remove(PK primaryKey);
 
-    ResponseEntity<Void> remove(C conditionDto);
+    ResponseEntity<Void> remove(C conditionDTO);
 
 }

@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.server.common.service.mybatis;
 
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 
 public interface CrudService<T, PK> extends ReadOnlyService<T, PK> {
 
@@ -8,10 +8,10 @@ public interface CrudService<T, PK> extends ReadOnlyService<T, PK> {
 
     void remove(T t);
 
-    void remove(ConditionDto conditionDto);
+    void remove(ConditionDTO conditionDTO);
 
     void modify(T t);
 
-    void modify(T t, ConditionDto conditionDto);
+    void modify(T t, ConditionDTO conditionDTO);
 
 }

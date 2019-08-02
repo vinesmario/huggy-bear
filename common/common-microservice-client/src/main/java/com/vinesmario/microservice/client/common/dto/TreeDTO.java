@@ -10,7 +10,7 @@ import lombok.Data;
  * Delete existing records.
  */
 @Data
-public abstract class TreeDto<T extends TreeDto> extends BaseDto<Long> {
+public abstract class TreeDTO<T extends TreeDTO> extends BaseDTO<Long> {
 
     private Long parentId;
     private T parent;

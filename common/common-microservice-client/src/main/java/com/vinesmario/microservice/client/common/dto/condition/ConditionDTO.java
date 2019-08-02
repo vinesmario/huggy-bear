@@ -1,6 +1,6 @@
 package com.vinesmario.microservice.client.common.dto.condition;
 
-public interface ConditionDto {
+public interface ConditionDTO {
 
     Integer getPageNumber();
 

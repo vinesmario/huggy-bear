@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.common.web.rest;
 
-import com.vinesmario.microservice.client.common.dto.BaseDto;
-import com.vinesmario.microservice.client.common.dto.condition.ConditionDto;
+import com.vinesmario.microservice.client.common.dto.BaseDTO;
+import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import com.vinesmario.microservice.client.common.web.feign.ReadOnlyClient;
 import com.vinesmario.microservice.server.common.service.mybatis.ReadOnlyService;
 import com.vinesmario.microservice.server.common.web.rest.util.PaginationUtil;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends ConditionDto, PK extends Serializable>
+public abstract class SimpleResource<DTO extends BaseDTO, CONDITION extends ConditionDTO, PK extends Serializable>
         implements ReadOnlyClient<DTO, CONDITION, PK> {
 
     protected static final String DEFAULT_PROPERTY_DELIMITER = ",";
@@ -40,31 +40,31 @@ public abstract class SimpleResource<DTO extends BaseDto, CONDITION extends Cond
     /**
      * 预处理查询条件
      *
-     * @param conditionDto
+     * @param conditionDTO
      */
-    public abstract void preConditionDto(CONDITION conditionDto);
+    public abstract void preConditionDTO(CONDITION conditionDTO);
 
     @ApiOperation(value = "查询列表，有分页参数则分页", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<List<DTO>> search(@ModelAttribute CONDITION conditionDto) {
-        preConditionDto(conditionDto);
+    public ResponseEntity<List<DTO>> search(@ModelAttribute CONDITION conditionDTO) {
+        preConditionDTO(conditionDTO);
         // 创建分页对象PageRequest
-        String[] directionParameter = conditionDto.getSort();
+        String[] directionParameter = conditionDTO.getSort();
         Sort sort = null;
         if (!ObjectUtils.isEmpty(directionParameter)) {
             sort = parseParameterIntoSort(directionParameter, DEFAULT_PROPERTY_DELIMITER);
         }
 
-        if (ObjectUtils.isEmpty(conditionDto.getPageNumber())
-                || ObjectUtils.isEmpty(conditionDto.getPageSize())) {
+        if (ObjectUtils.isEmpty(conditionDTO.getPageNumber())
+                || ObjectUtils.isEmpty(conditionDTO.getPageSize())) {
             // 分页参数不全
-            List<DTO> list = service.list(conditionDto, sort);
+            List<DTO> list = service.list(conditionDTO, sort);
             return ResponseEntity.ok().body(list);
         } else {
-            Pageable pageable = PageRequest.of(conditionDto.getPageNumber(), conditionDto.getPageSize(), sort);
-            Page<DTO> page = service.page(conditionDto, pageable);
+            Pageable pageable = PageRequest.of(conditionDTO.getPageNumber(), conditionDTO.getPageSize(), sort);
+            Page<DTO> page = service.page(conditionDTO, pageable);
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
