@@ -96,52 +96,52 @@ public class ExportExcel {
     public ExportExcel(String title, Class<?> cls, int type, int... groups) {
         // Get annotation field
         Field[] fs = cls.getDeclaredFields();
-        for (Field f : fs) {
-            ExcelColumn ef = f.getAnnotation(ExcelColumn.class);
-            if (ef != null && (ef.type() == 0 || ef.type() == type)) {
-                if (groups != null && groups.length > 0) {
-                    boolean inGroup = false;
-                    for (int g : groups) {
-                        if (inGroup) {
-                            break;
-                        }
-                        for (int efg : ef.groups()) {
-                            if (g == efg) {
-                                inGroup = true;
-                                annotationList.add(new Object[]{ef, f});
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    annotationList.add(new Object[]{ef, f});
-                }
-            }
-        }
+//        for (Field f : fs) {
+//            ExcelColumn ef = f.getAnnotation(ExcelColumn.class);
+//            if (ef != null && (ef.type() == 0 || ef.type() == type)) {
+//                if (groups != null && groups.length > 0) {
+//                    boolean inGroup = false;
+//                    for (int g : groups) {
+//                        if (inGroup) {
+//                            break;
+//                        }
+//                        for (int efg : ef.groups()) {
+//                            if (g == efg) {
+//                                inGroup = true;
+//                                annotationList.add(new Object[]{ef, f});
+//                                break;
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    annotationList.add(new Object[]{ef, f});
+//                }
+//            }
+//        }
         // Get annotation method
         Method[] ms = cls.getDeclaredMethods();
-        for (Method m : ms) {
-            ExcelColumn ef = m.getAnnotation(ExcelColumn.class);
-            if (ef != null && (ef.type() == 0 || ef.type() == type)) {
-                if (groups != null && groups.length > 0) {
-                    boolean inGroup = false;
-                    for (int g : groups) {
-                        if (inGroup) {
-                            break;
-                        }
-                        for (int efg : ef.groups()) {
-                            if (g == efg) {
-                                inGroup = true;
-                                annotationList.add(new Object[]{ef, m});
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    annotationList.add(new Object[]{ef, m});
-                }
-            }
-        }
+//        for (Method m : ms) {
+//            ExcelColumn ef = m.getAnnotation(ExcelColumn.class);
+//            if (ef != null && (ef.type() == 0 || ef.type() == type)) {
+//                if (groups != null && groups.length > 0) {
+//                    boolean inGroup = false;
+//                    for (int g : groups) {
+//                        if (inGroup) {
+//                            break;
+//                        }
+//                        for (int efg : ef.groups()) {
+//                            if (g == efg) {
+//                                inGroup = true;
+//                                annotationList.add(new Object[]{ef, m});
+//                                break;
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    annotationList.add(new Object[]{ef, m});
+//                }
+//            }
+//        }
         // Field sorting
         Collections.sort(annotationList, new Comparator<Object[]>() {
             public int compare(Object[] o1, Object[] o2) {
@@ -402,7 +402,7 @@ public class ExportExcel {
                     log.info(ex.toString());
                     val = "";
                 }
-                this.addCell(row, colunm++, val, ef.horizontalAlignment().getCode(), ef.fieldType());
+//                this.addCell(row, colunm++, val, ef.horizontalAlignment().getCode(), ef.fieldType());
                 sb.append(val + ", ");
             }
             log.debug("Write success: [" + row.getRowNum() + "] " + sb.toString());

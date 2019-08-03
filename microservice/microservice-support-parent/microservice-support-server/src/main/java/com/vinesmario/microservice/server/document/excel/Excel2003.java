@@ -1,16 +1,25 @@
 package com.vinesmario.microservice.server.document.excel;
 
+import com.google.common.collect.Lists;
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
+import com.vinesmario.microservice.server.document.excel.annotation.Excel;
+import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.util.ObjectUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -54,7 +63,7 @@ public class Excel2003 {
     private CrudClient client;
 
     public Excel2003(Class<? extends BaseDTO> clazz, List<Object[]> dataList) {
-        this.config = getConfig(clazz);
+        config(clazz);
         this.dataList = dataList;
     }
 
@@ -64,7 +73,7 @@ public class Excel2003 {
     }
 
     public Excel2003(Class<? extends BaseDTO> clazz, CrudClient client) {
-        this.config = getConfig(clazz);
+        config(clazz);
         this.client = client;
         this.remote = true;
     }
@@ -75,9 +84,51 @@ public class Excel2003 {
         this.remote = true;
     }
 
-    private ExcelConfig getConfig(Class<? extends BaseDTO> clazz) {
-        //TODO
-        return null;
+    private void config(Class<? extends BaseDTO> clazz) {
+        Excel excel = clazz.getAnnotation(Excel.class);
+        ExcelConfig.ExcelConfigBuilder excelConfigBuilder = ExcelConfig.builder()
+                .clazz(clazz)
+                .version(excel.version())
+                .extension(excel.version())
+                .sheetName(excel.sheetName())
+                .tiltle(excel.title());
+
+        Field[] fields = clazz.getDeclaredFields();
+        if (!ObjectUtils.isEmpty(fields)) {
+            for (Field field : fields) {
+                ExcelColumn[] excelColumns = field.getDeclaredAnnotationsByType(ExcelColumn.class);
+                if (!ObjectUtils.isEmpty(excelColumns)) {
+                    for (ExcelColumn excelColumn : excelColumns) {
+                        if (!ObjectUtils.isEmpty(excelColumn.columnType())) {
+                            if (ExcelColumn.ColumnType.BOTH.equals(excelColumn.columnType())
+                                    || ExcelColumn.ColumnType.IMPORT.equals(excelColumn.columnType())) {
+                                excelConfigBuilder.columnImportConfig(ExcelConfig.ExcelColumnConfig.builder()
+                                        .field(field)
+                                        .sort(excelColumn.sort())
+                                        .dictCatalog(excelColumn.dictCatalog())
+                                        .fieldName(excelColumn.value())
+                                        .fieldTypeClass(excelColumn.fieldTypeClass())
+                                        .build());
+                            } else if (ExcelColumn.ColumnType.BOTH.equals(excelColumn.columnType())
+                                    || ExcelColumn.ColumnType.EXPORT.equals(excelColumn.columnType())) {
+                                excelConfigBuilder.columnExportConfig(ExcelConfig.ExcelColumnConfig.builder()
+                                        .field(field)
+                                        .sort(excelColumn.sort())
+                                        .dictCatalog(excelColumn.dictCatalog())
+                                        .fieldName(excelColumn.value())
+                                        .fieldTypeClass(excelColumn.fieldTypeClass())
+                                        .title(excelColumn.title())
+                                        .horizontalAlignment(excelColumn.horizontalAlignment())
+                                        .verticalAlignment(excelColumn.verticalAlignment())
+                                        .cellType(excelColumn.cellType())
+                                        .build());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this.config = excelConfigBuilder.build();
     }
 
     /*
@@ -86,31 +137,32 @@ public class Excel2003 {
     public void export() throws Exception {
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();                        // 创建工作簿对象
-            HSSFSheet sheet = workbook.createSheet(config.getSheetName());                     // 创建工作表
-            int columnNum = config.getColumnConfigList().size();
+            HSSFSheet sheet = workbook.createSheet(config.getSheetName());     // 创建工作表
+            int columnNum = config.getColumnExportConfigList().size();
 
             // 产生表格标题行
             HSSFRow rowm = sheet.createRow(0);
             HSSFCell cellTiltle = rowm.createCell(0);
 
             //sheet样式定义【getColumnTopStyle()/getStyle()均为自定义方法 - 在下面  - 可扩展】
-            HSSFCellStyle columnTopStyle = this.getColumnTopStyle(workbook);//获取列头样式对象
-            HSSFCellStyle style = this.getStyle(workbook);                    //单元格样式对象
+            HSSFCellStyle columnTopStyle = this.getColumnHeaderStyle(workbook);//获取列头样式对象
+            HSSFCellStyle style = this.getColumnBodyStyle(workbook);           //单元格样式对象
 
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, (columnNum - 1)));
             cellTiltle.setCellStyle(columnTopStyle);
             cellTiltle.setCellValue(config.getTiltle());
 
             // 定义所需列数
-            HSSFRow rowRowName = sheet.createRow(2);                // 在索引2的位置创建行(最顶端的行开始的第二行)
+            HSSFRow rowRowName = sheet.createRow(2);                  // 在索引2的位置创建行(最顶端的行开始的第二行)
 
+            config.getColumnExportConfigList().sort(Comparator.comparing(ExcelConfig.ExcelColumnConfig::getSort));
             // 将列头设置到sheet的单元格中
             for (int n = 0; n < columnNum; n++) {
                 HSSFCell cellRowName = rowRowName.createCell(n);                //创建列头对应个数的单元格
-                cellRowName.setCellType(CellType.STRING);                //设置列头单元格的数据类型
-                HSSFRichTextString text = new HSSFRichTextString(config.getColumnConfigList().get(n).getTitle());
-                cellRowName.setCellValue(text);                                    //设置列头单元格的值
-                cellRowName.setCellStyle(columnTopStyle);                        //设置列头单元格样式
+                cellRowName.setCellType(CellType.STRING);                       //设置列头单元格的数据类型
+                HSSFRichTextString text = new HSSFRichTextString(config.getColumnExportConfigList().get(n).getTitle());
+                cellRowName.setCellValue(text);                                 //设置列头单元格的值
+                cellRowName.setCellStyle(columnTopStyle);                       //设置列头单元格样式
             }
 
             //将查询出的数据设置到sheet对应的单元格中
@@ -180,7 +232,25 @@ public class Excel2003 {
     /*
      * 列头单元格样式
      */
-    public HSSFCellStyle getColumnTopStyle(HSSFWorkbook workbook) {
+    public HSSFCellStyle getColumnHeaderStyle(HSSFWorkbook workbook) {
+        //设置样式;
+        HSSFCellStyle style = workbook.createCellStyle();
+        //设置底边框;
+        style.setBorderBottom(BorderStyle.THIN);
+        //设置底边框颜色;
+        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        //设置左边框;
+        style.setBorderLeft(BorderStyle.THIN);
+        //设置左边框颜色;
+        style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        //设置右边框;
+        style.setBorderRight(BorderStyle.THIN);
+        //设置右边框颜色;
+        style.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        //设置顶边框;
+        style.setBorderTop(BorderStyle.THIN);
+        //设置顶边框颜色;
+        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
 
         // 设置字体
         HSSFFont font = workbook.createFont();
@@ -190,6 +260,21 @@ public class Excel2003 {
         font.setBold(true);
         //设置字体名字
         font.setFontName("Courier New");
+        //在样式用应用设置的字体;
+        style.setFont(font);
+        //设置自动换行;
+        style.setWrapText(false);
+        //设置水平对齐的样式为居中对齐;
+        style.setAlignment(HorizontalAlignment.CENTER);
+        //设置垂直对齐的样式为居中对齐;
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        return style;
+    }
+
+    /*
+     * 列数据信息单元格样式
+     */
+    public HSSFCellStyle getColumnBodyStyle(HSSFWorkbook workbook) {
         //设置样式;
         HSSFCellStyle style = workbook.createCellStyle();
         //设置底边框;
@@ -208,23 +293,7 @@ public class Excel2003 {
         style.setBorderTop(BorderStyle.THIN);
         //设置顶边框颜色;
         style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        //在样式用应用设置的字体;
-        style.setFont(font);
-        //设置自动换行;
-        style.setWrapText(false);
-        //设置水平对齐的样式为居中对齐;
-        style.setAlignment(HorizontalAlignment.CENTER);
-        //设置垂直对齐的样式为居中对齐;
-        style.setVerticalAlignment(VerticalAlignment.CENTER);
 
-        return style;
-
-    }
-
-    /*
-     * 列数据信息单元格样式
-     */
-    public HSSFCellStyle getStyle(HSSFWorkbook workbook) {
         // 设置字体
         HSSFFont font = workbook.createFont();
         //设置字体大小
@@ -233,34 +302,17 @@ public class Excel2003 {
         //font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         //设置字体名字
         font.setFontName("Courier New");
-        //设置样式;
-        HSSFCellStyle style = workbook.createCellStyle();
-        //设置底边框;
-        style.setBorderBottom(BorderStyle.THIN);
-        //设置底边框颜色;
-        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        //设置左边框;
-        style.setBorderLeft(BorderStyle.THIN);
-        //设置左边框颜色;
-        style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        //设置右边框;
-        style.setBorderRight(BorderStyle.THIN);
-        //设置右边框颜色;
-        style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-        //设置顶边框;
-        style.setBorderTop(BorderStyle.THIN);
-        //设置顶边框颜色;
-        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
         //在样式用应用设置的字体;
         style.setFont(font);
+
         //设置自动换行;
         style.setWrapText(false);
         //设置水平对齐的样式为居中对齐;
         style.setAlignment(HorizontalAlignment.CENTER);
         //设置垂直对齐的样式为居中对齐;
         style.setVerticalAlignment(VerticalAlignment.CENTER);
-
         return style;
-
     }
+
+
 }

@@ -214,49 +214,49 @@ public class ImportExcel {
 		Field[] fs = cls.getDeclaredFields();
 		for (Field f : fs){
 			ExcelColumn ef = f.getAnnotation(ExcelColumn.class);
-			if (ef != null && (ef.type()==0 || ef.type()==2)){
-				if (groups!=null && groups.length>0){
-					boolean inGroup = false;
-					for (int g : groups){
-						if (inGroup){
-							break;
-						}
-						for (int efg : ef.groups()){
-							if (g == efg){
-								inGroup = true;
-								annotationList.add(new Object[]{ef, f});
-								break;
-							}
-						}
-					}
-				}else{
-					annotationList.add(new Object[]{ef, f});
-				}
-			}
+//			if (ef != null && (ef.type()==0 || ef.type()==2)){
+//				if (groups!=null && groups.length>0){
+//					boolean inGroup = false;
+//					for (int g : groups){
+//						if (inGroup){
+//							break;
+//						}
+//						for (int efg : ef.groups()){
+//							if (g == efg){
+//								inGroup = true;
+//								annotationList.add(new Object[]{ef, f});
+//								break;
+//							}
+//						}
+//					}
+//				}else{
+//					annotationList.add(new Object[]{ef, f});
+//				}
+//			}
 		}
 		// Get annotation method
 		Method[] ms = cls.getDeclaredMethods();
 		for (Method m : ms){
 			ExcelColumn ef = m.getAnnotation(ExcelColumn.class);
-			if (ef != null && (ef.type()==0 || ef.type()==2)){
-				if (groups!=null && groups.length>0){
-					boolean inGroup = false;
-					for (int g : groups){
-						if (inGroup){
-							break;
-						}
-						for (int efg : ef.groups()){
-							if (g == efg){
-								inGroup = true;
-								annotationList.add(new Object[]{ef, m});
-								break;
-							}
-						}
-					}
-				}else{
-					annotationList.add(new Object[]{ef, m});
-				}
-			}
+//			if (ef != null && (ef.type()==0 || ef.type()==2)){
+//				if (groups!=null && groups.length>0){
+//					boolean inGroup = false;
+//					for (int g : groups){
+//						if (inGroup){
+//							break;
+//						}
+//						for (int efg : ef.groups()){
+//							if (g == efg){
+//								inGroup = true;
+//								annotationList.add(new Object[]{ef, m});
+//								break;
+//							}
+//						}
+//					}
+//				}else{
+//					annotationList.add(new Object[]{ef, m});
+//				}
+//			}
 		}
 		// Field sorting
 		Collections.sort(annotationList, new Comparator<Object[]>() {
@@ -314,12 +314,12 @@ public class ImportExcel {
 						}else if (valType == Date.class){
 							val = DateUtil.getJavaDate((Double)val);
 						}else{
-							if (ef.fieldType() != Class.class){
-								val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val.toString());
-							}else{
-								val = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
-										"fieldtype."+valType.getSimpleName()+"Type")).getMethod("getValue", String.class).invoke(null, val.toString());
-							}
+//							if (ef.fieldType() != Class.class){
+//								val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val.toString());
+//							}else{
+//								val = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(),
+//										"fieldtype."+valType.getSimpleName()+"Type")).getMethod("getValue", String.class).invoke(null, val.toString());
+//							}
 						}
 					} catch (Exception ex) {
 						log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());

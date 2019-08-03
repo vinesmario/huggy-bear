@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  * @author Roc update 150325
  * @version 2013-03-10
  */
-@Target({ElementType.FIELD, ElementType.METHOD})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelColumn {
 
@@ -28,14 +28,9 @@ public @interface ExcelColumn {
     String value() default "";
 
     /**
-     * 字段标题
-     */
-    String title();
-
-    /**
      * 字段排序（升序）
      */
-    int sort() default 0;
+    int sort() default 9999;
 
     /**
      * 如果是字典类型，根据字典的catalog值及fieldName取得value
@@ -48,13 +43,17 @@ public @interface ExcelColumn {
     Class<?> fieldTypeClass() default Class.class;
 
     /**
-     * @see org.apache.poi.ss.usermodel.CellType
-     * _NONE(-1),NUMERIC(0),STRING(1),FORMULA(2),BLANK(3),BOOLEAN(4),ERROR(5);
+     * 字段类型（0：导出导入；1：仅导出；2：仅导入）
      */
-    CellType cellType() default CellType._NONE;
+    ColumnType columnType() default ColumnType.BOTH;
 
     /**
-     * 字段水平对齐方式（0：自动；1：靠左；2：居中；3：靠右）
+     * 字段标题
+     */
+    String title() default "";
+
+    /**
+     * 字段水平对齐方式
      *
      * @see org.apache.poi.ss.usermodel.HorizontalAlignment
      * GENERAL,LEFT,CENTER,RIGHT,FILL,JUSTIFY,CENTER_SELECTION,DISTRIBUTED
@@ -62,7 +61,7 @@ public @interface ExcelColumn {
     HorizontalAlignment horizontalAlignment() default HorizontalAlignment.GENERAL;
 
     /**
-     * 字段垂直对齐方式（0：顶部；1：居中；2：底部；）
+     * 字段垂直对齐方式
      *
      * @see org.apache.poi.ss.usermodel.VerticalAlignment
      * TOP,CENTER,BOTTOM,JUSTIFY,DISTRIBUTED
@@ -70,12 +69,20 @@ public @interface ExcelColumn {
     VerticalAlignment verticalAlignment() default VerticalAlignment.CENTER;
 
     /**
-     * 字段类型（0：导出导入；1：仅导出；2：仅导入）
+     * @see org.apache.poi.ss.usermodel.CellType
+     * _NONE(-1),NUMERIC(0),STRING(1),FORMULA(2),BLANK(3),BOOLEAN(4),ERROR(5);
      */
-    int type() default 0;
+    CellType cellType() default CellType._NONE;
 
     /**
-     * 字段归属组（根据分组导出导入）
+     * 宽度
      */
-    int[] groups() default {};
+    int width() default 100;
+
+    enum ColumnType {
+        BOTH,
+        IMPORT,
+        EXPORT;
+    }
+
 }
