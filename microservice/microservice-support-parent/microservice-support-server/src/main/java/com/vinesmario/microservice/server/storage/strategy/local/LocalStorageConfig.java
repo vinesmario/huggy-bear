@@ -16,5 +16,9 @@ public class LocalStorageConfig {
      * 持久化文件记录
      */
     private boolean persistent = true;
-
+    /**
+     * 临时文件目录
+     */
+    private String tmp;
+    
 }

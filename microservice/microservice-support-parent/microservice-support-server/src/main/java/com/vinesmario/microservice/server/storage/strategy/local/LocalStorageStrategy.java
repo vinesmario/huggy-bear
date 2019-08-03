@@ -31,6 +31,9 @@ public class LocalStorageStrategy extends StorageStrategy {
         } else if (ObjectUtils.isEmpty(storageProperties.getLocal().getRoot())) {
             log.error("Property 'storage.local.root' is empty ");
             throw new IllegalArgumentException("Property 'storage.local.root' is empty ");
+        } else if (ObjectUtils.isEmpty(storageProperties.getLocal().getBucketName())) {
+            log.error("Property 'storage.local.bucketName' is empty ");
+            throw new IllegalArgumentException("Property 'storage.local.bucketName' is empty ");
         }
         this.config = storageProperties.getLocal();
     }
@@ -57,10 +60,7 @@ public class LocalStorageStrategy extends StorageStrategy {
 
     @Override
     public String upload(InputStream inputStream, String fileRelativePath) throws Exception {
-        if (StringUtils.isNotBlank(config.getBucketName())) {
-            fileRelativePath = config.getBucketName() + "/" + fileRelativePath;
-        }
-        String fileAbsolutePath = config.getRoot() + "/" + fileRelativePath;
+        String fileAbsolutePath = config.getRoot() + "/" + config.getBucketName() + "/" + fileRelativePath;
         File file = new File(fileAbsolutePath);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();

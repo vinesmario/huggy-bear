@@ -3,7 +3,8 @@ storage:
     # 本地存储。
     local:
         root: "E:"
-        bucketName:
+        bucketName: namespace
+        tmp: tmp
     # 云端存储，需指定服务商及服务商提供的登录凭证
     cloud:
         strategy: QINIU # 服务商名称需取自枚举类CloudStorageStrategyEnum

@@ -14,7 +14,8 @@ public class StorageStrategyFactory {
     public static StorageStrategy build() {
         StorageProperties storageProperties = SpringContextUtil.getBean(StorageProperties.class);
         if (!ObjectUtils.isEmpty(storageProperties.getLocal())
-                && StringUtils.isNotBlank(storageProperties.getLocal().getRoot())) {
+                && StringUtils.isNotBlank(storageProperties.getLocal().getRoot())
+                && StringUtils.isNotBlank(storageProperties.getLocal().getBucketName())) {
             // 优先读取local配置
             return SpringContextUtil.getBean(LocalStorageStrategy.class);
         } else {
@@ -26,6 +27,9 @@ public class StorageStrategyFactory {
                 } else if (StringUtils.isBlank(storageProperties.getLocal().getRoot())) {
                     log.error("Property 'storage.local.root' is empty ");
                     throw new IllegalArgumentException("Property 'storage.local.root' is empty ");
+                } else if (StringUtils.isBlank(storageProperties.getLocal().getBucketName())) {
+                    log.error("Property 'storage.local.bucketName' is empty ");
+                    throw new IllegalArgumentException("Property 'storage.local.bucketName' is empty ");
                 }
             }
 
