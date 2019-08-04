@@ -105,7 +105,7 @@ public class Excel2003 {
                                 excelConfigBuilder.columnImportConfig(ExcelConfig.ExcelColumnConfig.builder()
                                         .field(field)
                                         .sort(excelColumn.sort())
-                                        .dictCatalog(excelColumn.dictCatalog())
+                                        .catalogCode(excelColumn.catalogCode())
                                         .fieldName(excelColumn.value())
                                         .fieldTypeClass(excelColumn.fieldTypeClass())
                                         .build());
@@ -114,7 +114,7 @@ public class Excel2003 {
                                 excelConfigBuilder.columnExportConfig(ExcelConfig.ExcelColumnConfig.builder()
                                         .field(field)
                                         .sort(excelColumn.sort())
-                                        .dictCatalog(excelColumn.dictCatalog())
+                                        .catalogCode(excelColumn.catalogCode())
                                         .fieldName(excelColumn.value())
                                         .fieldTypeClass(excelColumn.fieldTypeClass())
                                         .title(excelColumn.title())

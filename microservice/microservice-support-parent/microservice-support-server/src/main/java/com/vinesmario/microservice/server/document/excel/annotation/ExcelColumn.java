@@ -33,9 +33,9 @@ public @interface ExcelColumn {
     int sort() default 9999;
 
     /**
-     * 如果是字典类型，根据字典的catalog值及fieldName取得value
+     * 如果是字典类型，根据字典的catalogCode值及列的fieldName取得value
      */
-    String dictCatalog() default "";
+    String catalogCode() default "";
 
     /**
      * 如果是其他反射类型，根据字典的class及fieldName，反射取得value

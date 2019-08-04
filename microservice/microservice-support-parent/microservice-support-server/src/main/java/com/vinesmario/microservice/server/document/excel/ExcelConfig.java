@@ -60,9 +60,9 @@ public class ExcelConfig {
          */
         private int sort;
         /**
-         * 如果是字典类型，根据字典的catalog值及fieldName取得value
+         * 如果是字典类型，根据字典的catalogCode值及列的fieldName取得value
          */
-        private String dictCatalog;
+        private String catalogCode;
         /**
          * 字段名（默认调用当前字段的“get”方法，如指定导出字段为对象，请填写“对象名.对象属性”，例：“area.name”、“office.name”）
          */
