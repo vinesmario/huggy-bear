@@ -34,10 +34,10 @@ import java.util.Optional;
  * @author
  * @date
  */
-@Api(description = "StoragePdfSplitedCRUD", tags = "StoragePdfSplitedController", basePath = "/storage_pdf_splited")
+@Api(description = "StoragePdfSplitedCRUD", tags = "StoragePdfSplitedController", basePath = "/storage/pdf-splited")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_pdf_splited")
+@RequestMapping("/api/v1/storage/pdf-splited")
 public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDTO, StoragePdfSplitedConditionDTO, Long>
         implements StoragePdfSplitedClient {
 
@@ -92,8 +92,8 @@ public class StoragePdfSplitedResource extends BaseResource<StoragePdfSplitedDTO
                 .body(storageFileDTO);
     }
 
-    @ApiOperation(value = "下载文件", httpMethod = "GET")
-    @ApiResponse(code = 200, message = "下载文件成功", response = String.class)
+    @ApiOperation(value = "下载PDF", httpMethod = "GET")
+    @ApiResponse(code = 200, message = "下载PDF成功", response = String.class)
     @GetMapping(value = "/download/{uuid}")
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)

@@ -30,10 +30,10 @@ import java.util.Optional;
  * @author
  * @date
  */
-@Api(description = "StoragePdfCRUD", tags = "StoragePdfController", basePath = "/storage_pdf")
+@Api(description = "StoragePdfCRUD", tags = "StoragePdfController", basePath = "/storage/pdf")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_pdf")
+@RequestMapping("/api/v1/storage/pdf")
 public class StoragePdfResource extends BaseResource<StoragePdfDTO, StoragePdfConditionDTO, Long>
         implements StoragePdfClient {
 

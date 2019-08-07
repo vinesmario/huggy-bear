@@ -2,10 +2,10 @@ package com.vinesmario.microservice.server.storage.factory;
 
 import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
+import com.vinesmario.microservice.server.ignore.StorageResource;
 import com.vinesmario.microservice.server.storage.service.StorageExcelService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.v1.StorageExcelResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,10 +49,9 @@ public class StorageExcelFactory extends AbstractStorageFactory<StorageExcelDTO>
 
         // 文件访问绝对url为空，补充文件访问相对url
         if (StringUtils.isBlank(storageExcelDTO.getFileAbsoluteUrl())) {
-            String url = StorageExcelResource.class.getAnnotation(RequestMapping.class).value()[0];
-            url += StorageExcelResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
+            String url = StorageResource.class.getAnnotation(RequestMapping.class).value()[0];
+            url += StorageResource.class.getMethod("downloadExcel", String.class).getAnnotation(GetMapping.class).value()[0];
             storageExcelDTO.setFileRelativeUrl(url.replace("{uuid}", storageExcelDTO.getUuid()));
-//            storageExcelDTO.setFileRelativeUrl("/api/v1/storage_excel/download/{uuid}".replace("{uuid}", storageExcelDTO.getUuid()));
         }
 
         // 文件记录持久化

@@ -2,10 +2,10 @@ package com.vinesmario.microservice.server.storage.factory;
 
 import com.vinesmario.microservice.client.storage.dto.StorageTemplateDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
+import com.vinesmario.microservice.server.ignore.StorageResource;
 import com.vinesmario.microservice.server.storage.service.StorageTemplateService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.v1.StorageTemplateResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,10 +49,9 @@ public class StorageTemplateFactory extends AbstractStorageFactory<StorageTempla
 
         // 文件访问绝对url为空，补充文件访问相对url
         if (StringUtils.isBlank(storageTemplateDTO.getFileAbsoluteUrl())) {
-            String url = StorageTemplateResource.class.getAnnotation(RequestMapping.class).value()[0];
-            url += StorageTemplateResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
+            String url = StorageResource.class.getAnnotation(RequestMapping.class).value()[0];
+            url += StorageResource.class.getMethod("downloadTemplate", String.class).getAnnotation(GetMapping.class).value()[0];
             storageTemplateDTO.setFileRelativeUrl(url.replace("{uuid}", storageTemplateDTO.getUuid()));
-//            storageTemplateDTO.setFileRelativeUrl("/api/v1/storage_template/download/{uuid}".replace("{uuid}", storageTemplateDTO.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {

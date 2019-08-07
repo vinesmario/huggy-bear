@@ -30,10 +30,10 @@ import java.util.Optional;
  * @author
  * @date
  */
-@Api(description = "StorageExcelCRUD", tags = "StorageExcelController", basePath = "/storage_excel")
+@Api(description = "StorageExcelCRUD", tags = "StorageExcelController", basePath = "/storage/excel")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_excel")
+@RequestMapping("/api/v1/storage/excel")
 public class StorageExcelResource extends BaseResource<StorageExcelDTO, StorageExcelConditionDTO, Long>
         implements StorageExcelClient {
 

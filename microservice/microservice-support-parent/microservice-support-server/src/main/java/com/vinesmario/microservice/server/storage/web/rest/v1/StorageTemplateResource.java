@@ -30,10 +30,10 @@ import java.util.Optional;
  * @author
  * @date
  */
-@Api(description = "StorageTemplateCRUD", tags = "StorageTemplateController", basePath = "/storage_template")
+@Api(description = "StorageTemplateCRUD", tags = "StorageTemplateController", basePath = "/storage/template")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_template")
+@RequestMapping("/api/v1/storage/template")
 public class StorageTemplateResource extends BaseResource<StorageTemplateDTO, StorageTemplateConditionDTO, Long>
         implements StorageTemplateClient {
 
@@ -88,8 +88,8 @@ public class StorageTemplateResource extends BaseResource<StorageTemplateDTO, St
                 .body(storageFileDTO);
     }
 
-    @ApiOperation(value = "下载文件", httpMethod = "GET")
-    @ApiResponse(code = 200, message = "下载文件成功", response = String.class)
+    @ApiOperation(value = "下载模板", httpMethod = "GET")
+    @ApiResponse(code = 200, message = "下载模板成功", response = String.class)
     @GetMapping(value = "/download/{uuid}")
     @ResponseBody
     public ResponseEntity<byte[]> download(@PathVariable("uuid") String uuid)

@@ -2,10 +2,10 @@ package com.vinesmario.microservice.server.storage.factory;
 
 import com.vinesmario.microservice.client.storage.dto.StoragePdfDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
+import com.vinesmario.microservice.server.ignore.StorageResource;
 import com.vinesmario.microservice.server.storage.service.StoragePdfService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.v1.StoragePdfResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,10 +49,9 @@ public class StoragePdfFactory extends AbstractStorageFactory<StoragePdfDTO> {
 
         // 文件访问绝对url为空，补充文件访问相对url
         if (StringUtils.isBlank(storagePdfDTO.getFileAbsoluteUrl())) {
-            String url = StoragePdfResource.class.getAnnotation(RequestMapping.class).value()[0];
-            url += StoragePdfResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
+            String url = StorageResource.class.getAnnotation(RequestMapping.class).value()[0];
+            url += StorageResource.class.getMethod("downloadPdf", String.class).getAnnotation(GetMapping.class).value()[0];
             storagePdfDTO.setFileRelativeUrl(url.replace("{uuid}", storagePdfDTO.getUuid()));
-//            storagePdfDTO.setFileRelativeUrl("/api/v1/storage_pdf/download/{uuid}".replace("{uuid}", storagePdfDTO.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {

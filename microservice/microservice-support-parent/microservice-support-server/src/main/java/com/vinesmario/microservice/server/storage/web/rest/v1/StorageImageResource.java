@@ -33,10 +33,10 @@ import java.util.Optional;
  * @date
  */
 
-@Api(description = "StorageImageCRUD", tags = "StorageImageController", basePath = "/storage_image")
+@Api(description = "StorageImageCRUD", tags = "StorageImageController", basePath = "/storage/image")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_image")
+@RequestMapping("/api/v1/storage/image")
 public class StorageImageResource extends BaseResource<StorageImageDTO, StorageImageConditionDTO, Long>
         implements StorageImageClient {
 

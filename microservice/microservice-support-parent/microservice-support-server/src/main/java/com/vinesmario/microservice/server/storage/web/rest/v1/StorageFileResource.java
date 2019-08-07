@@ -31,10 +31,10 @@ import java.util.Optional;
  * @date
  */
 
-@Api(description = "StorageFileCRUD", tags = "StorageFileController", basePath = "/storage_file")
+@Api(description = "StorageFileCRUD", tags = "StorageFileController", basePath = "/storage/file")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/storage_file")
+@RequestMapping("/api/v1/storage/file")
 public class StorageFileResource extends BaseResource<StorageFileDTO, StorageFileConditionDTO, Long>
         implements StorageFileClient {
 

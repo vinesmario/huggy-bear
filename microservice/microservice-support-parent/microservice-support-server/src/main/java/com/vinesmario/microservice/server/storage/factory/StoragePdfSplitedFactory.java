@@ -2,10 +2,10 @@ package com.vinesmario.microservice.server.storage.factory;
 
 import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
+import com.vinesmario.microservice.server.ignore.StorageResource;
 import com.vinesmario.microservice.server.storage.service.StoragePdfSplitedService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
-import com.vinesmario.microservice.server.storage.web.rest.v1.StoragePdfSplitedResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,10 +49,9 @@ public class StoragePdfSplitedFactory extends AbstractStorageFactory<StoragePdfS
 
         // 文件访问绝对url为空，补充文件访问相对url
         if (StringUtils.isBlank(storagePdfSplitedDTO.getFileAbsoluteUrl())) {
-            String url = StoragePdfSplitedResource.class.getAnnotation(RequestMapping.class).value()[0];
-            url += StoragePdfSplitedResource.class.getMethod("download", String.class).getAnnotation(GetMapping.class).value()[0];
+            String url = StorageResource.class.getAnnotation(RequestMapping.class).value()[0];
+            url += StorageResource.class.getMethod("downloadPdfSplited", String.class).getAnnotation(GetMapping.class).value()[0];
             storagePdfSplitedDTO.setFileRelativeUrl(url.replace("{uuid}", storagePdfSplitedDTO.getUuid()));
-//            storagePdfSplitedDTO.setFileRelativeUrl("/api/v1/storage_pdf_splited/download/{uuid}".replace("{uuid}", storagePdfSplitedDTO.getUuid()));
         }
         // 文件记录持久化
         if (storageStrategy.isPersistent()) {
