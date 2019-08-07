@@ -4,7 +4,7 @@ import com.vinesmario.microservice.client.common.dto.TreeDTO;
 import lombok.Data;
 
 @Data
-public class ResourceDTO extends TreeDTO<ResourceDTO> {
+public class ResourceDTO extends TreeDTO<ResourceDTO, Long> {
 
     /**
      * 类型

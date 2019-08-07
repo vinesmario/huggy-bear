@@ -2,6 +2,8 @@ package com.vinesmario.microservice.client.common.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Base abstract class for entities which will
  * Create new records
@@ -10,9 +12,9 @@ import lombok.Data;
  * Delete existing records.
  */
 @Data
-public abstract class TreeDTO<T extends TreeDTO> extends BaseDTO<Long> {
+public abstract class TreeDTO<T extends TreeDTO, PK extends Serializable> extends BaseDTO {
 
-    private Long parentId;
+    private PK parentId;
     private T parent;
 
 }

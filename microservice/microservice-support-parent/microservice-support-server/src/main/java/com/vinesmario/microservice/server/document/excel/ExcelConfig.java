@@ -49,7 +49,7 @@ public class ExcelConfig {
     @Builder
     @Getter
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    class ExcelColumnConfig {
+    static class ExcelColumnConfig {
 
         /**
          * DTO对象的属性

@@ -25,6 +25,10 @@ secondary technical school 中等专业学校
 primary school 小学
 kindergarten 幼儿园
 
+学校->组织机构->租户
+      组织机构负责人->用户
+      组织机构岗位->角色
+
 school badge 校徽
 specialized subject, undergraduate and graduate students 专科、本科和研究生
 nature 办学性质 公办高校和民办高校
@@ -52,3 +56,5 @@ score 成绩
 考勤结果
 
 国民经济行业分类 统计局
+
+不动产

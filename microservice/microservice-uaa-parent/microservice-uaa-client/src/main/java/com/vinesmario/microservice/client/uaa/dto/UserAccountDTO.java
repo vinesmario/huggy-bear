@@ -15,6 +15,10 @@ import java.util.List;
 public class UserAccountDTO extends BaseDTO<Long> {
 
     /**
+     * 租户ID
+     */
+    private Long tenantId;
+    /**
      * 用户名
      */
     private String username;

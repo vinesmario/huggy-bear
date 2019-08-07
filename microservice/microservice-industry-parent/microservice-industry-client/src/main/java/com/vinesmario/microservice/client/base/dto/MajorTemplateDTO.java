@@ -3,9 +3,9 @@ package com.vinesmario.microservice.client.base.dto;
 import com.vinesmario.microservice.client.common.dto.TreeDTO;
 
 /**
- * 专业
+ * 专业目录
  */
-public class MajorDTO extends TreeDTO<MajorDTO> {
+public class MajorTemplateDTO extends TreeDTO<MajorTemplateDTO, Long> {
 
     /**
      * 名称

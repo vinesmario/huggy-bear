@@ -12,6 +12,10 @@ import lombok.Data;
 public class UserAccount extends BaseEntity<Long> {
 
     /**
+     * 租户ID
+     */
+    private Long tenantId;
+    /**
      * 用户名，唯一行约束，不可修改
      */
     private String username;

@@ -1,12 +1,12 @@
-package com.vinesmario.microservice.client.base.dto;
+package com.vinesmario.microservice.client.enterprise.dto;
 
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
 
 /**
- * 大学
+ * 小组
  */
-public class University extends BaseDTO<Long> {
-
+public class TeamDTO extends BaseDTO<Long> {
+    
     private String name;
 
     @Override

@@ -5,7 +5,7 @@ import com.vinesmario.microservice.client.common.dto.TreeDTO;
 /**
  * 行政区划
  */
-public class AreaDTO extends TreeDTO<AreaDTO> {
+public class AreaDTO extends TreeDTO<AreaDTO, Long> {
 
     /**
      * 名称

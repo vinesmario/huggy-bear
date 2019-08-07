@@ -3,7 +3,7 @@ package com.vinesmario.microservice.client.base.dto;
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
 
 /**
- * 目录
+ * 字典目录
  */
 public class CatalogDTO extends BaseDTO<Long> {
 
