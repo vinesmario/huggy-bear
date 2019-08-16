@@ -19,7 +19,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "microservice-support-server", path = "/api/v1/storage_template", fallbackFactory = StorageTemplateFallbackFactory.class)
+@FeignClient(name = "microservice-support-server", path = "/api/v1/storage/template", fallbackFactory = StorageTemplateFallbackFactory.class)
 public interface StorageTemplateClient extends CrudClient<StorageTemplateDTO, StorageTemplateConditionDTO, Long> {
 
     @GetMapping("")

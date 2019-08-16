@@ -19,7 +19,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "microservice-support-server", path = "/api/v1/storage_excel", fallbackFactory = StorageExcelFallbackFactory.class)
+@FeignClient(name = "microservice-support-server", path = "/api/v1/storage/excel", fallbackFactory = StorageExcelFallbackFactory.class)
 public interface StorageExcelClient extends CrudClient<StorageExcelDTO, StorageExcelConditionDTO, Long>{
 
 	@GetMapping("")

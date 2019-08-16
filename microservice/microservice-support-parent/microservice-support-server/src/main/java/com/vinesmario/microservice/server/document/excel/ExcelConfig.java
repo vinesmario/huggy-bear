@@ -1,6 +1,7 @@
 package com.vinesmario.microservice.server.document.excel;
 
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
+import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 import lombok.*;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -22,19 +23,26 @@ public class ExcelConfig {
      * 文件扩展名
      */
     private final String extension;
+     /**
+     * 文件名
+     */
+    private final String fileName;
     /**
      * 表单名
      */
-    @Builder.Default
-    private final String sheetName = "sheet1";
+    private final String sheetName;
     /**
      * 表单标题
      */
-    private final String tiltle;
+    private final String title;
     /**
      * DTO对象class名
      */
-    private final Class<? extends BaseDTO> clazz;
+    private final Class<? extends BaseDTO> dto;
+    /**
+     * Feign client接口class名
+     */
+    private final Class<? extends CrudClient> feignClient;
     /**
      * 导入列配置
      */
@@ -105,7 +113,7 @@ public class ExcelConfig {
         String version = "version";
         ExcelConfig config = ExcelConfig.builder()
                 .columnImportConfig(ExcelColumnConfig.builder().build())
-                .columnImportConfig(ExcelColumnConfig.builder().build())
+                .columnExportConfig(ExcelColumnConfig.builder().build())
                 .build();
         ExcelConfig.ExcelConfigBuilder builder = new ExcelConfig.ExcelConfigBuilder();
     }

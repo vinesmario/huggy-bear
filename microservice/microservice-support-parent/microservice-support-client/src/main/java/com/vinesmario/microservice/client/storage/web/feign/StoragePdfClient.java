@@ -19,7 +19,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "microservice-support-server", path = "/api/v1/storage_pdf", fallbackFactory = StoragePdfFallbackFactory.class)
+@FeignClient(name = "microservice-support-server", path = "/api/v1/storage/pdf", fallbackFactory = StoragePdfFallbackFactory.class)
 public interface StoragePdfClient extends CrudClient<StoragePdfDTO, StoragePdfConditionDTO, Long> {
 
     @GetMapping("")

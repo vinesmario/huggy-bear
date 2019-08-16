@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2014-2015 plarform
  */
-package com.vinesmario.microservice.server.document.excel.annotation;
+package com.vinesmario.microservice.client.document.excel.annotation;
 
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -25,7 +25,7 @@ public @interface ExcelColumn {
     /**
      * 字段名（默认调用当前字段的“get”方法，如指定导出字段为对象，请填写“对象名.对象属性”，例：“area.name”、“office.name”）
      */
-    String value() default "";
+    String name() default "";
 
     /**
      * 字段排序（升序）
@@ -40,7 +40,7 @@ public @interface ExcelColumn {
     /**
      * 如果是其他反射类型，根据字典的class及fieldName，反射取得value
      */
-    Class<?> fieldTypeClass() default Class.class;
+    Class<?> fieldTypeClass() default Object.class;
 
     /**
      * 字段类型（0：导出导入；1：仅导出；2：仅导入）
@@ -55,7 +55,7 @@ public @interface ExcelColumn {
     /**
      * 字段水平对齐方式
      *
-     * @see org.apache.poi.ss.usermodel.HorizontalAlignment
+     * @see HorizontalAlignment
      * GENERAL,LEFT,CENTER,RIGHT,FILL,JUSTIFY,CENTER_SELECTION,DISTRIBUTED
      */
     HorizontalAlignment horizontalAlignment() default HorizontalAlignment.GENERAL;
@@ -63,13 +63,13 @@ public @interface ExcelColumn {
     /**
      * 字段垂直对齐方式
      *
-     * @see org.apache.poi.ss.usermodel.VerticalAlignment
+     * @see VerticalAlignment
      * TOP,CENTER,BOTTOM,JUSTIFY,DISTRIBUTED
      */
     VerticalAlignment verticalAlignment() default VerticalAlignment.CENTER;
 
     /**
-     * @see org.apache.poi.ss.usermodel.CellType
+     * @see CellType
      * _NONE(-1),NUMERIC(0),STRING(1),FORMULA(2),BLANK(3),BOOLEAN(4),ERROR(5);
      */
     CellType cellType() default CellType._NONE;

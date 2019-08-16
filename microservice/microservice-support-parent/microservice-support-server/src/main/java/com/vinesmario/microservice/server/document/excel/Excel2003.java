@@ -1,12 +1,10 @@
 package com.vinesmario.microservice.server.document.excel;
 
-import com.google.common.collect.Lists;
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.server.document.excel.annotation.Excel;
-import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
+import com.vinesmario.microservice.client.document.excel.annotation.Excel;
+import com.vinesmario.microservice.client.document.excel.annotation.ExcelColumn;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -16,9 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -87,11 +83,13 @@ public class Excel2003 {
     private void config(Class<? extends BaseDTO> clazz) {
         Excel excel = clazz.getAnnotation(Excel.class);
         ExcelConfig.ExcelConfigBuilder excelConfigBuilder = ExcelConfig.builder()
-                .clazz(clazz)
                 .version(excel.version())
                 .extension(excel.version())
+                .fileName(excel.fileName())
                 .sheetName(excel.sheetName())
-                .tiltle(excel.title());
+                .title(excel.title())
+                .dto(clazz)
+                .feignClient(excel.feignClient());
 
         Field[] fields = clazz.getDeclaredFields();
         if (!ObjectUtils.isEmpty(fields)) {
@@ -106,7 +104,7 @@ public class Excel2003 {
                                         .field(field)
                                         .sort(excelColumn.sort())
                                         .catalogCode(excelColumn.catalogCode())
-                                        .fieldName(excelColumn.value())
+                                        .fieldName(excelColumn.name())
                                         .fieldTypeClass(excelColumn.fieldTypeClass())
                                         .build());
                             } else if (ExcelColumn.ColumnType.BOTH.equals(excelColumn.columnType())
@@ -115,7 +113,7 @@ public class Excel2003 {
                                         .field(field)
                                         .sort(excelColumn.sort())
                                         .catalogCode(excelColumn.catalogCode())
-                                        .fieldName(excelColumn.value())
+                                        .fieldName(excelColumn.name())
                                         .fieldTypeClass(excelColumn.fieldTypeClass())
                                         .title(excelColumn.title())
                                         .horizontalAlignment(excelColumn.horizontalAlignment())
@@ -150,7 +148,7 @@ public class Excel2003 {
 
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, (columnNum - 1)));
             cellTiltle.setCellStyle(columnTopStyle);
-            cellTiltle.setCellValue(config.getTiltle());
+            cellTiltle.setCellValue(config.getTitle());
 
             // 定义所需列数
             HSSFRow rowRowName = sheet.createRow(2);                  // 在索引2的位置创建行(最顶端的行开始的第二行)

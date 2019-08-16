@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.ignore;
+package com.vinesmario.microservice.server.storage.web.rest.anonymous;
 
 import com.vinesmario.microservice.client.storage.dto.*;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;

@@ -5,7 +5,7 @@ package com.vinesmario.microservice.server.document.excel;
 
 import com.google.common.collect.Lists;
 import com.vinesmario.common.kit.ReflectionKit;
-import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
+import com.vinesmario.microservice.client.document.excel.annotation.ExcelColumn;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;

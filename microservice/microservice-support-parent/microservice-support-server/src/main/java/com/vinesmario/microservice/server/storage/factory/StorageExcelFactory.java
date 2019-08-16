@@ -2,7 +2,7 @@ package com.vinesmario.microservice.server.storage.factory;
 
 import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
-import com.vinesmario.microservice.server.ignore.StorageResource;
+import com.vinesmario.microservice.server.storage.web.rest.anonymous.StorageResource;
 import com.vinesmario.microservice.server.storage.service.StorageExcelService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;

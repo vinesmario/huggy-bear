@@ -15,8 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.vinesmario.common.kit.ReflectionKit;
-import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
-import com.vinesmario.microservice.server.document.excel.annotation.ExcelColumn;
+import com.vinesmario.microservice.client.document.excel.annotation.ExcelColumn;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

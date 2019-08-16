@@ -19,7 +19,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "microservice-support-server", path = "/api/v1/storage_image", fallbackFactory = StorageImageFallbackFactory.class)
+@FeignClient(name = "microservice-support-server", path = "/api/v1/storage/image", fallbackFactory = StorageImageFallbackFactory.class)
 public interface StorageImageClient extends CrudClient<StorageImageDTO, StorageImageConditionDTO, Long> {
 
     @GetMapping("")

@@ -19,7 +19,7 @@ import java.util.List;
  * @author
  * @date
  */
-@FeignClient(name = "microservice-support-server", path = "/api/v1/storage_pdf_splited", fallbackFactory = StoragePdfSplitedFallbackFactory.class)
+@FeignClient(name = "microservice-support-server", path = "/api/v1/storage/pdf-splited", fallbackFactory = StoragePdfSplitedFallbackFactory.class)
 public interface StoragePdfSplitedClient extends CrudClient<StoragePdfSplitedDTO, StoragePdfSplitedConditionDTO, Long>{
 
 	@GetMapping("")
