@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelColumn {
 
+    int DEFAULT_SORT = 9999;
     /**
      * 字段名（默认调用当前字段的“get”方法，如指定导出字段为对象，请填写“对象名.对象属性”，例：“area.name”、“office.name”）
      */
@@ -30,7 +31,7 @@ public @interface ExcelColumn {
     /**
      * 字段排序（升序）
      */
-    int sort() default 9999;
+    int sort() default DEFAULT_SORT;
 
     /**
      * 如果是字典类型，根据字典的catalogCode值及列的fieldName取得value
@@ -69,6 +70,7 @@ public @interface ExcelColumn {
     VerticalAlignment verticalAlignment() default VerticalAlignment.CENTER;
 
     /**
+     * 单元格数据类型
      * @see CellType
      * _NONE(-1),NUMERIC(0),STRING(1),FORMULA(2),BLANK(3),BOOLEAN(4),ERROR(5);
      */

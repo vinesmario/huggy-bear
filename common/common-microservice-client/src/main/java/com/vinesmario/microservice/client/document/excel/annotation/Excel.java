@@ -18,6 +18,13 @@ import java.lang.annotation.Target;
 public @interface Excel {
 
     /**
+     * ID
+     *
+     * @return
+     */
+    String id() default "";
+
+    /**
      * Excel版本信息
      *
      * @return
