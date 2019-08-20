@@ -26,17 +26,14 @@ public class YpyunCloudStorageStrategy extends CloudStorageStrategy {
         this.config = storageProperties.getCloud().getYpyun();
     }
 
-    @Override
     public boolean isPersistent() {
         return config.isPersistent();
     }
 
-    @Override
     public String upload(InputStream inputStream, String fileRelativePath) throws Exception {
         return null;
     }
 
-    @Override
     public void deleteObject(String key) throws Exception {
 
     }

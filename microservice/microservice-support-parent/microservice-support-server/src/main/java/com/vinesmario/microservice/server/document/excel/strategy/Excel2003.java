@@ -1,19 +1,18 @@
-package com.vinesmario.microservice.server.document.excel;
+package com.vinesmario.microservice.server.document.excel.strategy;
 
-import com.vinesmario.microservice.client.common.dto.BaseDTO;
-import com.vinesmario.microservice.client.common.web.feign.CrudClient;
-import com.vinesmario.microservice.client.document.excel.annotation.Excel;
 import com.vinesmario.microservice.client.document.excel.annotation.ExcelColumn;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.util.ObjectUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -43,100 +42,30 @@ import java.util.List;
  *
  * @author
  */
-public class Excel2003 {
+@Builder
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Excel2003 implements ExcelStrategy {
 
-    /**
-     * 是否远程调用
-     */
-    private boolean remote = false;
-
-    private ExcelConfig config;
-
-    private Class<? extends BaseDTO> clazz;
+    private String fileName;
+    private String sheetName;
+    private String title;
+    private List<ExcelColumn> columns;
 
     private List<Object[]> dataList = new ArrayList<>();
 
-    private CrudClient client;
+    public void doImport() {
 
-    public Excel2003(Class<? extends BaseDTO> clazz, List<Object[]> dataList) {
-        config(clazz);
-        this.dataList = dataList;
-    }
-
-    public Excel2003(ExcelConfig config, List<Object[]> dataList) {
-        this.config = config;
-        this.dataList = dataList;
-    }
-
-    public Excel2003(Class<? extends BaseDTO> clazz, CrudClient client) {
-        config(clazz);
-        this.client = client;
-        this.remote = true;
-    }
-
-    public Excel2003(ExcelConfig config, CrudClient client) {
-        this.config = config;
-        this.client = client;
-        this.remote = true;
-    }
-
-    private void config(Class<? extends BaseDTO> clazz) {
-        Excel excel = clazz.getAnnotation(Excel.class);
-        ExcelConfig.ExcelConfigBuilder excelConfigBuilder = ExcelConfig.builder()
-                .version(excel.version())
-                .extension(excel.version())
-                .fileName(excel.fileName())
-                .sheetName(excel.sheetName())
-                .title(excel.title())
-                .dto(clazz)
-                .feignClient(excel.feignClient());
-
-        Field[] fields = clazz.getDeclaredFields();
-        if (!ObjectUtils.isEmpty(fields)) {
-            for (Field field : fields) {
-                ExcelColumn[] excelColumns = field.getDeclaredAnnotationsByType(ExcelColumn.class);
-                if (!ObjectUtils.isEmpty(excelColumns)) {
-                    for (ExcelColumn excelColumn : excelColumns) {
-                        if (!ObjectUtils.isEmpty(excelColumn.columnType())) {
-                            if (ExcelColumn.ColumnType.BOTH.equals(excelColumn.columnType())
-                                    || ExcelColumn.ColumnType.IMPORT.equals(excelColumn.columnType())) {
-                                excelConfigBuilder.columnImportConfig(ExcelConfig.ExcelColumnConfig.builder()
-                                        .field(field)
-                                        .sort(excelColumn.sort())
-                                        .catalogCode(excelColumn.catalogCode())
-                                        .fieldName(excelColumn.name())
-                                        .fieldTypeClass(excelColumn.fieldTypeClass())
-                                        .build());
-                            } else if (ExcelColumn.ColumnType.BOTH.equals(excelColumn.columnType())
-                                    || ExcelColumn.ColumnType.EXPORT.equals(excelColumn.columnType())) {
-                                excelConfigBuilder.columnExportConfig(ExcelConfig.ExcelColumnConfig.builder()
-                                        .field(field)
-                                        .sort(excelColumn.sort())
-                                        .catalogCode(excelColumn.catalogCode())
-                                        .fieldName(excelColumn.name())
-                                        .fieldTypeClass(excelColumn.fieldTypeClass())
-                                        .title(excelColumn.title())
-                                        .horizontalAlignment(excelColumn.horizontalAlignment())
-                                        .verticalAlignment(excelColumn.verticalAlignment())
-                                        .cellType(excelColumn.cellType())
-                                        .build());
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        this.config = excelConfigBuilder.build();
     }
 
     /*
      * 导出数据
      * */
-    public void export() throws Exception {
+    public void doExport() throws Exception {
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();                        // 创建工作簿对象
-            HSSFSheet sheet = workbook.createSheet(config.getSheetName());     // 创建工作表
-            int columnNum = config.getColumnExportConfigList().size();
+            HSSFSheet sheet = workbook.createSheet(sheetName);     // 创建工作表
+            int columnNum = columns.size();
 
             // 产生表格标题行
             HSSFRow rowm = sheet.createRow(0);
@@ -148,17 +77,17 @@ public class Excel2003 {
 
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, (columnNum - 1)));
             cellTiltle.setCellStyle(columnTopStyle);
-            cellTiltle.setCellValue(config.getTitle());
+            cellTiltle.setCellValue(title);
 
             // 定义所需列数
             HSSFRow rowRowName = sheet.createRow(2);                  // 在索引2的位置创建行(最顶端的行开始的第二行)
 
-            config.getColumnExportConfigList().sort(Comparator.comparing(ExcelConfig.ExcelColumnConfig::getSort));
+            columns.sort(Comparator.comparing(ExcelColumn::sort));
             // 将列头设置到sheet的单元格中
             for (int n = 0; n < columnNum; n++) {
                 HSSFCell cellRowName = rowRowName.createCell(n);                //创建列头对应个数的单元格
                 cellRowName.setCellType(CellType.STRING);                       //设置列头单元格的数据类型
-                HSSFRichTextString text = new HSSFRichTextString(config.getColumnExportConfigList().get(n).getTitle());
+                HSSFRichTextString text = new HSSFRichTextString(columns.get(n).title());
                 cellRowName.setCellValue(text);                                 //设置列头单元格的值
                 cellRowName.setCellStyle(columnTopStyle);                       //设置列头单元格样式
             }

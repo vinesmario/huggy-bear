@@ -10,7 +10,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-
 /**
  * @author
  * @date
@@ -18,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Excel(feignClient = StorageFileClient.class)
 @ApiModel(value = "StorageFileDTO", description = "StorageFile数据传输对象")
 @Data
-public class StorageFileDTO extends BaseDTO<Long> {
+public class StorageFileDTO extends BaseDTO<Long> implements IStorageDTO {
 
     /**
      *

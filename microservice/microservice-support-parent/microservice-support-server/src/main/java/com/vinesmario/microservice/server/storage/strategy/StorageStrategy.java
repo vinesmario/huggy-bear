@@ -1,19 +1,19 @@
 package com.vinesmario.microservice.server.storage.strategy;
 
+import com.vinesmario.microservice.client.storage.dto.IStorageDTO;
 import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
-import com.vinesmario.microservice.client.storage.dto.StorageImageDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
-public abstract class StorageStrategy {
+public interface StorageStrategy {
 
     /**
      * 数据持久化入库
      *
      * @return
      */
-    public abstract boolean isPersistent();
+    boolean isPersistent();
 
     /**
      * 文件上传
@@ -22,7 +22,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract <T extends StorageFileDTO> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception;
+    <T extends IStorageDTO> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
@@ -31,7 +31,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract <T extends StorageFileDTO> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception;
+    <T extends IStorageDTO> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
@@ -40,7 +40,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract <T extends StorageFileDTO> void upload(byte[] data, String fileRelativePath, T dto) throws Exception;
+    <T extends IStorageDTO> void upload(byte[] data, String fileRelativePath, T dto) throws Exception;
 
     /**
      * 文件上传
@@ -49,7 +49,7 @@ public abstract class StorageStrategy {
      * @param fileRelativePath
      * @throws Exception
      */
-    public abstract String upload(InputStream inputStream, String fileRelativePath) throws Exception;
+    String upload(InputStream inputStream, String fileRelativePath) throws Exception;
 
     /**
      * 删除单个文件:
@@ -58,5 +58,5 @@ public abstract class StorageStrategy {
      * @return
      * @throws Exception
      */
-    public abstract void deleteObject(String key) throws Exception;
+    void deleteObject(String key) throws Exception;
 }

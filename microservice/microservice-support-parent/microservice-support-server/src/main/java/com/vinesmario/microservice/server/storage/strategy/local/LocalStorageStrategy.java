@@ -1,12 +1,11 @@
 package com.vinesmario.microservice.server.storage.strategy.local;
 
-import com.vinesmario.microservice.client.storage.dto.StorageFileDTO;
+import com.vinesmario.microservice.client.storage.dto.IStorageDTO;
 import com.vinesmario.microservice.server.config.StorageProperties;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -20,7 +19,7 @@ import java.io.OutputStream;
 @Slf4j
 @Lazy
 @Service
-public class LocalStorageStrategy extends StorageStrategy {
+public class LocalStorageStrategy implements StorageStrategy {
 
     private final LocalStorageConfig config;
 
@@ -38,27 +37,22 @@ public class LocalStorageStrategy extends StorageStrategy {
         this.config = storageProperties.getLocal();
     }
 
-    @Override
     public boolean isPersistent() {
         return config.isPersistent();
     }
 
-    @Override
-    public <T extends StorageFileDTO> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception {
+    public <T extends IStorageDTO> void upload(MultipartFile multipartFile, String fileRelativePath, T dto) throws Exception {
         dto.setFileAbsolutePath(upload(multipartFile.getInputStream(), fileRelativePath));
     }
 
-    @Override
-    public <T extends StorageFileDTO> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception {
+    public <T extends IStorageDTO> void upload(InputStream inputStream, String fileRelativePath, T dto) throws Exception {
         dto.setFileAbsolutePath(upload(inputStream, fileRelativePath));
     }
 
-    @Override
-    public <T extends StorageFileDTO> void upload(byte[] data, String fileRelativePath, T dto) throws Exception {
+    public <T extends IStorageDTO> void upload(byte[] data, String fileRelativePath, T dto) throws Exception {
         dto.setFileAbsolutePath(upload(new ByteArrayInputStream(data), fileRelativePath));
     }
 
-    @Override
     public String upload(InputStream inputStream, String fileRelativePath) throws Exception {
         String fileAbsolutePath = config.getRoot() + "/" + config.getBucketName() + "/" + fileRelativePath;
         File file = new File(fileAbsolutePath);
@@ -72,7 +66,6 @@ public class LocalStorageStrategy extends StorageStrategy {
         return fileAbsolutePath;
     }
 
-    @Override
     public void deleteObject(String key) throws Exception {
 
     }

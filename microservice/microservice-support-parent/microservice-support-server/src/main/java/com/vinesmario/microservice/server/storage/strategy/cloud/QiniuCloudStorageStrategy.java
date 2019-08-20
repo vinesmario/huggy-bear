@@ -35,7 +35,6 @@ public class QiniuCloudStorageStrategy extends CloudStorageStrategy {
         return config.isPersistent();
     }
 
-    @Override
     public String upload(InputStream inputStream, String fileRelativePath) throws Exception {
         if (StringUtils.isNotBlank(config.getNameSpace())) {
             fileRelativePath = config.getNameSpace() + "/" + fileRelativePath;
@@ -47,7 +46,6 @@ public class QiniuCloudStorageStrategy extends CloudStorageStrategy {
         return fileAbsoluteUrl;
     }
 
-    @Override
     public void deleteObject(String key) throws Exception {
 
     }

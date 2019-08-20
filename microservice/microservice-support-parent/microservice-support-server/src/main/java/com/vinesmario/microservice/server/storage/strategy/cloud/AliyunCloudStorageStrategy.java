@@ -28,12 +28,10 @@ public class AliyunCloudStorageStrategy extends CloudStorageStrategy {
         this.config = storageProperties.getCloud().getAliyun();
     }
 
-    @Override
     public boolean isPersistent() {
         return config.isPersistent();
     }
 
-    @Override
     public String upload(InputStream inputStream, String fileRelativePath){
         if (StringUtils.isNotBlank(config.getNameSpace())) {
             fileRelativePath = config.getNameSpace() + "/" + fileRelativePath;
@@ -44,7 +42,6 @@ public class AliyunCloudStorageStrategy extends CloudStorageStrategy {
         return fileAbsoluteUrl;
     }
 
-    @Override
     public void deleteObject(String key) throws Exception {
 
     }

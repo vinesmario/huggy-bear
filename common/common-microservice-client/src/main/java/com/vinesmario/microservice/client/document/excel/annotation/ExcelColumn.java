@@ -7,10 +7,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * Excel列注解定义
@@ -20,6 +17,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(ExcelColumns.class)
 public @interface ExcelColumn {
 
     int DEFAULT_SORT = 9999;
@@ -46,7 +44,7 @@ public @interface ExcelColumn {
     /**
      * 字段类型（0：导出导入；1：仅导出；2：仅导入）
      */
-    ColumnType columnType() default ColumnType.BOTH;
+    PortType portType() default PortType.BOTH;
 
     /**
      * 字段标题
@@ -81,7 +79,7 @@ public @interface ExcelColumn {
      */
     int width() default 100;
 
-    enum ColumnType {
+    enum PortType {
         BOTH,
         IMPORT,
         EXPORT;

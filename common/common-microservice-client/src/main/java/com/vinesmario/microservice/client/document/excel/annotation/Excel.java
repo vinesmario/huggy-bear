@@ -1,8 +1,6 @@
 package com.vinesmario.microservice.client.document.excel.annotation;
 
 import com.vinesmario.common.constant.DocumentVersion;
-import com.vinesmario.common.constant.FileExtension;
-import com.vinesmario.microservice.client.common.web.feign.CrudClient;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,6 +21,12 @@ public @interface Excel {
      * @return
      */
     String id() default "";
+    /**
+     *
+     *
+     * @return
+     */
+    String name() default "filename";
 
     /**
      * Excel版本信息
@@ -30,20 +34,6 @@ public @interface Excel {
      * @return
      */
     String version() default DocumentVersion.EXCEL_2007;
-
-    /**
-     * 文件扩展名
-     *
-     * @return
-     */
-    String extension() default FileExtension.XLSX;
-
-    /**
-     * 文件名
-     *
-     * @return
-     */
-    String fileName() default "fileName";
 
     /**
      * 表单名
@@ -58,10 +48,5 @@ public @interface Excel {
      * @return
      */
     String title() default "title";
-
-    /**
-     * 查询数据接口类
-     */
-    Class<? extends CrudClient> feignClient() default CrudClient.class;
 
 }

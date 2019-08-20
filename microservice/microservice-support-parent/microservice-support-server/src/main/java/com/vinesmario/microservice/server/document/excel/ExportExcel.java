@@ -384,8 +384,8 @@ public class ExportExcel {
                 Object val = null;
                 // Get entity value
                 try {
-                    if (StringUtils.isNotBlank(ef.value())) {
-                        val = ReflectionKit.invokeGetter(e, ef.value());
+                    if (StringUtils.isNotBlank(ef.name())) {
+                        val = ReflectionKit.invokeGetter(e, ef.name());
                     } else {
                         if (os[1] instanceof Field) {
                             val = ReflectionKit.invokeGetter(e, ((Field) os[1]).getName());

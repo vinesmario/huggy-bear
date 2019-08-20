@@ -1,4 +1,12 @@
-package com.vinesmario.microservice.server.document.excel;
+package com.vinesmario.microservice.server.document.excel.strategy;
+
+import com.vinesmario.microservice.client.document.excel.annotation.ExcelColumn;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
 
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
@@ -25,6 +33,22 @@ package com.vinesmario.microservice.server.document.excel;
  *
  * @author
  */
-public class Excel2007 {
+@Builder
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Excel2007 implements ExcelStrategy {
 
+    private String fileName;
+    private String sheetName;
+    private String title;
+    private List<ExcelColumn> columns;
+
+    public void doImport() throws Exception {
+
+    }
+
+    public void doExport() throws Exception {
+
+    }
+    
 }

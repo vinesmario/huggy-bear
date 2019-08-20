@@ -66,5 +66,4 @@ public class StorageFile extends BaseEntity<Long> {
     @Column(name = "FILE_SHA1_HEX")
     private String fileSha1Hex;
 
-
 }
