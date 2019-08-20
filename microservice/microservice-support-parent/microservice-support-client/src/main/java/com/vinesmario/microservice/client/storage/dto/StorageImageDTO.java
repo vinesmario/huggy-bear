@@ -3,7 +3,6 @@ package com.vinesmario.microservice.client.storage.dto;
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.vinesmario.microservice.client.document.excel.annotation.Excel;
 import com.vinesmario.microservice.client.document.excel.annotation.ExcelColumn;
-import com.vinesmario.microservice.client.storage.web.feign.StorageImageClient;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  * @author
  * @date
  */
-@Excel(feignClient = StorageImageClient.class)
+@Excel
 @ApiModel(value = "StorageImageDTO", description = "StorageImage数据传输对象")
 @Data
 public class StorageImageDTO extends BaseDTO<Long> implements IStorageDTO {
