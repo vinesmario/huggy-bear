@@ -37,4 +37,14 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- 可执行jar 需用spring-boot插件打包-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
