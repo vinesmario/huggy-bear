@@ -12,7 +12,7 @@
     <artifactId>common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>common-tools</module>
+        <module>common-toolkit</module>
         <module>common-microservice-client</module>
         <module>common-microservice-server</module>
     </modules>

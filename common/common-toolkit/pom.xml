@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-tools</artifactId>
+    <artifactId>common-toolkit</artifactId>
     <description>套件、工具jar</description>
 
     <dependencies>

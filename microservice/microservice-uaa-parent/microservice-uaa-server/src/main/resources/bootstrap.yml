@@ -59,6 +59,7 @@ feign:
         response:
             enabled: true
 
+# UAA 不需要熔断器
 #hystrix:
 #    command:
 #        default:

@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>common-tools</artifactId>
+            <artifactId>common-toolkit</artifactId>
             <version>${project.common.version}</version>
         </dependency>
 

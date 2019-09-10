@@ -45,7 +45,7 @@ microservice:  微服务模块
     -- marketing-sale               市场销售：电商
         -- mall         电商
         -- merchant     商户
-        -- member       会员
+        -- member       消费者升级为会员
         -- order        订单（小额、高频消费场景）
         -- coupon       优惠（小额、高频消费场景）
         -- payment      支付（小额、高频消费场景）

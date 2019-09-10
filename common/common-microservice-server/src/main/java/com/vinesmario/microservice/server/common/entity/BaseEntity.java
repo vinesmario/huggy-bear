@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
  * Delete existing records.
  */
 @Data
-@Accessors(chain = true)
+@MappedSuperclass
 public class BaseEntity<PK extends Serializable> {
 
     /**
