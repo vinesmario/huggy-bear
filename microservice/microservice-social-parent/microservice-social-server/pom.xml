@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>microservice-social-server</artifactId>
-    <description>社区APP服务</description>
+    <description>社交APP服务</description>
 
     <dependencies>
         <dependency>

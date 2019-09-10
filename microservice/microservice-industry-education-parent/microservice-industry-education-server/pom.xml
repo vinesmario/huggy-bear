@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>microservice-industry-client</artifactId>
+            <artifactId>microservice-industry-education-client</artifactId>
             <version>${project.common.version}</version>
         </dependency>
 
