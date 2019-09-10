@@ -32,7 +32,7 @@
 
         <!-- spring 家族 -->
         <spring-boot.version>2.0.9.RELEASE</spring-boot.version>
-        <spring-cloud.version>Finchley.SR4</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <spring-boot-admin.version>2.0.6</spring-boot-admin.version>
         <!-- spring-boot-dependencies-2.0.9.RELEASE -->
         <!--<spring-data-releasetrain.version>Kay-SR14</spring-data-releasetrain.version>-->
