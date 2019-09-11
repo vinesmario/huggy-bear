@@ -50,7 +50,7 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         /**
-         *  find config from properties
+         *  find config from properties 'security.oauth2.authorization...'
          */
         super.configure(oauthServer);
 //        oauthServer.tokenKeyAccess("permitAll()")
@@ -60,7 +60,7 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         /**
-         *  find details from properties
+         *  find details from properties 'security.oauth2.client...'
          */
         super.configure(clients);
         /*

@@ -10,18 +10,20 @@ eureka:
 security:
     oauth2:
         # see org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties.class
+        # as authorization server
         authorization:
             check-token-access: permitAll()
             token-key-access: isAuthenticated()
             realm: realm_name
         # see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties.class
+        # as resource server
         resource:
             id: resource-uaa
             # authorization server中，resource的id参数配置不会自行生效，源码中默认值为resource-uaa，需代码覆盖原配置，见ResourceServerConfiguration。
-            # authorization server不依赖其他服务，resource的client-id和client-secret不需配置
+            # authorization server因为不依赖其他服务，resource的client-id和client-secret不需配置
             jwt:
                 # 对称加密
-                # 在resource server中用来解析令牌，需要与authorization server同步
+                # 在resource server中用来解析令牌，需要与authorization server同
                 # 也可以配置jks文件和设置key-uri参数，以非对称加密方式获取公钥 public-key
                 key-value: signingKey
         # org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.BaseClientDetailsConfiguration.class
