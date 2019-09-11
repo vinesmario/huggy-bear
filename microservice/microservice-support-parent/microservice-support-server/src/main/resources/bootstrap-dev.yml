@@ -18,7 +18,10 @@ security:
             # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration.class
 #            client-id: internal
 #            client-secret: internal
-            token-info-uri: http://MICROSERVICE-UAA-SERVER/oauth/check_token
+            # Missing tokenInfoUri and userInfoUri and there is no JWT verifier key
+#            token-info-uri: http://MICROSERVICE-UAA-SERVER/oauth/check_token
+#            user-info-uri:
+            # Only one of jwt.keyUri (or jwt.keyValue) and jwk.keySetUri should be configured.
             jwt:
                 # 对称加密
                 # 在resource server中用来解析令牌，需要与authorization server同步

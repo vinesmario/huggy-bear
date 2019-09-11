@@ -69,6 +69,10 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
 //        clients.withClientDetails(clientDetailsService);
     }
 
+    /**
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         super.configure(endpoints);
@@ -77,6 +81,7 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
         Collection<TokenEnhancer> tokenEnhancers = applicationContext.getBeansOfType(TokenEnhancer.class).values();
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(new ArrayList<>(tokenEnhancers));
+        // 默认使用org.springframework.security.oauth2.provider.token.DefaultTokenServices.class处理token
         endpoints.userDetailsService(userDetailsService)
                 .tokenStore(tokenStore)
                 .tokenEnhancer(tokenEnhancerChain)

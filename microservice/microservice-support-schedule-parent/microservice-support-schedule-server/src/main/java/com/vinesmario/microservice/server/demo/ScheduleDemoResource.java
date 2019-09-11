@@ -112,7 +112,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
 
     /**
      * 启动时获取token
-     * 并其定时重新获取，间隔时间要设置得小于access_token的过期时间
+     * 并定时重新获取，间隔时间要设置得小于access_token的过期时间
      */
     @PostConstruct
     @Scheduled(cron = "0 0/5 * * * ?")

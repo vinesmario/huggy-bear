@@ -4,6 +4,7 @@ import com.vinesmario.microservice.server.security.model.AuthoritiesConstants;
 import com.vinesmario.microservice.server.security.model.SecurityAuthority;
 import com.vinesmario.microservice.server.security.model.SecurityClient;
 import com.vinesmario.microservice.server.security.model.SecurityUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -11,8 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -34,33 +38,40 @@ public final class SecurityUtils {
                 .map(authentication -> {
                     if (authentication instanceof OAuth2Authentication) {
                         OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
-                        OAuth2Request storedRequest = oAuth2Authentication.getOAuth2Request();
-                        Authentication userAuthentication = oAuth2Authentication.getUserAuthentication();
-                        Collection<SecurityAuthority> authorities = (Collection<SecurityAuthority>) authentication.getAuthorities();
-//                        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
-                        String clientId = storedRequest.getClientId();
-                        if (userAuthentication instanceof UsernamePasswordAuthenticationToken) {
-                            SecurityUser springSecurityUser;
-                            if (authentication.getPrincipal() instanceof SecurityUser) {
-                                springSecurityUser = (SecurityUser) authentication.getPrincipal();
-                            } else if (authentication.getPrincipal() instanceof String) {
-                                if (((OAuth2Authentication) authentication).isClientOnly()) {
-                                    return null;
-                                } else {
-                                    String username = (String) authentication.getPrincipal();
-                                    // TODO 根据username从缓存中获取，例如redis
-                                    // password是密文
-                                    springSecurityUser = new SecurityUser(username, null, authorities);
-                                }
-                            } else {
-                                return null;
-                            }
-                            SecurityClient securityClient = new SecurityClient();
-                            // 根据clientId从缓存中获取，例如redis
-                            springSecurityUser.setCurrentClient(securityClient);
-                        } else {
-                            return null;
+                        String username;
+                        if (authentication.getPrincipal() instanceof UserDetails) {
+                            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                            username = userDetails.getUsername();
+                        } else if (authentication.getPrincipal() instanceof String) {
+                            username = (String) authentication.getPrincipal();
                         }
+                        Collection<SecurityAuthority> authorities = (Collection<SecurityAuthority>) authentication.getAuthorities();
+//                        Authentication userAuthentication = oAuth2Authentication.getUserAuthentication();
+                        OAuth2Request storedRequest = oAuth2Authentication.getOAuth2Request();
+                        String clientId = storedRequest.getClientId();
+                        Map<String, Serializable> extensions = storedRequest.getExtensions();
+//                        if (userAuthentication instanceof UsernamePasswordAuthenticationToken) {
+//                            SecurityUser springSecurityUser;
+//                            if (authentication.getPrincipal() instanceof SecurityUser) {
+//                                springSecurityUser = (SecurityUser) authentication.getPrincipal();
+//                            } else if (authentication.getPrincipal() instanceof String) {
+//                                if (((OAuth2Authentication) authentication).isClientOnly()) {
+//                                    return null;
+//                                } else {
+//                                    String username = (String) authentication.getPrincipal();
+//                                    // TODO 根据username从缓存中获取，例如redis
+//                                    // password是密文
+//                                    springSecurityUser = new SecurityUser(username, null, authorities);
+//                                }
+//                            } else {
+//                                return null;
+//                            }
+//                            SecurityClient securityClient = new SecurityClient();
+//                            // 根据clientId从缓存中获取，例如redis
+//                            springSecurityUser.setCurrentClient(securityClient);
+//                        } else {
+//                            return null;
+//                        }
                     }
                     return null;
                 });

@@ -39,8 +39,12 @@ security:
             resource-ids: resource-uaa,resource-support,resource-schedule
             # 逗号分隔
             scope: web-app,web-app
+            # default accessTokenValiditySeconds = 43200
+            # see org.springframework.security.oauth2.provider.token.DefaultTokenServices.class
             # Access Token is valid for 60 mins
             access-token-validity-seconds: 3600
+            # default refreshTokenValiditySeconds = 2592000;
+            # see org.springframework.security.oauth2.provider.token.DefaultTokenServices.class
             # Refresh Token is valid for 7 days
             refresh-token-validity-seconds: 604800
 

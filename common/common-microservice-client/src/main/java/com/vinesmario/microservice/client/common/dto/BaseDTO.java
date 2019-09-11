@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public abstract class BaseDTO<PK extends Serializable> {
+public abstract class BaseDTO<PK extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

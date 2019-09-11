@@ -64,6 +64,15 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         // 需重写原方法
         // 其他资源服务器配置可生效，不需重写。
         resources.resourceId(resourceServerProperties.getResourceId()).tokenStore(tokenStore());
+
+        // ①默认使用org.springframework.security.oauth2.provider.token.DefaultTokenServices.class处理token，
+        // 只做格式和简单逻辑校验，不验证真实性
+        // ②如果想要调用token-info-uri的地址对token进一步校验，可通过tokenServices(ResourceServerTokenServices tokenServices)方法，
+        // 传入org.springframework.security.oauth2.provider.token.RemoteTokenServices.class对象处理token；
+        // ③如果想要调用user-info-uri的地址对token进一步校验，可通过tokenServices(ResourceServerTokenServices tokenServices)方法，
+        // 传入org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices.class对象处理token；
+        // ④如果想要调用Github等第三方对token进一步校验，可通过tokenServices(ResourceServerTokenServices tokenServices)方法，
+        // 传入org.springframework.boot.autoconfigure.security.oauth2.resource.SpringSocialTokenServices.class对象处理token。
     }
 
     @Override
