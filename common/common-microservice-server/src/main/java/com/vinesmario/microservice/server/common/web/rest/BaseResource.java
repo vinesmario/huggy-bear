@@ -50,7 +50,7 @@ public abstract class BaseResource<DTO extends BaseDTO, CONDITION extends Condit
 
     @ApiOperation(value = "批量添加", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "批量添加成功", response = String.class)
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/multiple", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<Void> create(@RequestBody List<DTO> dtoList) {
         if (CollectionUtils.isEmpty(dtoList)) {

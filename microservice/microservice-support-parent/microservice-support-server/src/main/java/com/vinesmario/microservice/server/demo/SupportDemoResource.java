@@ -1,6 +1,7 @@
 package com.vinesmario.microservice.server.demo;
 
 import com.vinesmario.microservice.client.demo.*;
+import com.vinesmario.microservice.server.security.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

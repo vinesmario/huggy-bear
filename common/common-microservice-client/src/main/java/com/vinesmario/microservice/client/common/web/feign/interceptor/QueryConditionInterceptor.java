@@ -24,10 +24,10 @@ public class QueryConditionInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate template) {
         // 因为feign 不支持 GET 方法传 POJO,
         // 将body转key=value
-        if (template.method().equalsIgnoreCase("GET") && template.body() != null) {
+        if (template.method().equalsIgnoreCase("GET") && template.requestBody() != null) {
             try {
                 JsonNode jsonNode = objectMapper.readTree(template.requestBody().asBytes());
-                template.body((Request.Body) null);
+                template.body(Request.Body.empty());
 
                 Map<String, Collection<String>> queries = new HashMap<>();
                 buildCondition(jsonNode, "", queries);

@@ -10,10 +10,10 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
 #        type: com.zaxxer.hikari.HikariDataSource  HikariCP
         ## 使用localhost，mysql 中 GRANT 命令单独配置
-        url: jdbc:mysql://127.0.0.1/schedule?autoReconnect=true&useSSL=false&characterEncoding=utf-8
+        url: jdbc:mysql://127.0.0.1/schedule?autoReconnect=true&useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
         username: root
         password: 123456
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         ##连接池属性配置
         initialSize: 5
         minIdle: 5
