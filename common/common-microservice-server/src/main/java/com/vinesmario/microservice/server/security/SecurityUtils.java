@@ -1,14 +1,8 @@
 package com.vinesmario.microservice.server.security;
 
 import com.vinesmario.microservice.server.common.util.SpringContextUtil;
-import com.vinesmario.microservice.server.security.model.AuthoritiesConstants;
-import com.vinesmario.microservice.server.security.model.SecurityAuthority;
-import com.vinesmario.microservice.server.security.model.SecurityClient;
 import com.vinesmario.microservice.server.security.model.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +12,6 @@ import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 
@@ -63,9 +56,12 @@ public final class SecurityUtils {
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-                .map(authentication -> authentication.getAuthorities().stream()
-                        .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS)))
-                .orElse(false);
+                .map(authentication -> {
+                    OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
+                    return oAuth2Authentication.isAuthenticated();
+//                    authentication.getAuthorities().stream()
+//                            .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS));
+                }).orElse(false);
     }
 
     /**
