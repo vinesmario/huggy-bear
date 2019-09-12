@@ -43,7 +43,7 @@ public class UserLoginResource {
     @PutMapping(value = "/token/change/authority", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<OAuth2AccessToken> putAccessTokenByChangeAuthority(@RequestBody AuthorityDTO authorityDTO) {
         OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
-        oAuth2Authentication.getOAuth2Request().getExtensions().put(IatTokenEnhancer.CURRENT_AUTHORITY_ID, authorityDTO.getId());
+        oAuth2Authentication.getOAuth2Request().getRequestParameters().put(IatTokenEnhancer.CURRENT_AUTHORITY_ID, String.valueOf(authorityDTO.getId()));
 
         AuthorizationServerEndpointsConfiguration configuration = SpringContextUtil.getBean(AuthorizationServerEndpointsConfiguration.class);
         AuthorizationServerTokenServices tokenServices = configuration.getEndpointsConfigurer().getDefaultAuthorizationServerTokenServices();

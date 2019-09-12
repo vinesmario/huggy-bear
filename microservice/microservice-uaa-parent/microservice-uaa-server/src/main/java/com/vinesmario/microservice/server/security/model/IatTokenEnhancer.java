@@ -7,6 +7,7 @@ import com.vinesmario.microservice.client.uaa.dto.AuthorityDTO;
 import com.vinesmario.microservice.client.uaa.dto.TenantDTO;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -16,7 +17,6 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -71,19 +71,21 @@ public class IatTokenEnhancer implements TokenEnhancer {
         SecurityUserDetails securityUserDetails = new SecurityUserDetails();
         securityUserDetails.setName(username);
 
-        Map<String, Serializable> extensions = authentication.getOAuth2Request().getExtensions();
-        if (!ObjectUtils.isEmpty(extensions)) {
+        Map<String, String> requestParameters = authentication.getOAuth2Request().getRequestParameters();
+        if (!ObjectUtils.isEmpty(requestParameters)) {
             // TODO 用户选择切换权限角色或者机构租户（二选一）
-            Long authorityId = (Long) extensions.get(CURRENT_AUTHORITY_ID);
-            Long tenantId = (Long) extensions.get(GRANTED_TENANT_ID);
-            if (!ObjectUtils.isEmpty(authorityId)) {
+            String authorityIdStr = requestParameters.get(CURRENT_AUTHORITY_ID);
+            String tenantIdStr = requestParameters.get(GRANTED_TENANT_ID);
+            if (StringUtils.isNotBlank(authorityIdStr)) {
+                Long authorityId = Long.parseLong(authorityIdStr);
                 // TODO 指定权限角色
                 // 数据库中获取权限角色数据
                 AuthorityDTO authorityDTO = new AuthorityDTO();
                 authorityDTO.setId(authorityId);
                 authorityDTO.setName("test");
                 securityUserDetails.setCurrentAuthority(authorityDTO);
-            } else if (!ObjectUtils.isEmpty(tenantId)) {
+            } else if (StringUtils.isNotBlank(tenantIdStr)) {
+                Long tenantId = Long.parseLong(tenantIdStr);
                 // TODO 指定查看数据的机构租户
                 // 数据库中获取机构租户数据
                 TenantDTO tenantDTO = new TenantDTO();

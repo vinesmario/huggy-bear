@@ -11,7 +11,7 @@ public class ResourceDTO extends TreeDTO<ResourceDTO, Long> {
      */
     private Integer type;
     /**
-     * 权限
+     * 许可
      */
     private String permission;
 

@@ -9,7 +9,7 @@ import java.util.List;
 public class AuthorityDTO extends BaseDTO<Long> {
 
     /**
-     * 角色名称
+     * 权限名称。角色名称有"ROLE_"前缀
      */
     private String name;
     /**
