@@ -11,12 +11,7 @@ public class AuthorityDTO extends BaseDTO<Long> {
     /**
      * 角色名称
      */
-    private String role;
-    /**
-     * 主要角色，登录时默认角色
-     */
-    private Byte major;
-
+    private String name;
     /**
      * 可访问、可操作资源
      */
@@ -24,6 +19,6 @@ public class AuthorityDTO extends BaseDTO<Long> {
 
     @Override
     public String getAlertParam() {
-        return role;
+        return name;
     }
 }

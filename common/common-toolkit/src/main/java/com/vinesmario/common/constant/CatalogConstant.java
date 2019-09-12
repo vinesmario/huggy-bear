@@ -1,5 +1,8 @@
 package com.vinesmario.common.constant;
 
+/**
+ * 目录
+ */
 public class CatalogConstant {
 
     /**

@@ -7,8 +7,8 @@ import lombok.Data;
 public class Authority extends BaseEntity<Long> {
 
     /**
-     * 角色名称
+     * 权限名称
      */
-    private String role;
+    private String name;
 
 }

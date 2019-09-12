@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.util;
+package com.vinesmario.microservice.client.common.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
