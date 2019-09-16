@@ -16,7 +16,11 @@ spring:
 
 # org.springframework.cloud.netflix.ribbon.RibbonClientConfiguration
 ribbon:
-    # com.netflix.client.config
+    # Ribbon是懒加载的，在首次请求时，才会开始初始化相关类
+    # 会导致第一次请求失败的问题
+    # 此处配置饥饿加载
+    eager-load:
+        enabled: true
     ReadTimeout: 10000
     ConnectTimeout: 10000
 
@@ -33,6 +37,8 @@ feign:
             default:
                 connectTimeout: 5000
                 readTimeout: 5000
+    # see org.springframework.cloud.netflix.feign.FeignAutoConfiguration
+    # see org.springframework.cloud.netflix.feign.ribbon.HttpClientFeignLoadBalancedConfiguration
     okhttp:
         enable: true
     hystrix:
@@ -45,6 +51,7 @@ feign:
         response:
             enabled: true
 
+# gateway 不调用外部接口？所以不需要熔断器
 #hystrix:
 #    command:
 #        default:
@@ -56,8 +63,12 @@ feign:
 #                    thread:
 #                        timeoutInMilliseconds: 10000
 
+# 在Hystrix Dashboard中监控单个应用的地址 http://gateway-hostname:port/actuator/hystrix.stream
 management:
     endpoints:
         web:
             exposure:
                 include: "*" #对外暴露监控接口
+    endpoint:
+        health:
+            show-details: ALWAYS

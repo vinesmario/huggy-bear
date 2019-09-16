@@ -1,6 +1,8 @@
 #SpringBoot本身并不支持bootstrap文件，需要和Spring Cloud 的组件结合
 #只有加上Spring Cloud Context依赖才能生效
 spring:
+    main:
+        allow-bean-definition-overriding: true
     application:
         name: @project.artifactId@
     profiles:
@@ -59,7 +61,7 @@ feign:
         response:
             enabled: true
 
-# UAA 不需要熔断器
+# uaa 不调用外部接口，所以不需要熔断器
 #hystrix:
 #    command:
 #        default:

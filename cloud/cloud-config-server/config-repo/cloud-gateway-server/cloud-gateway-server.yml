@@ -1,3 +1,4 @@
+# see org.springframework.cloud.netflix.zuul.filters.ZuulProperties.class
 zuul:
     sensitive-headers:
     routes:
@@ -7,8 +8,14 @@ zuul:
         microservice-industry-server:
             path: /industry/**
             sensitive-headers:
+        microservice-industry-education-server:
+            path: /industry-education/**
+            sensitive-headers:
         microservice-support-server:
             path: /support/**
+            sensitive-headers:
+        microservice-support-schedule-server:
+            path: /support-schedule/**
             sensitive-headers:
 #        product-service:
 #            path: /product/**

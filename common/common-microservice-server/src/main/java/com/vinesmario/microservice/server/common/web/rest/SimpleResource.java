@@ -4,7 +4,7 @@ import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
 import com.vinesmario.microservice.client.common.web.feign.ReadOnlyClient;
 import com.vinesmario.microservice.server.common.service.mybatis.ReadOnlyService;
-import com.vinesmario.microservice.server.common.web.rest.util.PaginationUtil;
+import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
 import com.vinesmario.microservice.server.common.web.rest.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -65,7 +65,7 @@ public abstract class SimpleResource<DTO extends BaseDTO, CONDITION extends Cond
         } else {
             Pageable pageable = PageRequest.of(conditionDTO.getPageNumber(), conditionDTO.getPageSize(), sort);
             Page<DTO> page = service.page(conditionDTO, pageable);
-            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
+            HttpHeaders headers = HeaderUtil.createPage(page);
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
     }
@@ -86,23 +86,21 @@ public abstract class SimpleResource<DTO extends BaseDTO, CONDITION extends Cond
      * @see org.springframework.data.web.SortHandlerMethodArgumentResolver parseParameterIntoSort
      */
     protected Sort parseParameterIntoSort(String[] source, String delimiter) {
-        List<Sort.Order> allOrders = new ArrayList();
-        String[] var4 = source;
-        int var5 = source.length;
-
-        for (int var6 = 0; var6 < var5; ++var6) {
-            String part = var4[var6];
+        List<Sort.Order> allOrders = new ArrayList(source.length);
+        int arrayLength = source.length;
+        for (int i = 0; i < arrayLength; ++i) {
+            String part = source[i];
             if (part != null) {
                 String[] elements = part.split(delimiter);
-                Optional<Sort.Direction> direction = elements.length == 0 ? Optional.empty() : Sort.Direction.fromOptionalString(elements[elements.length - 1]);
-                int lastIndex = (Integer) direction.map((it) -> {
-                    return elements.length - 1;
-                }).orElseGet(() -> {
-                    return elements.length;
-                });
+                Optional<Sort.Direction> direction = elements.length == 0 ?
+                        Optional.empty() :
+                        Sort.Direction.fromOptionalString(elements[elements.length - 1]);
+                int lastIndex = direction
+                        .map(it -> elements.length - 1)
+                        .orElseGet(() -> elements.length);
 
-                for (int i = 0; i < lastIndex; ++i) {
-                    toOrder(elements[i], direction).ifPresent(allOrders::add);
+                for (int j = 0; j < lastIndex; ++j) {
+                    toOrder(elements[j], direction).ifPresent(allOrders::add);
                 }
             }
         }
@@ -117,10 +115,10 @@ public abstract class SimpleResource<DTO extends BaseDTO, CONDITION extends Cond
      * @see org.springframework.data.web.SortHandlerMethodArgumentResolver toOrder
      */
     protected Optional<Sort.Order> toOrder(String property, Optional<Sort.Direction> direction) {
-        return !StringUtils.hasText(property) ? Optional.empty() : Optional.of(direction.map((it) -> {
-            return new Sort.Order(it, property);
-        }).orElseGet(() -> {
-            return Sort.Order.by(property);
-        }));
+        return !StringUtils.hasText(property) ?
+                Optional.empty() :
+                Optional.of(direction
+                        .map(it -> new Sort.Order(it, property))
+                        .orElseGet(() -> Sort.Order.by(property)));
     }
 }

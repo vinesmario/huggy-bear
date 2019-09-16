@@ -18,7 +18,6 @@ spring:
                 enabled: true
                 serviceId: cloud-config-server
 
-
 mybatis:
     mapper-locations: classpath*:mapper/**/*.xml
 pagehelper:
@@ -48,6 +47,8 @@ feign:
             default:
                 connectTimeout: 5000
                 readTimeout: 5000
+    # see org.springframework.cloud.netflix.feign.FeignAutoConfiguration
+    # see org.springframework.cloud.netflix.feign.ribbon.HttpClientFeignLoadBalancedConfiguration
     okhttp:
         enable: true
     hystrix:
@@ -74,7 +75,7 @@ hystrix:
 #                        timeoutInMilliseconds: 5000
     share-security-context: true
 
-# 在Hystrix Dashboard中监控单个应用的地址 http://base-hostname:port/actuator/hystrix.stream
+# 在Hystrix Dashboard中监控单个应用的地址 http://support-hostname:port/actuator/hystrix.stream
 management:
     endpoints:
         web:
