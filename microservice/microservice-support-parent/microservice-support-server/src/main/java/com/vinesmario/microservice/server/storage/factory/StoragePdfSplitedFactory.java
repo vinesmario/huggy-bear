@@ -1,11 +1,11 @@
 package com.vinesmario.microservice.server.storage.factory;
 
+import com.vinesmario.microservice.client.common.util.SpringContextUtil;
 import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
-import com.vinesmario.microservice.server.common.util.SpringContextUtil;
-import com.vinesmario.microservice.server.storage.web.rest.anonymous.StorageResource;
 import com.vinesmario.microservice.server.storage.service.StoragePdfSplitedService;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategy;
 import com.vinesmario.microservice.server.storage.strategy.StorageStrategyFactory;
+import com.vinesmario.microservice.server.storage.web.rest.anonymous.StorageResource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;

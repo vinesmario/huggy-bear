@@ -1,5 +1,6 @@
 package com.vinesmario.microservice.server.demo;
 
+import com.vinesmario.microservice.client.common.security.OAuth2TokenEndpointClient;
 import com.vinesmario.microservice.client.common.security.ServiceTokenEndpointClient;
 import com.vinesmario.microservice.client.demo.*;
 import io.swagger.annotations.Api;
@@ -106,7 +107,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     }
 
     @Autowired
-    private ServiceTokenEndpointClient serviceTokenEndpointClient;
+    private OAuth2TokenEndpointClient oAuth2TokenEndpointClient;
     @Autowired
     private OAuth2ClientContext oauth2ClientContext;
 
@@ -117,7 +118,7 @@ public class ScheduleDemoResource implements ScheduleDemoClient {
     @PostConstruct
     @Scheduled(cron = "0 0/5 * * * ?")
     public void init() {
-        OAuth2AccessToken accessToken = serviceTokenEndpointClient.sendClentCredentialsGrant();
+        OAuth2AccessToken accessToken = oAuth2TokenEndpointClient.sendClentCredentialsGrant();
         log.info("AccessToken: " + accessToken.getValue());
         oauth2ClientContext.setAccessToken(accessToken);
     }

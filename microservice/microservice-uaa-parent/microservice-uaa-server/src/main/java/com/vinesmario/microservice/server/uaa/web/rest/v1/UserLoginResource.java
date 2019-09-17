@@ -6,7 +6,6 @@ import com.vinesmario.microservice.server.security.model.IatTokenEnhancer;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,7 +52,9 @@ public class UserLoginResource {
         headers.set("Cache-Control", "no-store");
         headers.set("Pragma", "no-cache");
         headers.set("Content-Type", "application/json;charset=UTF-8");
-        return new ResponseEntity(accessToken, headers, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(accessToken);
     }
 
 }

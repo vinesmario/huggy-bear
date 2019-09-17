@@ -24,8 +24,23 @@ security:
             jwt:
                 # 对称加密
                 # 在resource server中用来解析令牌，需要与authorization server同
-                # 也可以配置jks文件和设置key-uri参数，以非对称加密方式获取公钥 public-key
-                key-value: signingKey
+#                key-value: signingKey
+                # 非对称加密方式
+                # 使用jdk自带的工具生成签名证书，生成公钥以及私钥。
+                # keytool -genkeypair -alias alias_name -keyalg RSA -keypass key_pass_name -keystore D:/key_store_name.jks -storepass store_pass_name
+                # keytool -list --keystore key_store_name.jks
+                # 说明：
+                # keytool工具是基于“证书库”来对密钥进行管理的。“证书库”是一个Java KeyStore（文件后缀 .keystore 或 .jks）证书文件。
+                # 1). -genkeypair: 生成密钥（一对公钥和私钥）记录（证书）。
+                # 2). -alias: 本条密钥记录（证书）的别名。因一个证书库中可以存放多个证书, 所以可以通过别名标识密钥记录（证书）。
+                # 3). -keyalg: 本条密钥记录（证书）的加密算法。可以选择的加密算法有: RSA、DSA、EC等
+                # 4). -keypass: 本条密钥记录（证书）的私钥明文，可以与storepass相同。
+                # 5). -keystore: 指定存储密钥记录（证书）的“证书库”的名称。
+                # 6). -storepass: 指定存储密钥记录（证书）的“证书库”的密码, 可以与keypass相同。
+                key-store: key_store_name.jks
+                key-store-password: store_pass_name
+                key-alias: alias_name
+                key-password: key_pass_name
         # org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.BaseClientDetailsConfiguration.class
         # org.springframework.security.oauth2.provider.client.BaseClientDetails.class
         # AuthorizationCodeResourceDetails

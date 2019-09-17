@@ -25,8 +25,12 @@ security:
             jwt:
                 # 对称加密
                 # 在resource server中用来解析令牌，需要与authorization server同步
-                # 也可以设置 非对称加密方式，以key-uri参数获取公钥 public-key
                 key-value: signingKey
+                # 非对称加密方式
+                # 访问authorization server获取公钥 public-key
+                # org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerTokenServicesConfiguration自动配置，获取公钥
+                # RestTemplate未出处理，不能识别注册的服务ID，因此url需要使用绝对路径，不能包含服务ID。
+#                key-uri: http://hostname:port/oauth/token_key
         # see org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties.class
         # see org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails.class
         # see org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails.class

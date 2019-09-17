@@ -7,7 +7,6 @@ import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
-import com.vinesmario.microservice.server.common.web.rest.util.PaginationUtil;
 import com.vinesmario.microservice.server.uaa.service.UserAccountService;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.EmailAlreadyUsedException;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.MobileAlreadyUsedException;
@@ -75,8 +74,9 @@ public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccoun
         } else {
             Pageable pageable = PageRequest.of(conditionDTO.getPageNumber(), conditionDTO.getPageSize(), sort);
             Page<UserAccountDTO> page = service.page(conditionDTO, pageable);
-            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/page");
-            return ResponseEntity.ok().headers(headers).body(page.getContent());
+            return ResponseEntity.ok()
+                    .headers(HeaderUtil.createPage(page))
+                    .body(page.getContent());
         }
     }
 

@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
  *
  * @see ServiceTokenEndpointClient
  * @see OAuth2TokenEndpointClientAdapter
+ * @see org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
  */
 public interface OAuth2TokenEndpointClient {
     /**

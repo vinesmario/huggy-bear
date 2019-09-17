@@ -6,6 +6,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,21 +24,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- *
+ * 该配置问价文件中不宜使用@Bean注解创建TokenStore对象，
+ * 否则回出现循环调用。
  */
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerConfiguration {
 
     @Autowired
+    private ResourceServerProperties resourceServerProperties;
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private ClientDetailsServiceImpl clientDetailsService;
     @Autowired
     private ApplicationContext applicationContext;
-    // ResourceServerConfiguration中创建Bean
-    @Autowired
-    private TokenStore tokenStore;
 
     public AuthorizationServerConfiguration(BaseClientDetails details,
                                             AuthenticationConfiguration authenticationConfiguration,
@@ -83,7 +84,6 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
         tokenEnhancerChain.setTokenEnhancers(new ArrayList<>(tokenEnhancers));
         // 默认使用org.springframework.security.oauth2.provider.token.DefaultTokenServices.class处理token
         endpoints.userDetailsService(userDetailsService)
-                .tokenStore(tokenStore)
                 .tokenEnhancer(tokenEnhancerChain)
                 .reuseRefreshTokens(false);//don't reuse or we will run into session inactivity timeouts
     }

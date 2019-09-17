@@ -2,7 +2,6 @@ package com.vinesmario.microservice.client.common.web.feign.interceptor;
 
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +16,14 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 @Configuration
 public class OAuth2FeignClientConfiguration {
 
-    @Autowired
-    private OAuth2ClientContext oauth2ClientContext;
-    @Autowired
-    private OAuth2ProtectedResourceDetails details;
+    private final OAuth2ClientContext oauth2ClientContext;
+    private final OAuth2ProtectedResourceDetails details;
+
+    public OAuth2FeignClientConfiguration(OAuth2ClientContext oauth2ClientContext,
+                                          OAuth2ProtectedResourceDetails details) {
+        this.oauth2ClientContext = oauth2ClientContext;
+        this.details = details;
+    }
 
     @Bean(name = "oAuth2FeignClientInterceptor")
     public RequestInterceptor getOAuth2FeignClientInterceptor() {
@@ -50,7 +53,7 @@ public class OAuth2FeignClientConfiguration {
         // protected static class SessionScopedConfiguration {...}
         // 条件1：使用@EnableOAuth2Client
         // 条件2：需要装载OAuth2ClientConfiguration.class
-        // 条件3：security.oauth2.client.grant-type属性的为空，或者值不包含client_credentials
+        // 条件3：security.oauth2.client.grant-type属性值包含client_credentials
         return new OAuth2FeignRequestInterceptor(oauth2ClientContext, details);
     }
 

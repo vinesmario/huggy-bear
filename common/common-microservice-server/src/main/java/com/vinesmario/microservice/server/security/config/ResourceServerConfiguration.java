@@ -21,6 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * ResourceServerConfigurerAdapter用于保护oauth要开放的资源，
  * 同时主要作用于client端以及token的认证(Bearer auth)
+ * <p>
+ * 对于自动配置文件 ResourceServerTokenServicesConfiguration
+ *
+ * @see org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerTokenServicesConfiguration
+ * 1，AuthorizationServerEndpointsConfiguration不存在时，TokenStore对象会自动创建。
+ * 2，AuthorizationServerEndpointsConfiguration存在时，TokenStore对象需要手动处理。
  */
 @Configuration
 @EnableResourceServer
@@ -51,8 +57,43 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
+        // 1.对称加解密方式
+        // 授权服务器加密和资源服务器解密，使用相同的密钥
+        // 考虑到性能和更容易理解，使用对称加解密方式。
         accessTokenConverter.setSigningKey(resourceServerProperties.getJwt().getKeyValue());
         return accessTokenConverter;
+
+        // 2.非对称加解密方式
+        // ①授权服务器加密，读取本地存放的 jks 证书文件
+        // 使用jdk自带的工具生成签名证书，生成公钥以及私钥。
+        // keytool -genkeypair -alias alias_name -keyalg RSA -keypass key_pass_name -keystore D:/key_store_name.jks -storepass store_pass_name
+        // keytool -list --keystore key_store_name.jks
+        // 说明：
+        // keytool工具是基于“证书库”来对密钥进行管理的。“证书库”是一个Java KeyStore（文件后缀 .keystore 或 .jks）证书文件。
+        // 1). -genkeypair: 生成一对非对称密钥（公钥和私钥）记录（证书）。
+        // 2). -alias: 本条密钥记录（证书）的别名。因一个证书库中可以存放多个证书, 所以可以通过别名标识密钥记录（证书）。
+        // 3). -keyalg: 本条密钥记录（证书）的加密算法。可以选择的加密算法有: RSA、DSA、EC等
+        // 4). -keypass: 本条密钥记录（证书）的私钥明文，可以与storepass相同。
+        // 5). -keystore: 指定存储密钥记录（证书）的“证书库”的名称。
+        // 6). -storepass: 指定存储密钥记录（证书）的“证书库”的密码, 可以与keypass相同。
+//        KeyPair keyPair = new KeyStoreKeyFactory(
+//                new ClassPathResource(resourceServerProperties.getJwt().getKeyStore()),
+//                resourceServerProperties.getJwt().getKeyStorePassword().toCharArray())
+//                // 如果key_pass_name和store_pass_name相同
+//                .getKeyPair(resourceServerProperties.getJwt().getKeyAlias());
+//                // 如果key_pass_name和store_pass_name不相同
+//                .getKeyPair(resourceServerProperties.getJwt().getKeyAlias(), resourceServerProperties.getJwt().getKeyPassword().toCharArray());
+//        accessTokenConverter.setKeyPair(keyPair);
+//        return accessTokenConverter;
+        // ②资源服务器解密，读取本地存放公钥文件，或者获取从鉴权服务器获取公钥
+//        String verifierKey = null;
+//        Resource resource = new ClassPathResource("public_key.txt");
+//        try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
+//            verifierKey = br.lines().collect(Collectors.joining("\n"));
+//        } catch (IOException ioe) {
+//            verifierKey = oAuth2TokenKeyEndpointClient.getPublicKey();
+//        }
+//        accessTokenConverter.setVerifierKey(verifierKey);
     }
 
     @Override
@@ -62,10 +103,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         // 源码中默认resourceId为oauth2-resource，见ResourceServerSecurityConfigurer.class
         // 需重写原方法
         // 其他资源服务器配置可生效，不需重写。
-        resources.resourceId(resourceServerProperties.getResourceId()).tokenStore(tokenStore());
+        resources.resourceId(resourceServerProperties.getResourceId());
 
         // ①默认使用org.springframework.security.oauth2.provider.token.DefaultTokenServices.class处理token，
-        // 只做格式和简单逻辑校验，不验证真实性
+        // 只做格式和简单校验，如有效期，不验证数据一致性
         // ②如果想要调用token-info-uri的地址对token进一步校验，可通过tokenServices(ResourceServerTokenServices tokenServices)方法，
         // 传入org.springframework.security.oauth2.provider.token.RemoteTokenServices.class对象处理token；
         // ③如果想要调用user-info-uri的地址对token进一步校验，可通过tokenServices(ResourceServerTokenServices tokenServices)方法，

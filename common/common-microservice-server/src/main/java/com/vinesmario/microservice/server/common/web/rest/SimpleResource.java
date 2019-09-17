@@ -65,8 +65,9 @@ public abstract class SimpleResource<DTO extends BaseDTO, CONDITION extends Cond
         } else {
             Pageable pageable = PageRequest.of(conditionDTO.getPageNumber(), conditionDTO.getPageSize(), sort);
             Page<DTO> page = service.page(conditionDTO, pageable);
-            HttpHeaders headers = HeaderUtil.createPage(page);
-            return ResponseEntity.ok().headers(headers).body(page.getContent());
+            return ResponseEntity.ok()
+                    .headers(HeaderUtil.createPage(page))
+                    .body(page.getContent());
         }
     }
 

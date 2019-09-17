@@ -62,12 +62,13 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
      */
     @Override
     public OAuth2AccessToken sendRefreshGrant(String refreshTokenValue) {
+        HttpHeaders reqHeaders = new HttpHeaders();
+        reqHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "refresh_token");
         params.add("refresh_token", refreshTokenValue);
-        HttpHeaders headers = new HttpHeaders();
-        addAuthentication(headers, params);
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
+        addAuthentication(reqHeaders, params);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, reqHeaders);
         log.debug("contacting OAuth2 token endpoint to refresh OAuth2 JWT tokens");
         ResponseEntity<OAuth2AccessToken> responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity,
                 OAuth2AccessToken.class);
