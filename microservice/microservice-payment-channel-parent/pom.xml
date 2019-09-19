@@ -9,13 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>microservice-industry-parent</artifactId>
-    <description>行业应用</description>
-    <packaging>pom</packaging>
-    <modules>
-        <module>microservice-industry-client</module>
-        <module>microservice-industry-server</module>
-    </modules>
-
+    <artifactId>microservice-payment-channel-parent</artifactId>
+    <description>支付渠道，聚合支付，包括对账</description>
 
 </project>

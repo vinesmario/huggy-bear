@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>microservice-industry-education-parent</artifactId>
+    <description>行业应用——教育行业</description>
     <packaging>pom</packaging>
     <modules>
         <module>microservice-industry-education-client</module>

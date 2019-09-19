@@ -14,12 +14,25 @@ generator:  代码生成器模块
     -- generator-microservice: 微服务生成器
     -- generator-table: 表CRUD生成器
 microservice:  微服务模块   
-    -- uaa: 用户与账户  端口号[11000~11099]
-    -- open: 开放平台，对外开放接入接口
-    -- industry: 行业信息 行政区划、商品与服务分类、高校、节假日端口号[11100~11199]
-    -- industry-education：教育行业（小学、中学、大学）
-    -- industry-business：商业
-    -- social: 接入第三方社交，例如微信、支付宝、微博... 端口号[11900~11999]
+    -- uaa:         用户与账户  端口号[11000~11099]    鉴权、密码
+    -- industry:    行业应用    端口号[11100~11199]    经济活动中的分类、标准，例如行政区划、商品与服务分类、高校、节假日...
+    -- industry-education:      行业应用——教育行业（小学、中学、大学）
+    -- industry-business:       行业应用——商业
+    -- operation:   运营        端口号[11200~11299]    管理
+    -- merchant:    商户平台    端口号[11300~11399]    活动、营销、推广
+    -- merchant-mall:      商城，销售商品
+    -- merchant-groupon:   团购，销售服务
+    -- merchant-coupon :   商户优惠券
+    -- merchant-card :     商户权益卡
+    -- person:      个人业务    端口号[11400~11499]    会员、积分、钱包、卡券
+    -- social:      第三方社交  端口号[11900~11999]    微信、支付宝、微博...
+    -- order:       订单        端口号[11500~11599]    购货、消费
+    -- payment:     支付        端口号[11600~11699]
+    -- payment-channel:    支付渠道
+    -- payment-route:      支付路由
+    -- logistics:    物流       端口号[11700~11799]
+    -- finance:      财务       端口号[11800~11899]
+    -- finance-capital:      资金
 
     -- support: 技术支撑服务，例如文件存储服务、邮件服务、短信服务、验证码、文档导入导出 端口号[12000~12099]
     -- support-schedule: 任务调度服务 端口号[12100~12199]  

@@ -14,10 +14,15 @@
     <modules>
         <module>microservice-uaa-parent</module>
         <module>microservice-industry-parent</module>
+        <module>microservice-industry-education-parent</module>
+        <module>microservice-operating-parent</module>
+        <module>microservice-merchant-parent</module>
+        <module>microservice-person-parent</module>
+        <module>microservice-social-parent</module>
+        <module>microservice-payment-route-parent</module>
+        <module>microservice-payment-channel-parent</module>
         <module>microservice-support-parent</module>
         <module>microservice-support-schedule-parent</module>
-        <module>microservice-social-parent</module>
-        <module>microservice-industry-education-parent</module>
     </modules>
 
     <dependencies>
