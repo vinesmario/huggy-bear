@@ -37,7 +37,7 @@ microservice:  微服务模块
     -- order:                   订单、工单。购物、消费
 
     -- industry-adapter:        行业应用    经济活动中的分类、标准，例如行政区划、商品与服务分类、高校、节假日...
-    -- industry-restaurant:     行业应用——餐饮服务                              [国民经济行业分类 GB/T 4754-2017 62]      [ISIC Rev.4 56]
+    -- industry-catering:       行业应用——餐饮服务                              [国民经济行业分类 GB/T 4754-2017 62]      [ISIC Rev.4 56]
     -- industry-realty:         行业应用——物业管理（停车场、设备报修）          [国民经济行业分类 GB/T 4754-2017 7020]    [ISIC Rev.4 6820]
     -- industry-education:      行业应用——教育                                  [国民经济行业分类 GB/T 4754-2017 83]      [ISIC Rev.4 85]
     -- industry-religion:       行业应用——宗教组织                              [国民经济行业分类 GB/T 4754-2017 954]     [ISIC Rev.4 9491]
