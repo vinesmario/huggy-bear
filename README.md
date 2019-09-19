@@ -15,28 +15,38 @@ generator:  代码生成器模块
     -- generator-table: 表CRUD生成器
 microservice:  微服务模块   
     -- uaa:         用户与账户  端口号[11000~11099]    鉴权、密码
-    -- industry:    行业应用    端口号[11100~11199]    经济活动中的分类、标准，例如行政区划、商品与服务分类、高校、节假日...
-    -- industry-education:      行业应用——教育行业（小学、中学、大学）
-    -- industry-business:       行业应用——商业
-    -- operation:   运营        端口号[11200~11299]    管理
-    -- merchant:    商户平台    端口号[11300~11399]    活动、营销、推广
-    -- merchant-mall:      商城，销售商品
-    -- merchant-groupon:   团购，销售服务
-    -- merchant-coupon :   商户优惠券
-    -- merchant-card :     商户权益卡
-    -- person:      个人业务    端口号[11400~11499]    会员、积分、钱包、卡券
-    -- social:      第三方社交  端口号[11900~11999]    微信、支付宝、微博...
-    -- order:       订单        端口号[11500~11599]    购货、消费
-    -- payment:     支付        端口号[11600~11699]
-    -- payment-channel:    支付渠道
-    -- payment-route:      支付路由
-    -- logistics:    物流       端口号[11700~11799]
-    -- finance:      财务       端口号[11800~11899]
-    -- finance-capital:      资金
-
     -- support: 技术支撑服务，例如文件存储服务、邮件服务、短信服务、验证码、文档导入导出 端口号[12000~12099]
-    -- support-schedule: 任务调度服务 端口号[12100~12199]  
-    -- hardware: 硬件集成服务，网络摄像机 端口号[13000~13099]
+    -- support-schedule: 任务调度服务 端口号[11200~11299]
+
+    -- hardware: 硬件集成服务，网络摄像机 端口号[12000~12099]
+
+    -- enterprise:              企业（商户）平台    端口号[13000~13999]
+    -- enterprise-inbound:      企业（商户）内部平台，组织，人力资源
+    -- enterprise-outbound:     企业（商户）外部平台，活动、营销、推广、销售
+    -- enterprise-mall:         企业（商户）商城，销售商品
+    -- enterprise-groupon:      团购平台，销售服务
+    -- enterprise-coupon :      优惠券
+    -- enterprise-card :        权益卡
+    -- enterprise-finance:      企业（商户）财务、资金
+
+    -- person:                  个人业务    端口号[15000~15999]
+    -- person-consumption:      消费服务。会员、积分、钱包、卡券
+    -- person-appraisal:        工作考核，签到
+    -- person-education:        教育培训
+    -- social:                  第三方社交，微信、支付宝、微博...
+    -- order:                   订单、工单。购物、消费
+
+    -- industry-adapter:        行业应用    经济活动中的分类、标准，例如行政区划、商品与服务分类、高校、节假日...
+    -- industry-restaurant:     行业应用——餐饮服务                              [国民经济行业分类 GB/T 4754-2017 62]      [ISIC Rev.4 56]
+    -- industry-realty:         行业应用——物业管理（停车场、设备报修）          [国民经济行业分类 GB/T 4754-2017 7020]    [ISIC Rev.4 6820]
+    -- industry-education:      行业应用——教育                                  [国民经济行业分类 GB/T 4754-2017 83]      [ISIC Rev.4 85]
+    -- industry-religion:       行业应用——宗教组织                              [国民经济行业分类 GB/T 4754-2017 954]     [ISIC Rev.4 9491]
+
+    -- payment:                 支付        端口号[16000~16999]
+    -- payment-channel:         支付渠道，对账
+    -- payment-route:           支付路由
+
+    -- logistics:    物流       端口号[11700~11799]
 
     价值链的增值活动可以分为基本增值活动和辅助性增值活动两大部分。
     企业的基本增值活动，即一般意义上的“生产经营环节”，如材料供应、成品开发、生产运行、成品储运、市场营销和售后服务。
