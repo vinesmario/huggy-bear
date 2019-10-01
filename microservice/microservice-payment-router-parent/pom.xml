@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>microservice-payment-gateway-parent</artifactId>
+    <artifactId>microservice-payment-router-parent</artifactId>
     <description>支付网关、支付路由</description>
 
 

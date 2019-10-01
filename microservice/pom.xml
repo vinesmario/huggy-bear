@@ -19,7 +19,7 @@
         <module>microservice-merchant-parent</module>
         <module>microservice-person-parent</module>
         <module>microservice-social-parent</module>
-        <module>microservice-payment-route-parent</module>
+        <module>microservice-payment-router-parent</module>
         <module>microservice-payment-channel-parent</module>
         <module>microservice-support-parent</module>
         <module>microservice-support-schedule-parent</module>
