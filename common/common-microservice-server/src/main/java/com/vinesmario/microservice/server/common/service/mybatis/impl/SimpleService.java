@@ -71,6 +71,7 @@ public abstract class SimpleService<DTO extends BaseDTO, T extends BaseEntity<PK
             }
         }
 
+        // PageHelper.startPage后面的第一个select方法会被分页，返回com.github.pagehelper.Page对象
         List<T> list = mapper.selectByExample(example);
         PageInfo<T> pageInfo = new PageInfo<>(list);
 
