@@ -3,25 +3,22 @@ package com.vinesmario.microservice.client.standard.dto;
 import com.vinesmario.microservice.client.common.dto.TreeDTO;
 
 /**
- * 专业目录
+ * 行政区划
+ * GB T 2260-2007
  */
-public class MajorDTO extends TreeDTO<MajorDTO, Long> {
+public class AreaCatalogDTO extends TreeDTO<AreaCatalogDTO, Long> {
 
     /**
      * 名称
      */
     private String name;
-    /**
-     * 代码
-     */
     private String code;
-    /**
-     * 等级
-     */
     private String level;
+    private String address;
 
     @Override
     public String getAlertParam() {
         return name;
     }
+
 }

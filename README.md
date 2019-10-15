@@ -41,9 +41,13 @@ microservice:  微服务模块
     -- customer-life:             生活。会员、积分、钱包、卡券
 
     企业多元化战略 业务场景
-    -- industry-catering:       行业应用——餐饮服务                              [国民经济行业分类 GB/T 4754-2017 62]      [ISIC Rev.4 56]
-    -- industry-realty:         行业应用——物业管理（停车场、设备报修）          [国民经济行业分类 GB/T 4754-2017 7020]    [ISIC Rev.4 6820]
+    -- industry-retail:         行业应用——零售业                                [国民经济行业分类 GB/T 4754-2017 52]      [ISIC Rev.4 47]
+    -- industry-accommodation:  行业应用——住宿业                                [国民经济行业分类 GB/T 4754-2017 61]      [ISIC Rev.4 55]
+    -- industry-catering:       行业应用——餐饮业                                [国民经济行业分类 GB/T 4754-2017 62]      [ISIC Rev.4 56]
+    -- industry-realty:         行业应用——房地产（物业、停车场、公寓）          [国民经济行业分类 GB/T 4754-2017 70]      [ISIC Rev.4 68]
+    -- industry-rental:         行业应用——租赁业                                [国民经济行业分类 GB/T 4754-2017 71]      [ISIC Rev.4 77]
     -- industry-education:      行业应用——教育                                  [国民经济行业分类 GB/T 4754-2017 83]      [ISIC Rev.4 85]
+    -- industry-hygiene:        行业应用——卫生                                  [国民经济行业分类 GB/T 4754-2017 84]      [ISIC Rev.4 86]
     -- industry-religion:       行业应用——宗教组织                              [国民经济行业分类 GB/T 4754-2017 954]     [ISIC Rev.4 9491]
     医疗
 

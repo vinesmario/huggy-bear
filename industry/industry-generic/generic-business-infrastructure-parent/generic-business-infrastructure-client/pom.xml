@@ -12,5 +12,13 @@
     <artifactId>generic-business-infrastructure-client</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>common-microservice-client</artifactId>
+            <version>${project.common.version}</version>
+        </dependency>
+
+    </dependencies>
 
 </project>

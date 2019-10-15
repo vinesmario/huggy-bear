@@ -5,7 +5,7 @@ import com.vinesmario.microservice.client.common.dto.BaseDTO;
 /**
  * 字典目录
  */
-public class CatalogDTO extends BaseDTO<Long> {
+public class DictionaryCatalogDTO extends BaseDTO<Long> {
 
     /**
      * 名称

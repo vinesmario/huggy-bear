@@ -4,14 +4,12 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * 权限、职责
+ * 职工岗位 多对多关系
  */
 @Data
-public class Authority extends BaseEntity<Long> {
+public class UserAccountPosition extends BaseEntity<Long> {
 
-    /**
-     * 权限名称
-     */
-    private String name;
+    private Long userAccountId;
+    private Long positionId;
 
 }

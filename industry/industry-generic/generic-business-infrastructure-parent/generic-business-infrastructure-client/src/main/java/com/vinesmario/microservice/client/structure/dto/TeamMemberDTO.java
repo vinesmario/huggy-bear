@@ -8,14 +8,10 @@ import com.vinesmario.microservice.client.common.dto.BaseDTO;
 public class TeamMemberDTO extends BaseDTO<Long> {
 
     private Long teamId;
-    private Long staffId;
-    /**
-     * 任务职责
-     */
-    private String duty;
+    private Long userAccountId;
 
     @Override
     public String getAlertParam() {
-        return duty;
+        return null;
     }
 }

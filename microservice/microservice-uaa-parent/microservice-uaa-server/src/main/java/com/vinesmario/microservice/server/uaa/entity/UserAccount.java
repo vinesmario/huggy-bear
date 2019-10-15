@@ -4,6 +4,8 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
+ * 职工账号
+ *
  * @author
  * @date
  */
