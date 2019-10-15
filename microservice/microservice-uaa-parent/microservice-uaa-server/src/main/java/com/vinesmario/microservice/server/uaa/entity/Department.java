@@ -15,6 +15,7 @@ public class Department extends TreeEntity<Long> {
     private Long tenantId;
     /**
      * 部门名称
+     * 住宿部、餐饮部、图书部、门诊部、住院部...
      */
     private String name;
 

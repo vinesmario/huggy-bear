@@ -13,5 +13,9 @@ public class Position extends BaseEntity<Long> {
     private Long TenantId;
     private Long departmentId;
     private String name;
+    /**
+     * 职业
+     */
+    private String profession;
 
 }
