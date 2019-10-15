@@ -1,7 +1,0 @@
-eureka:
-    instance:
-        prefer-ip-address: true
-    client:
-        service-url:
-            defaultZone: http://eureka_username:eureka_password@localhost:10000/eureka/
-

@@ -9,19 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>microservice</artifactId>
+    <artifactId>industry</artifactId>
     <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>microservice-uaa-parent</module>
-        <module>microservice-social-parent</module>
-        <module>microservice-payment-router-parent</module>
-        <module>microservice-payment-channel-parent</module>
-        <module>microservice-support-parent</module>
-        <module>microservice-support-schedule-parent</module>
+        <module>industry-generic</module>
+        <module>industry-catering</module>
+        <module>industry-realty</module>
+        <module>industry-education</module>
+        <module>industry-religion</module>
     </modules>
 
-    <dependencies>
-
-    </dependencies>
 
 </project>

@@ -68,7 +68,9 @@ public class UserAccountService extends BaseService<UserAccountDTO, UserAccount,
 
     @Transactional(readOnly = true)
     public Optional<UserAccountDTO> getWithAuthoritiesByUsername(String username) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByUsername(username)));
+        Optional<UserAccountDTO> optional = Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByUsername(username)));
+        // TODO 角色
+        return optional;
     }
 
     @Transactional(readOnly = true)

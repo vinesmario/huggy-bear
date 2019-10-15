@@ -24,7 +24,7 @@ security:
             jwt:
                 # 对称加密
                 # 在resource server中用来解析令牌，需要与authorization server同
-#                key-value: signingKey
+                key-value: signingKey
                 # 非对称加密方式
                 # 使用jdk自带的工具生成签名证书，生成公钥以及私钥。
                 # keytool -genkeypair -alias alias_name -keyalg RSA -keypass key_pass_name -keystore D:/key_store_name.jks -storepass store_pass_name
@@ -37,10 +37,10 @@ security:
                 # 4). -keypass: 本条密钥记录（证书）的私钥明文，可以与storepass相同。
                 # 5). -keystore: 指定存储密钥记录（证书）的“证书库”的名称。
                 # 6). -storepass: 指定存储密钥记录（证书）的“证书库”的密码, 可以与keypass相同。
-                key-store: key_store_name.jks
-                key-store-password: store_pass_name
-                key-alias: alias_name
-                key-password: key_pass_name
+#                key-store: key_store_name.jks
+#                key-store-password: store_pass_name
+#                key-alias: alias_name
+#                key-password: key_pass_name
         # org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration.BaseClientDetailsConfiguration.class
         # org.springframework.security.oauth2.provider.client.BaseClientDetails.class
         # AuthorizationCodeResourceDetails

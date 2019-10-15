@@ -14,38 +14,43 @@ generator:  代码生成器模块
     -- generator-microservice: 微服务生成器
     -- generator-table: 表CRUD生成器
 microservice:  微服务模块   
-    -- uaa:         用户与账户  端口号[11000~11099]    鉴权、密码
+    -- uaa:         用户与账户  端口号[11000~11099]    鉴权、密码 第三方登陆，微信、支付宝、微博... 不包括企业账号
     -- support: 技术支撑服务，例如文件存储服务、邮件服务、短信服务、验证码、文档导入导出 端口号[12000~12099]
     -- support-schedule: 任务调度服务 端口号[11200~11299]
 
-    -- hardware: 硬件集成服务，网络摄像机 端口号[12000~12099]
+    B2C
+    -- industry-standard:       行业标准    经济活动中的分类、标准，例如行政区划、商品与服务分类、高校、节假日...
+    -- industry-generic:        行业应用——普遍、通用
+    B端
+    -- business:                 企业平台    端口号[13000~13999]
+    -- business-infrastructure:   企业基础，组织架构，人力资源
+    -- business-infrastructure-assessment:       工作考核，签到
+    -- business-infrastructure-hardware:         硬件集成服务，网络摄像机
+    -- business-finance:          企业财务、资金、商户、账户
+    -- business-inbound:          企业内部平台，生产加工，原材料、半成品，ERP
+    -- business-inbound-storage:  企业采购，内部仓储（进销存、溯源）
+    -- business-outbound:         企业外部平台，活动、营销、推广、销售
+    -- business-outbound-mall:    企业商城，销售商品
+    -- business-outbound-groupon: 团购平台，销售服务
+    -- business-outbound-coupon : 优惠券
+    -- business-outbound-card :   权益卡
+    -- business-outbound-logistics :   外部物流（进销存，溯源）
 
-    -- enterprise:              企业（商户）平台    端口号[13000~13999]
-    -- enterprise-inbound:      企业（商户）内部平台，组织，人力资源
-    -- enterprise-outbound:     企业（商户）外部平台，活动、营销、推广、销售
-    -- enterprise-mall:         企业（商户）商城，销售商品
-    -- enterprise-groupon:      团购平台，销售服务
-    -- enterprise-coupon :      优惠券
-    -- enterprise-card :        权益卡
-    -- enterprise-finance:      企业（商户）财务、资金
+    C端
+    -- customer:                  个人业务    端口号[15000~15999]
+    -- customer-life:             生活。会员、积分、钱包、卡券
 
-    -- person:                  个人业务    端口号[15000~15999]
-    -- person-consumption:      消费服务。会员、积分、钱包、卡券
-    -- person-appraisal:        工作考核，签到
-    -- person-education:        教育培训
-    -- social:                  第三方社交，微信、支付宝、微博...
-    -- order:                   订单、工单。购物、消费
-
-    -- industry-adapter:        行业应用    经济活动中的分类、标准，例如行政区划、商品与服务分类、高校、节假日...
+    企业多元化战略 业务场景
     -- industry-catering:       行业应用——餐饮服务                              [国民经济行业分类 GB/T 4754-2017 62]      [ISIC Rev.4 56]
     -- industry-realty:         行业应用——物业管理（停车场、设备报修）          [国民经济行业分类 GB/T 4754-2017 7020]    [ISIC Rev.4 6820]
     -- industry-education:      行业应用——教育                                  [国民经济行业分类 GB/T 4754-2017 83]      [ISIC Rev.4 85]
     -- industry-religion:       行业应用——宗教组织                              [国民经济行业分类 GB/T 4754-2017 954]     [ISIC Rev.4 9491]
+    医疗
 
+    -- order:                   预约、订单、工单。咨询、购物、消费
     -- payment:                 支付        端口号[16000~16999]
     -- payment-channel:         支付渠道，对账
-    -- payment-route:           支付路由
-
+    -- payment-router:          支付路由
     -- logistics:    物流       端口号[11700~11799]
 
     价值链的增值活动可以分为基本增值活动和辅助性增值活动两大部分。
