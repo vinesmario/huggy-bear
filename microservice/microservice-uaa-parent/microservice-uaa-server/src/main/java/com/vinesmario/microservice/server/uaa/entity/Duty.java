@@ -4,9 +4,9 @@ import com.vinesmario.microservice.server.common.entity.TreeEntity;
 import lombok.Data;
 
 /**
- * 岗位职责 多对对关系
- * 岗位对应多个职责，职责是资源组
- * 岗位职责对应不同的数据范围：
+ * 职责
+ * 岗位Position与职权Authority是多对对关系，职权Authority是资源Resource组
+ * 不同职责授予不同的数据范围：
  * 1，所在机构
  * 2，所在机构及直接下属机构
  * 3，所在机构及所有下属机构；
@@ -20,7 +20,7 @@ import lombok.Data;
  * 11，仅自己
  */
 @Data
-public class PositionAuthority extends TreeEntity<Long> {
+public class Duty extends TreeEntity<Long> {
 
     private Long positionId;
     private Long authorityId;

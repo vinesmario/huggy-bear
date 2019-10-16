@@ -1,13 +1,13 @@
 package com.vinesmario.microservice.server.uaa.web.rest.v1;
 
 import com.vinesmario.common.constant.DictConstant;
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDTO;
-import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDTO;
-import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
+import com.vinesmario.microservice.client.uaa.dto.OauthUserDTO;
+import com.vinesmario.microservice.client.uaa.dto.condition.OauthUserConditionDTO;
+import com.vinesmario.microservice.client.uaa.web.feign.OauthUserClient;
 import com.vinesmario.microservice.server.common.web.rest.BaseResource;
 import com.vinesmario.microservice.server.common.web.rest.errors.BadRequestAlertException;
 import com.vinesmario.microservice.server.common.web.rest.util.HeaderUtil;
-import com.vinesmario.microservice.server.uaa.service.UserAccountService;
+import com.vinesmario.microservice.server.uaa.service.OauthUserService;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.EmailAlreadyUsedException;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.MobileAlreadyUsedException;
 import com.vinesmario.microservice.server.uaa.web.rest.errors.UsernameAlreadyUsedException;
@@ -33,23 +33,23 @@ import java.util.Optional;
  * @date
  */
 
-@Api(description = "UserAccountCRUD", tags = "UserAccountController", basePath = "/user_account")
+@Api(description = "OauthUserCRUD", tags = "OauthUserController", basePath = "/oauth_user")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/user_account")
-public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccountConditionDTO, Long>
-        implements UserAccountClient {
+@RequestMapping("/api/v1/oauth_user")
+public class OauthUserResource extends BaseResource<OauthUserDTO, OauthUserConditionDTO, Long>
+        implements OauthUserClient {
 
-    private final UserAccountService service;
+    private final OauthUserService service;
 
-    public UserAccountResource(UserAccountService service) {
+    public OauthUserResource(OauthUserService service) {
         super(service);
         this.service = service;
-        this.entityName = "UserAccount";
+        this.entityName = "OauthUser";
     }
 
     @Override
-    public void preConditionDTO(UserAccountConditionDTO queryDTO) {
+    public void preConditionDTO(OauthUserConditionDTO queryDTO) {
 
     }
 
@@ -57,7 +57,7 @@ public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccoun
     @ApiResponse(code = 200, message = "查询成功", response = String.class)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<List<UserAccountDTO>> search(@ModelAttribute UserAccountConditionDTO conditionDTO) {
+    public ResponseEntity<List<OauthUserDTO>> search(@ModelAttribute OauthUserConditionDTO conditionDTO) {
         preConditionDTO(conditionDTO);
         // 创建分页对象PageRequest
         String[] directionParameter = conditionDTO.getSort();
@@ -69,11 +69,11 @@ public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccoun
         if (ObjectUtils.isEmpty(conditionDTO.getPageNumber())
                 || ObjectUtils.isEmpty(conditionDTO.getPageSize())) {
             // 分页参数不全
-            List<UserAccountDTO> list = service.list(conditionDTO, sort);
+            List<OauthUserDTO> list = service.list(conditionDTO, sort);
             return ResponseEntity.ok().body(list);
         } else {
             Pageable pageable = PageRequest.of(conditionDTO.getPageNumber(), conditionDTO.getPageSize(), sort);
-            Page<UserAccountDTO> page = service.page(conditionDTO, pageable);
+            Page<OauthUserDTO> page = service.page(conditionDTO, pageable);
             return ResponseEntity.ok()
                     .headers(HeaderUtil.createPage(page))
                     .body(page.getContent());
@@ -86,7 +86,7 @@ public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccoun
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @Override
-    public ResponseEntity<UserAccountDTO> create(@RequestBody UserAccountDTO dto) {
+    public ResponseEntity<OauthUserDTO> create(@RequestBody OauthUserDTO dto) {
         if (!ObjectUtils.isEmpty(dto.getId())) {
             throw new BadRequestAlertException("A new " + entityName + " cannot already have an ID",
                     null, "id.exists", entityName);
@@ -108,9 +108,9 @@ public class UserAccountResource extends BaseResource<UserAccountDTO, UserAccoun
     @ApiResponse(code = 200, message = "更新成功", response = String.class)
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<UserAccountDTO> modify(@PathVariable("id") Long id,
-                                                 @RequestBody UserAccountDTO dto) {
-        Optional<UserAccountDTO> optional = service.getByUsername(dto.getUsername());
+    public ResponseEntity<OauthUserDTO> modify(@PathVariable("id") Long id,
+                                                 @RequestBody OauthUserDTO dto) {
+        Optional<OauthUserDTO> optional = service.getByUsername(dto.getUsername());
         if (optional.isPresent() && optional.get().getId().equals(id)) {
             throw new UsernameAlreadyUsedException(entityName);
         }

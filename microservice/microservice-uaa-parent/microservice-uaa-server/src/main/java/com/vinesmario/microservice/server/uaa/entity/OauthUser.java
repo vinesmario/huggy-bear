@@ -4,14 +4,14 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * 职工账号
- *
- * @author
- * @date
+ * 用户账号
+ * 新增或注册，自动获取消费者（C端用户）身份
+ * 新增或注册的用户，被任职后才会获得职工（B端用户）身份
+ * 被任职的用户需要绑定才可登陆使用B端前端页面。
  */
 
 @Data
-public class UserAccount extends BaseEntity<Long> {
+public class OauthUser extends BaseEntity<Long> {
 
     /**
      * 租户ID

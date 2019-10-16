@@ -21,12 +21,12 @@ import java.util.Optional;
  * Utility class for Spring Security.
  */
 @Slf4j
-public final class SecurityUtils {
+public final class SecurityUtil {
 
     public final static String ADDITIONAL_INFORMATION_USER_DETAILS = "user_details";
     public final static String ADDITIONAL_INFORMATION_CLIENT_DETAILS = "client_details";
 
-    private SecurityUtils() {
+    private SecurityUtil() {
     }
 
     public static Optional<OAuth2AccessToken> getAccessToken() {

@@ -4,13 +4,15 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * 岗位，树形结构
- * 弱化角色的概念,岗位对应多个职责，职责是资源权限组
+ * 岗位，职权Authority组
+ * 树形结构
+ * 弱化角色的概念，
+ * 岗位决定了B端用户的身份以及衍生业务
  */
 @Data
 public class Position extends BaseEntity<Long> {
 
-    private Long TenantId;
+    private Long tenantId;
     private Long departmentId;
     private String name;
     /**

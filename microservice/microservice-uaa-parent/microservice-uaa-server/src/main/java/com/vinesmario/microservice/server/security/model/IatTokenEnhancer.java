@@ -1,11 +1,11 @@
 package com.vinesmario.microservice.server.security.model;
 
-import com.vinesmario.microservice.client.security.SecurityUtils;
+import com.vinesmario.microservice.client.security.SecurityUtil;
 import com.vinesmario.microservice.client.security.model.SecurityClientDetails;
 import com.vinesmario.microservice.client.security.model.SecurityUserDetails;
 import com.vinesmario.microservice.client.uaa.dto.AuthorityDTO;
 import com.vinesmario.microservice.client.uaa.dto.TenantDTO;
-import com.vinesmario.microservice.server.uaa.service.UserAccountService;
+import com.vinesmario.microservice.server.uaa.service.OauthUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class IatTokenEnhancer implements TokenEnhancer {
     public final static String GRANTED_TENANT_ID = "GRANTED_TENANT_ID";
 
     @Autowired
-    private UserAccountService userAccountService;
+    private OauthUserService oauthUserService;
 //    @Autowired
 //    private ClientDetailsServiceImpl clientDetailsService;
 
@@ -55,7 +55,7 @@ public class IatTokenEnhancer implements TokenEnhancer {
         String clientId = authentication.getOAuth2Request().getClientId();
         SecurityClientDetails clientDetails = new SecurityClientDetails();
         clientDetails.setClientId(clientId);
-        accessToken.getAdditionalInformation().put(SecurityUtils.ADDITIONAL_INFORMATION_CLIENT_DETAILS, clientDetails);
+        accessToken.getAdditionalInformation().put(SecurityUtil.ADDITIONAL_INFORMATION_CLIENT_DETAILS, clientDetails);
 
         // TODO 用户信息
         String username = null;
@@ -66,7 +66,7 @@ public class IatTokenEnhancer implements TokenEnhancer {
             username = (String) authentication.getPrincipal();
         }
         // 从数据库中获取更多用户账户信息
-//            Optional<UserAccountDTO> optionalUserAccountDTO = userAccountService.getByUsername(username);
+//            Optional<OauthUserDTO> optionalOauthUserDTO = oauthUserService.getByUsername(username);
 //            SecurityUserDetails securityUserDetails = new SecurityUserDetails(username, "", null);
         SecurityUserDetails securityUserDetails = new SecurityUserDetails();
         securityUserDetails.setName(username);
@@ -95,7 +95,7 @@ public class IatTokenEnhancer implements TokenEnhancer {
             }
         }
         securityUserDetails.setClientDetails(clientDetails);
-        accessToken.getAdditionalInformation().put(SecurityUtils.ADDITIONAL_INFORMATION_USER_DETAILS, securityUserDetails);
+        accessToken.getAdditionalInformation().put(SecurityUtil.ADDITIONAL_INFORMATION_USER_DETAILS, securityUserDetails);
     }
 
 }

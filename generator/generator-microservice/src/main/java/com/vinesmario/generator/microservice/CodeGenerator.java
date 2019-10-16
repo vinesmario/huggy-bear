@@ -16,7 +16,7 @@ public class CodeGenerator {
 		
 		// 通过数据库表生成文件
 		// uaa
-//		g.generateByTable("user_account");
+//		g.generateByTable("oauth_user");
 //		g.generateByTable("storage_file");
 		g.generateByTable("storage_image");
 

@@ -4,13 +4,13 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * 权限、职责
+ * 职权，资源Resource组
  */
 @Data
 public class Authority extends BaseEntity<Long> {
 
     /**
-     * 权限名称
+     * 职权名称
      */
     private String name;
 

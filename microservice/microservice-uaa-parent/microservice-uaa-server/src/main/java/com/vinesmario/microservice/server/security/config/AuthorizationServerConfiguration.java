@@ -63,11 +63,11 @@ public class AuthorizationServerConfiguration extends OAuth2AuthorizationServerC
         /**
          *  find details from properties 'security.oauth2.client...'
          */
-        super.configure(clients);
-        /*
-        For a better client design, this should be done by a ClientDetailsService (similar to UserDetailsService, find details from database).
+//        super.configure(clients);
+        /**
+         * For a better client design, this should be done by a ClientDetailsService (similar to UserDetailsService, find details from database).
          */
-//        clients.withClientDetails(clientDetailsService);
+        clients.withClientDetails(clientDetailsService);
     }
 
     /**

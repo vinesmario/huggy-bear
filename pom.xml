@@ -20,8 +20,8 @@
         <module>cloud</module>
         <module>common</module>
         <module>generator</module>
-        <module>microservice</module>
         <module>industry</module>
+        <module>microservice</module>
     </modules>
 
     <!-- 对所依赖jar包进行版本管理 以dependency里的version为准-->

@@ -10,9 +10,9 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "UserAccountConditionDTO", description = "UserAccountConditionDTO")
+@ApiModel(value = "OauthUserConditionDTO", description = "OauthUserConditionDTO")
 @Data
-public class UserAccountConditionDTO implements ConditionDTO {
+public class OauthUserConditionDTO implements ConditionDTO {
 
     /**
      * ID

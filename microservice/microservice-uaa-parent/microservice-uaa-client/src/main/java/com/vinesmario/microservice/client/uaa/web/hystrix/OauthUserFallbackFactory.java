@@ -1,8 +1,8 @@
 package com.vinesmario.microservice.client.uaa.web.hystrix;
 
-import com.vinesmario.microservice.client.uaa.dto.UserAccountDTO;
-import com.vinesmario.microservice.client.uaa.dto.condition.UserAccountConditionDTO;
-import com.vinesmario.microservice.client.uaa.web.feign.UserAccountClient;
+import com.vinesmario.microservice.client.uaa.dto.OauthUserDTO;
+import com.vinesmario.microservice.client.uaa.dto.condition.OauthUserConditionDTO;
+import com.vinesmario.microservice.client.uaa.web.feign.OauthUserClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -12,31 +12,31 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class UserAccountFallbackFactory implements FallbackFactory<UserAccountClient> {
+public class OauthUserFallbackFactory implements FallbackFactory<OauthUserClient> {
 
     @Override
-    public UserAccountClient create(Throwable throwable) {
-        return new UserAccountClient() {
+    public OauthUserClient create(Throwable throwable) {
+        return new OauthUserClient() {
             @Override
-            public ResponseEntity<List<UserAccountDTO>> search(UserAccountConditionDTO condition) {
+            public ResponseEntity<List<OauthUserDTO>> search(OauthUserConditionDTO condition) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UserAccountDTO> get(Long id) {
+            public ResponseEntity<OauthUserDTO> get(Long id) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UserAccountDTO> create(UserAccountDTO dto) {
+            public ResponseEntity<OauthUserDTO> create(OauthUserDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
 
             @Override
-            public ResponseEntity<UserAccountDTO> modify(Long id, UserAccountDTO dto) {
+            public ResponseEntity<OauthUserDTO> modify(Long id, OauthUserDTO dto) {
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }
@@ -48,7 +48,7 @@ public class UserAccountFallbackFactory implements FallbackFactory<UserAccountCl
             }
 
             @Override
-            public ResponseEntity<Void> remove(UserAccountConditionDTO condition){
+            public ResponseEntity<Void> remove(OauthUserConditionDTO condition){
                 log.error("进入回退逻辑", throwable);
                 return ResponseEntity.notFound().build();
             }

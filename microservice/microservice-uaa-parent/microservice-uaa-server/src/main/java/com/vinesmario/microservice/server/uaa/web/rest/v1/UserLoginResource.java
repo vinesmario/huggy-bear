@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.web.bind.annotation.*;
 
-@Api(description = "UserAccountCRUD", tags = "UserAccountController", basePath = "/user_account")
+@Api(description = "OauthUserCRUD", tags = "OauthUserController", basePath = "/oauth_user")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/user_login")

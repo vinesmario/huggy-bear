@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vinesmario.microservice.server.uaa.mapper.UserAccountMapper">
-    <resultMap id="BaseResultMap" type="com.vinesmario.microservice.server.uaa.entity.UserAccount">
+<mapper namespace="com.vinesmario.microservice.server.uaa.mapper.OauthUserMapper">
+    <resultMap id="BaseResultMap" type="com.vinesmario.microservice.server.uaa.entity.OauthUser">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -86,7 +86,7 @@
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from user_account
+        from oauth_user
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -97,44 +97,44 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user_account
+        from oauth_user
         where id = #{id,jdbcType=BIGINT}
         and deleted = 0
     </select>
     <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user_account
+        from oauth_user
         where username = #{username,jdbcType=VARCHAR}
         and deleted = 0
     </select>
     <select id="selectByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user_account
+        from oauth_user
         where mobile = #{mobile,jdbcType=VARCHAR}
         and deleted = 0
     </select>
     <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user_account
+        from oauth_user
         where email = #{email,jdbcType=VARCHAR}
         and deleted = 0
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from user_account
+        delete from oauth_user
         where id = #{id,jdbcType=BIGINT}
     </delete>
     <delete id="deleteByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample">
-        delete from user_account
+        delete from oauth_user
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
-            parameterType="com.vinesmario.microservice.server.uaa.entity.UserAccount">
-        insert into user_account (id, username, password,
+            parameterType="com.vinesmario.microservice.server.uaa.entity.OauthUser">
+        insert into oauth_user (id, username, password,
         mobile, email, activated,
         created_by, last_modified_by, memo
         )
@@ -143,8 +143,8 @@
         #{createdBy,jdbcType=BIGINT}, #{lastModifiedBy,jdbcType=BIGINT}, #{memo,jdbcType=VARCHAR}
         )
     </insert>
-    <insert id="insertSelective" parameterType="com.vinesmario.microservice.server.uaa.entity.UserAccount">
-        insert into user_account
+    <insert id="insertSelective" parameterType="com.vinesmario.microservice.server.uaa.entity.OauthUser">
+        insert into oauth_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -206,13 +206,13 @@
     </insert>
     <select id="countByExample" parameterType="com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample"
             resultType="java.lang.Long">
-        select count(*) from user_account
+        select count(*) from oauth_user
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update user_account
+        update oauth_user
         <set>
             <if test="record.username != null">
                 username = #{record.username,jdbcType=VARCHAR},
@@ -244,7 +244,7 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update user_account
+        update oauth_user
         set username = #{record.username,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=VARCHAR},
         mobile = #{record.mobile,jdbcType=VARCHAR},
@@ -256,8 +256,8 @@
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.vinesmario.microservice.server.uaa.entity.UserAccount">
-        update user_account
+    <update id="updateByPrimaryKeySelective" parameterType="com.vinesmario.microservice.server.uaa.entity.OauthUser">
+        update oauth_user
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
@@ -286,8 +286,8 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.vinesmario.microservice.server.uaa.entity.UserAccount">
-        update user_account
+    <update id="updateByPrimaryKey" parameterType="com.vinesmario.microservice.server.uaa.entity.OauthUser">
+        update oauth_user
         set username = #{username,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
         mobile = #{mobile,jdbcType=VARCHAR},

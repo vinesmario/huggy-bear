@@ -16,7 +16,7 @@ public class CodeGenerator {
 		
 		// 通过数据库表生成文件
 		// uaa
-		g.generateByTable("user_account");
+		g.generateByTable("oauth_user");
 
 
 		// 自动搜索数据库中的所有表并生成文件,template为模板的根目录

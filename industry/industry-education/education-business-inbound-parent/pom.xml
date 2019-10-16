@@ -10,7 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>education-business-inbound-parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>education-business-inbound-client</module>
+        <module>education-business-inbound-server</module>
+    </modules>
 
 
 </project>

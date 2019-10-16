@@ -50,7 +50,7 @@
         <!--</javaClientGenerator>-->
 
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
-        <!--<table tableName="user_account" domainObjectName="UserAccount"/>-->
+        <!--<table tableName="oauth_user" domainObjectName="UserAccount"/>-->
         <!--<table tableName="face_recognition" domainObjectName="FaceRecognition"/>-->
         <!--<table tableName="face_picture" domainObjectName="FacePicture"/>-->
         <!--<table tableName="face_upgrade" domainObjectName="FaceUpgrade"/>-->

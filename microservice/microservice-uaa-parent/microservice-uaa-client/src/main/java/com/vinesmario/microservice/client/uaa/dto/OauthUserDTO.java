@@ -10,9 +10,9 @@ import java.util.List;
  * @author
  * @date
  */
-@ApiModel(value = "UserAccountDTO", description = "UserAccountDTO")
+@ApiModel(value = "OauthUserDTO", description = "OauthUserDTO")
 @Data
-public class UserAccountDTO extends BaseDTO<Long> {
+public class OauthUserDTO extends BaseDTO<Long> {
 
     /**
      * 租户ID

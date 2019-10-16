@@ -4,11 +4,11 @@ import com.vinesmario.microservice.server.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * 资源组
- * 权限和资源多对对关系
+ * 许可
+ * 职权Authority和资源Resource是多对对关系
  */
 @Data
-public class AuthorityResource extends BaseEntity<Long> {
+public class Permission extends BaseEntity<Long> {
 
     private Long authorityId;
     private Long resourceId;
