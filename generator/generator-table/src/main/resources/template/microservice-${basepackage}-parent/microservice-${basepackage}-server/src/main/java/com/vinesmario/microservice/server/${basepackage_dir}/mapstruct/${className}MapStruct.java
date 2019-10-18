@@ -5,7 +5,7 @@ package com.vinesmario.microservice.server.${basepackage}.mapstruct;
 
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.client.${basepackage}.dto.${className}DTO;
-import com.vinesmario.microservice.server.${basepackage}.entity.${className};
+import com.vinesmario.microservice.server.${basepackage}.po.${className};
 import org.mapstruct.Mapper;
 
 /**

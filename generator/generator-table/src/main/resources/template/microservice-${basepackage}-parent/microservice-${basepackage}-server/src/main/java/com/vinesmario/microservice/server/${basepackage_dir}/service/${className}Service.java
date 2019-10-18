@@ -9,9 +9,9 @@ import com.vinesmario.microservice.client.${basepackage}.dto.condition.${classNa
 import com.vinesmario.microservice.client.${basepackage}.dto.${className}DTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.${basepackage}.entity.${className};
 import com.vinesmario.microservice.server.${basepackage}.mapper.${className}Mapper;
 import com.vinesmario.microservice.server.${basepackage}.mapstruct.${className}MapStruct;
+import com.vinesmario.microservice.server.${basepackage}.po.${className};
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

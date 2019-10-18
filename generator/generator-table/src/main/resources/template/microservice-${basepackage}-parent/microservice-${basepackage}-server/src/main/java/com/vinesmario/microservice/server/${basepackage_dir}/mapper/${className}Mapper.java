@@ -4,7 +4,7 @@
 package com.vinesmario.microservice.server.${basepackage}.mapper;
 
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.CrudMapper;
-import com.vinesmario.microservice.server.${basepackage}.entity.${className};
+import com.vinesmario.microservice.server.${basepackage}.po.${className};
 
 /**
  * @author
