@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.uaa.entity;
+package com.vinesmario.microservice.server.uaa.po;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import lombok.Data;
 
 /**
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 
 @Data
-public class OauthUser extends BaseEntity<Long> {
+public class OauthUser extends BasePO<Long> {
 
     /**
      * 租户ID

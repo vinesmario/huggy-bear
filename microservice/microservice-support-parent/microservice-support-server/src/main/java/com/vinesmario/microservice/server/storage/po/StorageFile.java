@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.storage.entity;
+package com.vinesmario.microservice.server.storage.po;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -10,12 +10,13 @@ import javax.persistence.Table;
  * @author
  * @date
  */
+
 @Data
-@Table(name = "storage_template")
-public class StorageTemplate extends BaseEntity<Long> {
+@Table(name = "storage_file")
+public class StorageFile extends BasePO<Long> {
 
     /**
-     *
+     * 
      */
     @Column(name = "TENANT_ID")
     private Long tenantId;

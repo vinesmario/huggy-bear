@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.uaa.mapper;
 
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.CrudMapper;
-import com.vinesmario.microservice.server.uaa.entity.OauthUser;
+import com.vinesmario.microservice.server.uaa.po.OauthUser;
 
 /**
  * @author

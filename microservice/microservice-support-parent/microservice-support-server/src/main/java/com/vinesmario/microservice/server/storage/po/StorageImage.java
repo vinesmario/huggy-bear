@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.storage.entity;
+package com.vinesmario.microservice.server.storage.po;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -10,9 +10,10 @@ import javax.persistence.Table;
  * @author
  * @date
  */
+
 @Data
-@Table(name = "storage_pdf_splited")
-public class StoragePdfSplited extends BaseEntity<Long> {
+@Table(name = "storage_image")
+public class StorageImage extends BasePO<Long> {
 
     /**
      *
@@ -65,19 +66,14 @@ public class StoragePdfSplited extends BaseEntity<Long> {
     @Column(name = "FILE_SHA1_HEX")
     private String fileSha1Hex;
     /**
-     * 来源ID
+     * 图片高度
      */
-    @Column(name = "ORIGIN_ID")
-    private Long originId;
+    @Column(name = "IMAGE_HEIGHT")
+    private Integer imageHeight;
     /**
-     * 来源UUID
+     * 图片宽度
      */
-    @Column(name = "ORIGIN_UUID")
-    private String originUuid;
-    /**
-     * 页码，从第1页开始
-     */
-    @Column(name = "PAGINATION")
-    private Integer pagination;
+    @Column(name = "IMAGE_WIDTH")
+    private Integer imageWidth;
 
 }

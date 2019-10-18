@@ -6,7 +6,7 @@ import com.vinesmario.microservice.client.storage.dto.StorageImageDTO;
 import com.vinesmario.microservice.client.storage.dto.condition.StorageImageConditionDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StorageImage;
+import com.vinesmario.microservice.server.storage.po.StorageImage;
 import com.vinesmario.microservice.server.storage.mapper.StorageImageMapper;
 import com.vinesmario.microservice.server.storage.mapstruct.StorageImageMapStruct;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class StorageImageService extends BaseService<StorageImageDTO, StorageIma
 
     @Transactional(readOnly = true)
     public Optional<StorageImageDTO> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
+        return Optional.ofNullable(mapStruct.fromPO2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

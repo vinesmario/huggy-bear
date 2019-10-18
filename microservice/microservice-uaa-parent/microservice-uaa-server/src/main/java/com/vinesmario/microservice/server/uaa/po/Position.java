@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.uaa.entity;
+package com.vinesmario.microservice.server.uaa.po;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * 岗位决定了B端用户的身份以及衍生业务
  */
 @Data
-public class Position extends BaseEntity<Long> {
+public class Position extends BasePO<Long> {
 
     private Long tenantId;
     private Long departmentId;

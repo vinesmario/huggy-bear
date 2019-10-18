@@ -5,7 +5,7 @@ import com.vinesmario.common.constant.DictConstant;
 import com.vinesmario.microservice.server.common.web.rest.TestUtil;
 import com.vinesmario.microservice.server.common.web.rest.errors.ExceptionTranslator;
 import com.vinesmario.microservice.server.uaa.UaaServerApplicationIntTest;
-import com.vinesmario.microservice.server.uaa.entity.OauthUser;
+import com.vinesmario.microservice.server.uaa.po.OauthUser;
 import com.vinesmario.microservice.server.uaa.mapstruct.OauthUserMapStructImpl;
 import com.vinesmario.microservice.server.uaa.service.OauthUserService;
 import com.vinesmario.microservice.server.uaa.web.rest.v1.OauthUserResource;

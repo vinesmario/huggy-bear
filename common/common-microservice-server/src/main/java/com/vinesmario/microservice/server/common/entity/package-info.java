@@ -1,1 +1,0 @@
-package com.vinesmario.microservice.server.common.entity;

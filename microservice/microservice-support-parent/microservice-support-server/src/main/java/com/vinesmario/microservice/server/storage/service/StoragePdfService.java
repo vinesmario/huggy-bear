@@ -6,7 +6,7 @@ import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfCondit
 import com.vinesmario.microservice.client.storage.dto.StoragePdfDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StoragePdf;
+import com.vinesmario.microservice.server.storage.po.StoragePdf;
 import com.vinesmario.microservice.server.storage.mapper.StoragePdfMapper;
 import com.vinesmario.microservice.server.storage.mapstruct.StoragePdfMapStruct;
 
@@ -57,7 +57,7 @@ public class StoragePdfService extends BaseService<StoragePdfDTO, StoragePdf, Lo
 
     @Transactional(readOnly = true)
     public Optional<StoragePdfDTO> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
+        return Optional.ofNullable(mapStruct.fromPO2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

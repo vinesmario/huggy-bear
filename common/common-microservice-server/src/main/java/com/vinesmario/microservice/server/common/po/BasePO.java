@@ -1,9 +1,8 @@
-package com.vinesmario.microservice.server.common.entity;
+package com.vinesmario.microservice.server.common.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vinesmario.common.constant.DictConstant;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @MappedSuperclass
-public class BaseEntity<PK extends Serializable> {
+public class BasePO<PK extends Serializable> {
 
     /**
      * ID，主键

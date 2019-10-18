@@ -1,18 +1,18 @@
 package com.vinesmario.microservice.server.common.mapstruct;
 
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 
 import java.util.List;
 
-public interface BaseMapStruct<T extends BaseEntity, DTO extends BaseDTO> {
+public interface BaseMapStruct<T extends BasePO, DTO extends BaseDTO> {
 
-    DTO fromEntity2DTO(T entity);
+    DTO fromPO2DTO(T entity);
 
-    T fromDTO2Entity(DTO dto);
+    T fromDTO2PO(DTO dto);
 
-    List<DTO> fromEntities2DTOs(List<T> entities);
+    List<DTO> fromPOs2DTOs(List<T> entities);
 
-    List<T> fromDTOs2Entities(List<DTO> dtos);
+    List<T> fromDTOs2POs(List<DTO> dtos);
 
 }

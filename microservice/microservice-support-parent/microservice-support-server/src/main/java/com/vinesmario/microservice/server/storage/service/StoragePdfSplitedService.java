@@ -6,8 +6,8 @@ import com.vinesmario.microservice.client.storage.dto.condition.StoragePdfSplite
 import com.vinesmario.microservice.client.storage.dto.StoragePdfSplitedDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StoragePdf;
-import com.vinesmario.microservice.server.storage.entity.StoragePdfSplited;
+import com.vinesmario.microservice.server.storage.po.StoragePdf;
+import com.vinesmario.microservice.server.storage.po.StoragePdfSplited;
 import com.vinesmario.microservice.server.storage.mapper.StoragePdfSplitedMapper;
 import com.vinesmario.microservice.server.storage.mapstruct.StoragePdfSplitedMapStruct;
 
@@ -58,7 +58,7 @@ public class StoragePdfSplitedService extends BaseService<StoragePdfSplitedDTO, 
 
 	@Transactional(readOnly = true)
 	public Optional<StoragePdfSplitedDTO> getByUuid(String uuid) {
-		return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
+		return Optional.ofNullable(mapStruct.fromPO2DTO(mapper.selectByUuid(uuid)));
 	}
   
 }

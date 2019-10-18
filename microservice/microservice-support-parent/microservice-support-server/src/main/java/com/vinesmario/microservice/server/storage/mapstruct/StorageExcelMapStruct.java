@@ -2,7 +2,7 @@ package com.vinesmario.microservice.server.storage.mapstruct;
 
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
-import com.vinesmario.microservice.server.storage.entity.StorageExcel;
+import com.vinesmario.microservice.server.storage.po.StorageExcel;
 import org.mapstruct.Mapper;
 
 /**

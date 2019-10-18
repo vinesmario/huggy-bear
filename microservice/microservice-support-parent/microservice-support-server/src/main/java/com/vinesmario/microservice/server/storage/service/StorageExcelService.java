@@ -6,7 +6,7 @@ import com.vinesmario.microservice.client.storage.dto.condition.StorageExcelCond
 import com.vinesmario.microservice.client.storage.dto.StorageExcelDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StorageExcel;
+import com.vinesmario.microservice.server.storage.po.StorageExcel;
 import com.vinesmario.microservice.server.storage.mapper.StorageExcelMapper;
 import com.vinesmario.microservice.server.storage.mapstruct.StorageExcelMapStruct;
 
@@ -57,7 +57,7 @@ public class StorageExcelService extends BaseService<StorageExcelDTO, StorageExc
 
     @Transactional(readOnly = true)
     public Optional<StorageExcelDTO> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
+        return Optional.ofNullable(mapStruct.fromPO2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

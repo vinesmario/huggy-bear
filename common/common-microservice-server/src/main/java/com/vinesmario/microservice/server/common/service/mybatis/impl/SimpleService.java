@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 import com.vinesmario.common.kit.StringKit;
 import com.vinesmario.microservice.client.common.dto.BaseDTO;
 import com.vinesmario.microservice.client.common.dto.condition.ConditionDTO;
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.ReadOnlyMapper;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional
-public abstract class SimpleService<DTO extends BaseDTO, T extends BaseEntity<PK>, PK extends Serializable>
+public abstract class SimpleService<DTO extends BaseDTO, T extends BasePO<PK>, PK extends Serializable>
         implements ReadOnlyService<DTO, PK> {
 
     private final ReadOnlyMapper<T, PK> mapper;
@@ -77,7 +77,7 @@ public abstract class SimpleService<DTO extends BaseDTO, T extends BaseEntity<PK
 
         // 转换为org.springframework.data.domain.PageImpl对象
         // 以便于在不修改前端和controller层的情况下能够快速切换到JPA
-        return new PageImpl<>(mapStruct.fromEntities2DTOs(pageInfo.getList()), pageable, pageInfo.getTotal());
+        return new PageImpl<>(mapStruct.fromPOs2DTOs(pageInfo.getList()), pageable, pageInfo.getTotal());
     }
 
     @Transactional(readOnly = true)
@@ -107,12 +107,12 @@ public abstract class SimpleService<DTO extends BaseDTO, T extends BaseEntity<PK
             }
         }
 
-        return mapStruct.fromEntities2DTOs(mapper.selectByExample(example));
+        return mapStruct.fromPOs2DTOs(mapper.selectByExample(example));
     }
 
     @Transactional(readOnly = true)
     public Optional<DTO> get(PK primaryKey) {
-        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByPrimaryKey(primaryKey)));
+        return Optional.ofNullable(mapStruct.fromPO2DTO(mapper.selectByPrimaryKey(primaryKey)));
     }
 
 }

@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.uaa.entity;
+package com.vinesmario.microservice.server.uaa.po;
 
-import com.vinesmario.microservice.server.common.entity.TreeEntity;
+import com.vinesmario.microservice.server.common.po.TreePO;
 import lombok.Data;
 
 /**
@@ -20,7 +20,7 @@ import lombok.Data;
  * 11，仅自己
  */
 @Data
-public class Duty extends TreeEntity<Long> {
+public class Duty extends TreePO<Long> {
 
     private Long positionId;
     private Long authorityId;

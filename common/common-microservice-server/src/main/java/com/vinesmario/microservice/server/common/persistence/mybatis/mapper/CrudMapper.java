@@ -1,12 +1,12 @@
 package com.vinesmario.microservice.server.common.persistence.mybatis.mapper;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
 
-public interface CrudMapper<T extends BaseEntity<PK>, PK extends Serializable>
+public interface CrudMapper<T extends BasePO<PK>, PK extends Serializable>
         extends ReadOnlyMapper<T, PK> {
 
     /**

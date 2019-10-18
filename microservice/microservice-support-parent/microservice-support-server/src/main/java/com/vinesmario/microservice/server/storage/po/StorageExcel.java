@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.storage.entity;
+package com.vinesmario.microservice.server.storage.po;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -10,10 +10,9 @@ import javax.persistence.Table;
  * @author
  * @date
  */
-
 @Data
-@Table(name = "storage_image")
-public class StorageImage extends BaseEntity<Long> {
+@Table(name = "storage_excel")
+public class StorageExcel extends BasePO<Long> {
 
     /**
      *
@@ -65,15 +64,5 @@ public class StorageImage extends BaseEntity<Long> {
      */
     @Column(name = "FILE_SHA1_HEX")
     private String fileSha1Hex;
-    /**
-     * 图片高度
-     */
-    @Column(name = "IMAGE_HEIGHT")
-    private Integer imageHeight;
-    /**
-     * 图片宽度
-     */
-    @Column(name = "IMAGE_WIDTH")
-    private Integer imageWidth;
 
 }

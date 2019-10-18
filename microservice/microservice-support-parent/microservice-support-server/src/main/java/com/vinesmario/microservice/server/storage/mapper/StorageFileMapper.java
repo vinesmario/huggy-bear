@@ -1,7 +1,7 @@
 package com.vinesmario.microservice.server.storage.mapper;
 
 import com.vinesmario.microservice.server.common.persistence.mybatis.mapper.CrudMapper;
-import com.vinesmario.microservice.server.storage.entity.StorageFile;
+import com.vinesmario.microservice.server.storage.po.StorageFile;
 
 /**
  * @author

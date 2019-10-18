@@ -6,7 +6,7 @@ import com.vinesmario.microservice.client.uaa.dto.OauthUserDTO;
 import com.vinesmario.microservice.client.uaa.dto.condition.OauthUserConditionDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.uaa.entity.OauthUser;
+import com.vinesmario.microservice.server.uaa.po.OauthUser;
 import com.vinesmario.microservice.server.uaa.mapper.OauthUserMapper;
 import com.vinesmario.microservice.server.uaa.mapstruct.OauthUserMapStruct;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,38 +53,38 @@ public class OauthUserService extends BaseService<OauthUserDTO, OauthUser, Long>
 
     @Transactional(readOnly = true)
     public Optional<OauthUserDTO> getByUsername(String username) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByUsername(username)));
+        return Optional.ofNullable(this.mapStruct.fromPO2DTO(this.mapper.selectByUsername(username)));
     }
 
     @Transactional(readOnly = true)
     public Optional<OauthUserDTO> getByMobile(String mobile) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByMobile(mobile)));
+        return Optional.ofNullable(this.mapStruct.fromPO2DTO(this.mapper.selectByMobile(mobile)));
     }
 
     @Transactional(readOnly = true)
     public Optional<OauthUserDTO> getByEmail(String email) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByEmail(email)));
+        return Optional.ofNullable(this.mapStruct.fromPO2DTO(this.mapper.selectByEmail(email)));
     }
 
     @Transactional(readOnly = true)
     public Optional<OauthUserDTO> getWithAuthoritiesByUsername(String username) {
-        Optional<OauthUserDTO> optional = Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByUsername(username)));
+        Optional<OauthUserDTO> optional = Optional.ofNullable(this.mapStruct.fromPO2DTO(this.mapper.selectByUsername(username)));
         // TODO 角色
         return optional;
     }
 
     @Transactional(readOnly = true)
     public Optional<OauthUserDTO> getWithAuthoritiesByMobile(String mobile) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByMobile(mobile)));
+        return Optional.ofNullable(this.mapStruct.fromPO2DTO(this.mapper.selectByMobile(mobile)));
     }
 
     @Transactional(readOnly = true)
     public Optional<OauthUserDTO> getWithAuthoritiesByEmail(String email) {
-        return Optional.ofNullable(this.mapStruct.fromEntity2DTO(this.mapper.selectByEmail(email)));
+        return Optional.ofNullable(this.mapStruct.fromPO2DTO(this.mapper.selectByEmail(email)));
     }
 
     public void create(OauthUserDTO dto) {
-        OauthUser entity = mapStruct.fromDTO2Entity(dto);
+        OauthUser entity = mapStruct.fromDTO2PO(dto);
         this.mapper.insert(entity);
         dto.setId(entity.getId());
         // 初始化用户角色

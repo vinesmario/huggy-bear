@@ -1,13 +1,13 @@
-package com.vinesmario.microservice.server.uaa.entity;
+package com.vinesmario.microservice.server.uaa.po;
 
-import com.vinesmario.microservice.server.common.entity.TreeEntity;
+import com.vinesmario.microservice.server.common.po.TreePO;
 import lombok.Data;
 
 /**
  * 租户下属部门
  */
 @Data
-public class Department extends TreeEntity<Long> {
+public class Department extends TreePO<Long> {
 
     /**
      * 租户ID

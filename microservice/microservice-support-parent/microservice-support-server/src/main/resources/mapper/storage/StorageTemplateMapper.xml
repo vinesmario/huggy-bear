@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vinesmario.microservice.server.storage.mapper.StorageTemplateMapper">
-  <resultMap id="BaseResultMap" type="com.vinesmario.microservice.server.storage.entity.StorageTemplate">
+  <resultMap id="BaseResultMap" type="com.vinesmario.microservice.server.storage.po.StorageTemplate">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
     <result column="uuid" jdbcType="VARCHAR" property="uuid" />
@@ -119,7 +119,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.entity.StorageTemplate">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.po.StorageTemplate">
     insert into storage_template (id, tenant_id, uuid, 
       file_extension, file_name, file_absolute_path, 
       file_absolute_url, file_relative_url, file_size, 
@@ -133,7 +133,7 @@
       #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=BIGINT}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
       #{memo,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.entity.StorageTemplate">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.vinesmario.microservice.server.storage.po.StorageTemplate">
     insert into storage_template
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -330,7 +330,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.vinesmario.microservice.server.storage.entity.StorageTemplate">
+  <update id="updateByPrimaryKeySelective" parameterType="com.vinesmario.microservice.server.storage.po.StorageTemplate">
     update storage_template
     <set>
       <if test="tenantId != null">
@@ -384,7 +384,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.vinesmario.microservice.server.storage.entity.StorageTemplate">
+  <update id="updateByPrimaryKey" parameterType="com.vinesmario.microservice.server.storage.po.StorageTemplate">
     update storage_template
     set tenant_id = #{tenantId,jdbcType=BIGINT},
       uuid = #{uuid,jdbcType=VARCHAR},

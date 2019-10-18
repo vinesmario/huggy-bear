@@ -7,7 +7,7 @@ import com.vinesmario.microservice.client.storage.dto.condition.StorageTemplateC
 import com.vinesmario.microservice.client.storage.dto.StorageTemplateDTO;
 import com.vinesmario.microservice.server.common.persistence.mybatis.BaseExample;
 import com.vinesmario.microservice.server.common.service.mybatis.impl.BaseService;
-import com.vinesmario.microservice.server.storage.entity.StorageTemplate;
+import com.vinesmario.microservice.server.storage.po.StorageTemplate;
 import com.vinesmario.microservice.server.storage.mapper.StorageTemplateMapper;
 import com.vinesmario.microservice.server.storage.mapstruct.StorageTemplateMapStruct;
 
@@ -58,7 +58,7 @@ public class StorageTemplateService extends BaseService<StorageTemplateDTO, Stor
 
     @Transactional(readOnly = true)
     public Optional<StorageTemplateDTO> getByUuid(String uuid) {
-        return Optional.ofNullable(mapStruct.fromEntity2DTO(mapper.selectByUuid(uuid)));
+        return Optional.ofNullable(mapStruct.fromPO2DTO(mapper.selectByUuid(uuid)));
     }
 
 }

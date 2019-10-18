@@ -1,6 +1,6 @@
-package com.vinesmario.microservice.server.uaa.entity;
+package com.vinesmario.microservice.server.uaa.po;
 
-import com.vinesmario.microservice.server.common.entity.BaseEntity;
+import com.vinesmario.microservice.server.common.po.BasePO;
 import lombok.Data;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Data;
  * 被任职的用户OauthUser获得职工（B端用户）身份
  */
 @Data
-public class Appointment extends BaseEntity<Long> {
+public class Appointment extends BasePO<Long> {
 
     private Long oauthUserId;
     private Long positionId;

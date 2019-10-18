@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.server.common.entity;
+package com.vinesmario.microservice.server.common.po;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Delete existing records.
  */
 @Data
-public class TreeEntity<PK extends Serializable> extends BaseEntity {
+public class TreePO<PK extends Serializable> extends BasePO {
 
     /**
      *

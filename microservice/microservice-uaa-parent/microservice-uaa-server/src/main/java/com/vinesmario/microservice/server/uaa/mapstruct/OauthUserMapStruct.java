@@ -2,7 +2,7 @@ package com.vinesmario.microservice.server.uaa.mapstruct;
 
 import com.vinesmario.microservice.server.common.mapstruct.BaseMapStruct;
 import com.vinesmario.microservice.client.uaa.dto.OauthUserDTO;
-import com.vinesmario.microservice.server.uaa.entity.OauthUser;
+import com.vinesmario.microservice.server.uaa.po.OauthUser;
 import org.mapstruct.Mapper;
 
 /**
