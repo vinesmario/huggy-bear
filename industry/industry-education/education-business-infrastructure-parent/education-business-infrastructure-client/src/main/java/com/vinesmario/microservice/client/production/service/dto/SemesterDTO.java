@@ -1,7 +1,9 @@
 package com.vinesmario.microservice.client.production.service.dto;
 
 /**
- * 成绩
+ * 学期
  */
-public class Score {
+public class SemesterDTO {
+
+    private Long tenantId;
 }
