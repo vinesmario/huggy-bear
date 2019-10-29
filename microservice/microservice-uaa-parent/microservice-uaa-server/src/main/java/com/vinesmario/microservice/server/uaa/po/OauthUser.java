@@ -12,7 +12,6 @@ import lombok.Data;
 
 @Data
 public class OauthUser extends BasePO<Long> {
-
     /**
      * 租户ID
      */
@@ -33,6 +32,10 @@ public class OauthUser extends BasePO<Long> {
      * 邮箱
      */
     private String email;
+    /**
+     * 编号
+     */
+    private String serialNumber;
     /**
      * 是否激活
      */

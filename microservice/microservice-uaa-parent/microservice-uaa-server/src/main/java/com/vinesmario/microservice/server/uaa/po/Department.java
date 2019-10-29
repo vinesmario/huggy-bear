@@ -4,11 +4,10 @@ import com.vinesmario.microservice.server.common.po.TreePO;
 import lombok.Data;
 
 /**
- * 租户下属部门
+ * 部门、团队、工作组
  */
 @Data
 public class Department extends TreePO<Long> {
-
     /**
      * 租户ID
      */

@@ -1,9 +1,9 @@
-package com.vinesmario.microservice.client.immovable.dto;
+package com.vinesmario.microservice.client.liveness.detection.dto;
 
 /**
- * 建筑物
+ * 用户组
  */
-public class BuildingDTO {
+public class UserGroupDTO {
     /**
      * 租户ID
      */
@@ -12,5 +12,4 @@ public class BuildingDTO {
      * 名称
      */
     private String name;
-
 }

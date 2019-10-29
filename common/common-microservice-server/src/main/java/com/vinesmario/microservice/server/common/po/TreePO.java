@@ -2,6 +2,7 @@ package com.vinesmario.microservice.server.common.po;
 
 import lombok.Data;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * Delete existing records.
  */
 @Data
+@MappedSuperclass
 public class TreePO<PK extends Serializable> extends BasePO {
 
     /**

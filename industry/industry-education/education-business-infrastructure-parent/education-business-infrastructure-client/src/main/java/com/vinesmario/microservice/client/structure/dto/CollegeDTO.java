@@ -1,9 +1,9 @@
-package com.vinesmario.microservice.client.immovable.dto;
+package com.vinesmario.microservice.client.structure.dto;
 
 /**
- * 建筑物
+ * 学院
  */
-public class BuildingDTO {
+public class CollegeDTO {
     /**
      * 租户ID
      */
@@ -14,3 +14,4 @@ public class BuildingDTO {
     private String name;
 
 }
+

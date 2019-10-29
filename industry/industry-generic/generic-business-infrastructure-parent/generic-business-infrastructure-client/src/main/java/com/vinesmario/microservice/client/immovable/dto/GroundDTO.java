@@ -4,7 +4,6 @@ package com.vinesmario.microservice.client.immovable.dto;
  * 开阔地面
  */
 public class GroundDTO {
-
     /**
      * 用途：泊车、集会
      */
