@@ -1,11 +1,11 @@
-package com.vinesmario.microservice.client.detection.dto;
+package com.vinesmario.microservice.client.access.dto;
 
 import java.time.LocalDateTime;
 
 /**
- * 二维码识别场景
+ * 芯片卡控制通行场景
  */
-public class QRCodeRecognitionScenarioDTO {
+public class ChipcardAccessDTO {
     /**
      * 租户ID
      */
@@ -19,7 +19,7 @@ public class QRCodeRecognitionScenarioDTO {
      */
     private Long deviceName;
     /**
-     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-支付
+     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-消费支付
      */
     private Integer scenario;
     /**
@@ -35,17 +35,17 @@ public class QRCodeRecognitionScenarioDTO {
      */
     private String serialNumber;
     /**
-     * 二维码ID
+     * 芯片卡ID
      */
-    private Long qrcodeId;
+    private Long chipcardId;
     /**
-     * 二维码唯一标识码
+     * 芯片卡唯一标识码
      */
-    private String qrcodeSerialNumber;
+    private String chipcardSerialNumber;
     /**
      * 识别时间
      */
-    private LocalDateTime recognitionTime;
+    private LocalDateTime identificationTime;
     /**
      * 下行状态 0-否；1-是
      */
