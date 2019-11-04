@@ -1,18 +1,17 @@
-package com.vinesmario.microservice.client.detection.dto;
+package com.vinesmario.microservice.client.offline.dto;
 
 /**
- * 设备人脸更新记录
+ * 设备与芯片卡关系更新记录
  */
-public class CameraFaceAppendDTO {
+public class DeviceChipcardAppendDTO {
     /**
      * 租户ID
      */
     private Long tenantId;
     /**
      * 设备ID
-     * 支持人脸作为信息载体的设备
      */
-    private Long cameraId;
+    private Long deviceId;
     /**
      * 用户组ID
      */

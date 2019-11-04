@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.client.liveness.dto;
+package com.vinesmario.microservice.client.identity.dto;
 
 /**
  * 指纹

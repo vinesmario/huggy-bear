@@ -3,9 +3,9 @@ package com.vinesmario.microservice.client.detection.dto;
 import java.time.LocalDateTime;
 
 /**
- * 卡片识别场景
+ * 芯片卡识别场景
  */
-public class CardIdentificationScenarioDTO {
+public class ChipcardIdentificationScenarioDTO {
     /**
      * 租户ID
      */
@@ -37,11 +37,11 @@ public class CardIdentificationScenarioDTO {
     /**
      * 芯片卡ID
      */
-    private Long cardId;
+    private Long chipcardId;
     /**
      * 芯片卡唯一标识码
      */
-    private String cardSerialNumber;
+    private String chipcardSerialNumber;
     /**
      * 识别时间
      */
