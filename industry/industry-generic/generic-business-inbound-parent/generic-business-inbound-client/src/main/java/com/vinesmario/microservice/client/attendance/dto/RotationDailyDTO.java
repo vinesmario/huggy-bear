@@ -6,7 +6,7 @@ import java.time.LocalDate;
 /**
  * 考勤日报
  */
-public class AttendanceDailyDTO {
+public class RotationDailyDTO {
     /**
      * 租户ID
      */
@@ -16,18 +16,18 @@ public class AttendanceDailyDTO {
      */
     private LocalDate attendanceDate;
     /**
-     * 被考勤人员ID
+     * 人员ID
      */
     private Long userId;
     /**
-     * 被考勤人员名称
+     * 人员名称
      */
     private Long userName;
     /**
-     * 考勤状态
+     * 状态
      * 0-待处理；
      * 1-正常；
-     * 21-迟到；22-早退；
+     * 2-迟到/早退；
      * 3-旷工；
      * 4-请假（事假）；41-年假；42-婚假；43-产假；44-丧假；45-陪产假；46-工伤；47-病假；
      * 5-调休；
@@ -38,7 +38,7 @@ public class AttendanceDailyDTO {
     /**
      * 应到时长（小时）
      */
-    private BigDecimal planHour;
+    private BigDecimal rotationHour;
     /**
      * 出勤时长（小时）
      */

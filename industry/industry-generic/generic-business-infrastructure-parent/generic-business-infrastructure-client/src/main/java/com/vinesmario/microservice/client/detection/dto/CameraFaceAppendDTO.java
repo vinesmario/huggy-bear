@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.client.liveness.detection.dto;
+package com.vinesmario.microservice.client.detection.dto;
 
 /**
  * 设备人脸更新记录
@@ -10,6 +10,7 @@ public class CameraFaceAppendDTO {
     private Long tenantId;
     /**
      * 设备ID
+     * 支持人脸作为信息载体的设备
      */
     private Long cameraId;
     /**

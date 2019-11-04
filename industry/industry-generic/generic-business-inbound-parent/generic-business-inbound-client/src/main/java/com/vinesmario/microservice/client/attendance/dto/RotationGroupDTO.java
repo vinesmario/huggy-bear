@@ -1,35 +1,32 @@
 package com.vinesmario.microservice.client.attendance.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
- * 轮岗计划更新记录
+ * 排班群组计划 时间+地点+用户组
  */
-public class RotationPlanAppandDTO {
+public class RotationGroupDTO {
     /**
      * 租户ID
      */
     private Long tenantId;
     /**
-     * 排期ID
+     * 名称
      */
-    private Long crontabId;
+    private Long name;
     /**
-     * 排期名称
+     * 开始时间
      */
-    private Long crontabName;
+    private LocalTime beginTime;
     /**
-     * 严格的  0-否；1-是
+     * 结束时间
      */
-    private Integer strict;
+    private LocalTime endTime;
     /**
-     * 提前（分钟）量
+     * 次日结束 0-否；1-是
      */
-    private Integer minutesAheadPlan;
-    /**
-     * 延后（分钟）量
-     */
-    private Integer minutesBehindPlan;
+    private Integer endMorrow;
     /**
      * 每月的第{day}日执行
      * day=*表示每天执行
@@ -43,7 +40,7 @@ public class RotationPlanAppandDTO {
      */
     private Integer month;
     /**
-     * 每周的第{week}天（星期一至星期日）执行
+     * 每周的第{week}天（星期日至星期六）执行
      * week=*表示不限制
      * 星期日~星期六
      * 1~7 1=SUN
@@ -54,7 +51,7 @@ public class RotationPlanAppandDTO {
      */
     private Integer alternateWeek;
     /**
-     * 隔周执行的起始周 0-无；1-单周；2-双周
+     * 隔周执行的单双周 0-无；1-单周；2-双周
      */
     private Integer parityWeek;
     /**
@@ -62,7 +59,19 @@ public class RotationPlanAppandDTO {
      */
     private Integer excludeHoliday;
     /**
-     * 起始日期
+     * 严格的  0-否；1-是
+     */
+    private Integer strict;
+    /**
+     * 提前（分钟）量
+     */
+    private Integer minutesAheadPlan;
+    /**
+     * 延后（分钟）量
+     */
+    private Integer minutesBehindPlan;
+    /**
+     * 开始日期
      */
     private LocalDate beginDate;
     /**
@@ -70,25 +79,19 @@ public class RotationPlanAppandDTO {
      */
     private LocalDate endDate;
     /**
-     * 房间（区域）ID
+     * 房间（空间）ID
      */
     private Long roomId;
     /**
-     * 房间（区域）名称
+     * 房间（空间）名称
      */
     private String roomName;
     /**
-     * 人员ID
+     * 用户组ID
      */
-    private Long userId;
+    private Long userGroupId;
     /**
-     * 人员名称
+     * 用户组名称
      */
-    private String userName;
-    /**
-     * 数据库基本操作
-     * C-create；D-delete
-     */
-    private String operation;
-
+    private String userGroupName;
 }

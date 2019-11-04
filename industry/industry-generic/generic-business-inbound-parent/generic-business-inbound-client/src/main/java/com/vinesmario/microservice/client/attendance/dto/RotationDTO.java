@@ -1,23 +1,63 @@
 package com.vinesmario.microservice.client.attendance.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
- * 轮岗计划 时间+地点+人员
+ * 排班人员计划 时间+地点+人员
  */
-public class RotationPlanDTO {
+public class RotationDTO {
     /**
      * 租户ID
      */
     private Long tenantId;
     /**
-     * 排期ID
+     * 名称
      */
-    private Long crontabId;
+    private Long name;
     /**
-     * 排期名称
+     * 开始时间
      */
-    private Long crontabName;
+    private LocalTime beginTime;
+    /**
+     * 结束时间
+     */
+    private LocalTime endTime;
+    /**
+     * 次日结束 0-否；1-是
+     */
+    private Integer endMorrow;
+    /**
+     * 每月的第{day}日执行
+     * day=*表示每天执行
+     * 1~31,*
+     */
+    private String day;
+    /**
+     * 每年的第{month}月执行
+     * month=*表示每月执行
+     * 1~12,*
+     */
+    private String month;
+    /**
+     * 每周的第{week}天（星期日至星期六）执行
+     * week=*表示不限制
+     * 星期日~星期六
+     * 1~7,* 1=SUN
+     */
+    private String week;
+    /**
+     * 隔周执行 0-否；1-是
+     */
+    private Integer alternateWeek;
+    /**
+     * 隔周执行的单双周 0-无；1-单周；2-双周
+     */
+    private Integer parityWeek;
+    /**
+     * 排除节假日 0-否；1-是
+     */
+    private Integer excludeHoliday;
     /**
      * 严格的  0-否；1-是
      */
@@ -31,38 +71,7 @@ public class RotationPlanDTO {
      */
     private Integer minutesBehindPlan;
     /**
-     * 每月的第{day}日执行
-     * day=*表示每天执行
-     * 1~31
-     */
-    private Integer day;
-    /**
-     * 每年的第{month}月执行
-     * month=*表示每月执行
-     * 1~12
-     */
-    private Integer month;
-    /**
-     * 每周的第{week}天（星期一至星期日）执行
-     * week=*表示不限制
-     * 星期日~星期六
-     * 1~7 1=SUN
-     */
-    private Integer week;
-    /**
-     * 隔周执行 0-否；1-是
-     */
-    private Integer alternateWeek;
-    /**
-     * 隔周执行的起始周 0-无；1-单周；2-双周
-     */
-    private Integer parityWeek;
-    /**
-     * 排除节假日 0-否；1-是
-     */
-    private Integer excludeHoliday;
-    /**
-     * 起始日期
+     * 开始日期
      */
     private LocalDate beginDate;
     /**
@@ -70,11 +79,11 @@ public class RotationPlanDTO {
      */
     private LocalDate endDate;
     /**
-     * 房间（区域）ID
+     * 房间（空间）ID
      */
     private Long roomId;
     /**
-     * 房间（区域）名称
+     * 房间（空间）名称
      */
     private String roomName;
     /**

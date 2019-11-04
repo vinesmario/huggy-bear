@@ -1,11 +1,11 @@
-package com.vinesmario.microservice.client.liveness.detection.dto;
+package com.vinesmario.microservice.client.detection.dto;
 
 import java.time.LocalDateTime;
 
 /**
- * 人脸识别
+ * 二维码识别场景
  */
-public class FaceRecognitionDTO {
+public class QRCodeRecognitionScenarioDTO {
     /**
      * 租户ID
      */
@@ -13,11 +13,15 @@ public class FaceRecognitionDTO {
     /**
      * 设备ID
      */
-    private Long cameraId;
+    private Long deviceId;
     /**
      * 设备名称
      */
-    private Long cameraName;
+    private Long deviceName;
+    /**
+     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-支付
+     */
+    private Integer scenario;
     /**
      * 人员ID
      */
@@ -31,29 +35,17 @@ public class FaceRecognitionDTO {
      */
     private String serialNumber;
     /**
-     * 人脸ID
+     * 二维码ID
      */
-    private Long faceId;
+    private Long qrcodeId;
     /**
-     * 抓拍人脸访问绝对url
+     * 二维码唯一标识码
      */
-    private String faceAbsoluteUrl;
-    /**
-     * 抓拍人脸访问相对url
-     */
-    private String faceRelativeUrl;
+    private String qrcodeSerialNumber;
     /**
      * 识别时间
      */
     private LocalDateTime recognitionTime;
-    /**
-     * 相似度0~100
-     */
-    private Integer similatity;
-    /**
-     * 用途：1-考勤签到；2-限制通行。
-     */
-    private Integer purpose;
     /**
      * 下行状态 0-否；1-是
      */

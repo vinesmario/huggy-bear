@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * 加班计划
+ * 会议计划
  */
-public class OvertimePlanDTO {
+public class MeetingDTO {
     /**
      * 租户ID
      */
@@ -16,7 +16,7 @@ public class OvertimePlanDTO {
      */
     private LocalDate attendanceDate;
     /**
-     * 起始时间
+     * 开始时间
      */
     private LocalTime beginTime;
     /**

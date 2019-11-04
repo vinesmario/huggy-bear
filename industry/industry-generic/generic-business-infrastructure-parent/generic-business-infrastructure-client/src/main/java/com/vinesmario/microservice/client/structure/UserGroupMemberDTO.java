@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.client.liveness.detection.dto;
+package com.vinesmario.microservice.client.structure;
 
 /**
  * 用户组成员

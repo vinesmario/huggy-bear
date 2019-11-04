@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * 请假计划
+ * 请假、调休人员计划
  */
-public class LeavePlanDTO {
+public class RotationLeaveDTO {
     /**
      * 租户ID
      */
@@ -16,7 +16,7 @@ public class LeavePlanDTO {
      */
     private LocalDate attendanceDate;
     /**
-     * 起始时间
+     * 开始时间
      */
     private LocalTime beginTime;
     /**
