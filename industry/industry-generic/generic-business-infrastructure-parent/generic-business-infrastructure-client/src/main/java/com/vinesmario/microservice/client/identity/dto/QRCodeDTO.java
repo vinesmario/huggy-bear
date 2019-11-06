@@ -5,6 +5,10 @@ package com.vinesmario.microservice.client.identity.dto;
  */
 public class QRCodeDTO {
     /**
+     * 租户ID
+     */
+    private Long tenantId;
+    /**
      *
      */
     private Long userId;

@@ -1,9 +1,9 @@
-package com.vinesmario.microservice.client.offline.dto;
+package com.vinesmario.microservice.client.downlink.dto;
 
 /**
- * 设备与人脸关系
+ * 设备与人员关系
  */
-public class DeviceFaceDTO {
+public class DeviceUserDTO {
     /**
      * 租户ID
      */
@@ -20,8 +20,4 @@ public class DeviceFaceDTO {
      * 人员ID
      */
     private Long userId;
-    /**
-     * 人脸ID
-     */
-    private Long faceId;
 }

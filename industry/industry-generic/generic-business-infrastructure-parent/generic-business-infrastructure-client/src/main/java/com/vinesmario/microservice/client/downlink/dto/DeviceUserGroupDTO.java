@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.client.offline.dto;
+package com.vinesmario.microservice.client.downlink.dto;
 
 /**
  * 设备与群组关系

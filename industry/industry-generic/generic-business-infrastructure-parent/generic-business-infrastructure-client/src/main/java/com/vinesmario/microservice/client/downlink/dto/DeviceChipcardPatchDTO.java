@@ -1,9 +1,11 @@
-package com.vinesmario.microservice.client.offline.dto;
+package com.vinesmario.microservice.client.downlink.dto;
 
 /**
- * 设备与芯片卡关系更新记录
+ * 设备与芯片卡关系数据补丁
+ *
  */
-public class DeviceChipcardAppendDTO {
+public class DeviceChipcardPatchDTO
+{
     /**
      * 租户ID
      */
@@ -21,16 +23,16 @@ public class DeviceChipcardAppendDTO {
      */
     private Long userId;
     /**
-     * 人脸ID
+     * 芯片卡ID
      */
-    private Long faceId;
+    private Long chipcardId;
     /**
      * 数据库基本操作
      * C-create；D-delete
      */
     private String operation;
     /**
-     * 下行状态 0-否；1-是
+     * 下发成功 0-否；1-是
      */
     private Integer downlinkStatus;
 }
