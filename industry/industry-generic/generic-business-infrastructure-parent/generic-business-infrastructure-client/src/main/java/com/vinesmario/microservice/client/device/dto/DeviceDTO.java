@@ -37,10 +37,9 @@ public class DeviceDTO
      */
     private Integer identityCarrier;
     /**
-     * 房间（空间）ID
-     * 应用场景为1-工作打卡；2-会议签到；3-宿舍考勤时 必选
+     * 场所ID
      */
-    private Long roomId;
+    private Long facilityId;
     /**
      * 方向 I-进；O-出
      * 应用场景为1-工作打卡；2-会议签到；3-宿舍考勤时 建议选
