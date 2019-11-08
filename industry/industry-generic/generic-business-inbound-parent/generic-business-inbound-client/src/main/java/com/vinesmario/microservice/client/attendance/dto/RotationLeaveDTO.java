@@ -28,14 +28,6 @@ public class RotationLeaveDTO {
      */
     private Integer endMorrow;
     /**
-     * 房间（区域）ID，可默认取值
-     */
-    private Long roomId;
-    /**
-     * 房间（区域）名称
-     */
-    private String roomName;
-    /**
      * 人员
      */
     private Long userId;

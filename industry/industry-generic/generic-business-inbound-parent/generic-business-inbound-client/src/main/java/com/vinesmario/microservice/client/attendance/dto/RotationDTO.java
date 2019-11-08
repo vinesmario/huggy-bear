@@ -79,13 +79,13 @@ public class RotationDTO {
      */
     private LocalDate endDate;
     /**
-     * 房间（空间）ID
+     * 场所ID
      */
-    private Long roomId;
+    private Long facilityId;
     /**
-     * 房间（空间）名称
+     * 场所名称
      */
-    private String roomName;
+    private String facilityName;
     /**
      * 人员ID
      */

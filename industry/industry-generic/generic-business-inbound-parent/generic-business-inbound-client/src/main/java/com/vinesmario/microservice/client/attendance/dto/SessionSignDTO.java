@@ -58,13 +58,13 @@ public class SessionSignDTO {
      */
     private Long userName;
     /**
-     * 房间（空间）ID
+     * 场所ID
      */
-    private Long roomId;
+    private Long facilityId;
     /**
-     * 房间（空间）名称
+     * 场所名称
      */
-    private Long roomName;
+    private String facilityName;
     /**
      * 签到时间
      */

@@ -1,12 +1,9 @@
 package com.vinesmario.microservice.client.immovable.dto;
 
-import lombok.Data;
-
 /**
- * 房间（空间）
+ * 宿舍
  */
-@Data
-public class RoomDTO {
+public class DormitoryDTO {
     /**
      * 租户ID
      */
@@ -16,6 +13,10 @@ public class RoomDTO {
      */
     private Long buildingId;
     /**
+     * 场所ID
+     */
+    private Long facilityId;
+    /**
      * 名称
      */
     private String name;
@@ -24,16 +25,11 @@ public class RoomDTO {
      */
     private String code;
     /**
-     * 用途：1-安保；2-教学；3-会议；4-居住；5-储物；9-其他。
-     */
-    private Integer purpose;
-    /**
-     * 教学、会议、居住 可容纳人数
+     * 可容纳人数/可容纳货物数
      */
     private Integer capacity;
     /**
      * 容量单位
      */
     private String capacityUnit;
-
 }

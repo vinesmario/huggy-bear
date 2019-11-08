@@ -19,7 +19,7 @@ public class FaceAccessDTO {
      */
     private Long deviceName;
     /**
-     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-消费支付
+     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-消费支付（支付模块处理）
      */
     private Integer scenario;
     /**
