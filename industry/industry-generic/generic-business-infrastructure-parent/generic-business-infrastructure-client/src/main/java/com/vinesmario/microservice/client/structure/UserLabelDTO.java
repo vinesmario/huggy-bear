@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.client.structure;
 
 /**
- * 用户组成员
+ * 用户标签关系
  */
-public class UserGroupMemberDTO {
+public class UserLabelDTO {
     /**
      * 租户ID
      */
@@ -11,13 +11,9 @@ public class UserGroupMemberDTO {
     /**
      * 用户组ID，人脸库ID
      */
-    private Long userGroupId;
+    private Long labelId;
     /**
      * 人员ID
      */
     private Long userId;
-    /**
-     * 人脸ID
-     */
-    private Long faceId;
 }

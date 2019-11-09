@@ -1,9 +1,9 @@
-package com.vinesmario.microservice.client.downlink.dto;
+package com.vinesmario.microservice.client.device.dto;
 
 /**
- * 设备与人员关系
+ * 设备与群组关系
  */
-public class DeviceUserDTO {
+public class DeviceUserGroupDTO {
     /**
      * 租户ID
      */
@@ -16,8 +16,5 @@ public class DeviceUserDTO {
      * 用户组ID
      */
     private Long userGroupId;
-    /**
-     * 人员ID
-     */
-    private Long userId;
+
 }

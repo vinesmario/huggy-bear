@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.client.uplink.dto;
 
 /**
- * 二维码识别业务场景
+ * 人脸识别业务数据上行
  */
-public class QRCodeScenarioDTO {
+public class FaceUplinkDTO {
     /**
      * 租户ID
      */
@@ -13,11 +13,15 @@ public class QRCodeScenarioDTO {
      */
     private Long deviceId;
     /**
-     * 唯一标识
+     * 人脸ID
      */
-    private Long uuidId;
+    private Long faceId;
     /**
      *
      */
     private Long userId;
+    /**
+     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-支付
+     */
+    private Integer scenario;
 }

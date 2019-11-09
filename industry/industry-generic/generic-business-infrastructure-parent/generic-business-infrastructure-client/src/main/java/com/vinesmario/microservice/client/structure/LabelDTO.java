@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.client.structure;
 
 /**
- * 用户组
+ * 标签
  */
-public class UserGroupDTO {
+public class LabelDTO {
     /**
      * 租户ID
      */
@@ -12,8 +12,4 @@ public class UserGroupDTO {
      * 名称
      */
     private String name;
-    /**
-     * 用途 1-device；2-rotation
-     */
-    private Byte purpose;
 }

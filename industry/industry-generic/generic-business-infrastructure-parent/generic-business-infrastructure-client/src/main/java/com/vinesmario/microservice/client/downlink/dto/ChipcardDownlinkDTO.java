@@ -1,10 +1,10 @@
 package com.vinesmario.microservice.client.downlink.dto;
 
 /**
- * 设备与人脸关系数据补丁
+ * 芯片卡数据补丁下行
+ *
  */
-public class DeviceFacePatchDTO
-{
+public class ChipcardDownlinkDTO {
     /**
      * 租户ID
      */
@@ -14,17 +14,13 @@ public class DeviceFacePatchDTO
      */
     private Long deviceId;
     /**
-     * 用户组ID
-     */
-    private Long userGroupId;
-    /**
      * 人员ID
      */
     private Long userId;
     /**
-     * 人脸ID
+     * 芯片卡ID
      */
-    private Long faceId;
+    private Long chipcardId;
     /**
      * 数据库基本操作
      * C-create；D-delete

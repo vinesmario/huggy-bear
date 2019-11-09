@@ -1,4 +1,4 @@
-package com.vinesmario.microservice.client.downlink.dto;
+package com.vinesmario.microservice.client.device.dto;
 
 /**
  * 设备与人员关系更新记录
@@ -12,10 +12,6 @@ public class DeviceUserAppendDTO {
      * 设备ID
      */
     private Long deviceId;
-    /**
-     * 用户组ID
-     */
-    private Long userGroupId;
     /**
      * 人员ID
      */

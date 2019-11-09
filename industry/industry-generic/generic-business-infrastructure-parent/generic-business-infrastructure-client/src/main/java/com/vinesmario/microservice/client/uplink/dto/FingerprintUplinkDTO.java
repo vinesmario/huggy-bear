@@ -1,9 +1,9 @@
 package com.vinesmario.microservice.client.uplink.dto;
 
 /**
- * 芯片卡识别业务场景
+ * 指纹识别业务数据上行
  */
-public class ChipcardScenarioDTO {
+public class FingerprintUplinkDTO {
     /**
      * 租户ID
      */
@@ -13,15 +13,15 @@ public class ChipcardScenarioDTO {
      */
     private Long deviceId;
     /**
-     * 卡ID
+     *
      */
-    private Long chipcardId;
-    /**
-     * 卡号，唯一编号
-     */
-    private String serialNumber;
+    private Long fingerprintId;
     /**
      *
      */
     private Long userId;
+    /**
+     * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-支付
+     */
+    private Integer scenario;
 }
