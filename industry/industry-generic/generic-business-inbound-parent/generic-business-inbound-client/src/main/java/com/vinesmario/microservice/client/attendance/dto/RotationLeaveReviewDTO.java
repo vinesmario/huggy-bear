@@ -1,15 +1,15 @@
 package com.vinesmario.microservice.client.attendance.dto;
 
 /**
- * 加班审批
+ * 请假审批
  * 单向链表结点
  */
-public class RotationOvertimeApprovalDTO {
+public class RotationLeaveReviewDTO {
 
     /**
-     * 加班申请ID
+     * 休假申请ID
      */
-    private Long overtimeId;
+    private Long leaveId;
     /**
      * 审批人ID
      */
