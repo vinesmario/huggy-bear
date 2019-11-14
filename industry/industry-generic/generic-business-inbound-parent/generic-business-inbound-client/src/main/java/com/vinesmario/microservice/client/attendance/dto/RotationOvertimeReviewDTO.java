@@ -19,13 +19,17 @@ public class RotationOvertimeReviewDTO {
      */
     private String userName;
     /**
-     * 理由
+     * 审批者顺序，由低到高
      */
-    private String reason;
+    private Byte userSort;
     /**
      * 0-不同意；1-同意；
      */
-    private Integer status;
+    private Boolean approved;
+    /**
+     * 评论
+     */
+    private String remark;
     /**
      * 下一审批记录ID
      */

@@ -73,12 +73,7 @@ public class RotationClockDTO {
      * 0-待打卡；
      * 1-正常打卡；
      * 2-迟到/早退；
-     * 3-旷工；
-     * 4-请假（事假）；41-年假；42-婚假；43-产假；44-丧假；45-陪产假；46-工伤；47-病假；
-     * 5-调休；
-     * 6-出差；
-     * 7-补卡；
-     * 99-其他
+     * 9-补卡；
      */
     private Integer clockInStatus;
     /**
@@ -98,12 +93,7 @@ public class RotationClockDTO {
      * 0-待打卡；
      * 1-正常打卡；
      * 2-迟到/早退；
-     * 3-旷工；
-     * 4-请假（事假）；41-年假；42-婚假；43-产假；44-丧假；45-陪产假；46-工伤；47-病假；
-     * 5-调休；
-     * 6-出差；
-     * 7-补卡；
-     * 99-其他
+     * 9-补卡；
      */
     private Integer clockOutStatus;
     /**
@@ -114,5 +104,17 @@ public class RotationClockDTO {
      * 下班打卡记录ID
      */
     private Long clockOutRecordId;
+    /**
+     * 休假类型 1-年假；2-事假；3-病假；4-调休假；5-婚假；6-产假；7-陪产假；9-其他
+     */
+    private Byte leaveType;
+    /**
+     * 休假开始时间
+     */
+    private LocalDateTime leaveBeginTime;
+    /**
+     * 休假结束时间
+     */
+    private LocalDateTime leaveEndTime;
 
 }

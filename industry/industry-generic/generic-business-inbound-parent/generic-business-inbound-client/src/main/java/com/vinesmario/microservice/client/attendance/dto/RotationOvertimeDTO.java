@@ -1,7 +1,9 @@
 package com.vinesmario.microservice.client.attendance.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * 加班人员计划
@@ -14,15 +16,23 @@ public class RotationOvertimeDTO {
     /**
      * 开始时间
      */
-    private LocalDateTime beginTime;
+    private LocalTime beginTime;
     /**
      * 结束时间
      */
-    private LocalDateTime endTime;
+    private LocalTime endTime;
     /**
-     * 时长（小时）
+     * 次日结束 0-否；1-是
      */
-    private BigDecimal duration;
+    private Integer endMorrow;
+    /**
+     * 开始日期
+     */
+    private LocalDate beginDate;
+    /**
+     * 结束日期
+     */
+    private LocalDate endDate;
     /**
      * 场所ID
      */
