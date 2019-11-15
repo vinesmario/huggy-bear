@@ -60,6 +60,6 @@ public class RotationOvertimeDTO {
     /**
      * 当前审批记录ID
      */
-    private Long approvalId;
+    private Long reviewlId;
 
 }
