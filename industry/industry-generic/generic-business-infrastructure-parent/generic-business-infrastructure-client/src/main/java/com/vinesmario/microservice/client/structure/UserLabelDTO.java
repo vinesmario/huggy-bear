@@ -9,11 +9,12 @@ public class UserLabelDTO {
      */
     private Long tenantId;
     /**
-     * 用户组ID，人脸库ID
-     */
-    private Long labelId;
-    /**
      * 人员ID
      */
     private Long userId;
+    /**
+     * 标签
+     */
+    private String labelName;
+
 }

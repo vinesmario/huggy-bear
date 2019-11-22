@@ -10,7 +10,13 @@ import lombok.Data;
 @Data
 public class Permission extends BasePO<Long> {
 
+    /**
+     * 职权ID
+     */
     private Long authorityId;
+    /**
+     * 资源ID
+     */
     private Long resourceId;
 
 }

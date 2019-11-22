@@ -12,8 +12,17 @@ import lombok.Data;
 @Data
 public class Position extends BasePO<Long> {
 
+    /**
+     * 租户ID
+     */
     private Long tenantId;
+    /**
+     * 部门ID
+     */
     private Long departmentId;
+    /**
+     * 岗位名称
+     */
     private String name;
     /**
      * 职业

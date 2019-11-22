@@ -22,8 +22,21 @@ import lombok.Data;
 @Data
 public class Duty extends TreePO<Long> {
 
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
+    /**
+     * 岗位ID
+     */
     private Long positionId;
+    /**
+     * 职权ID
+     */
     private Long authorityId;
+    /**
+     * 数据范围
+     */
     private Integer dataScope;
 
 }

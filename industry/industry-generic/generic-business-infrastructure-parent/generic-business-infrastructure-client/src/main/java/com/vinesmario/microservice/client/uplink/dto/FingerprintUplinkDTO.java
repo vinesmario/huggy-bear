@@ -17,9 +17,13 @@ public class FingerprintUplinkDTO {
      */
     private Long fingerprintId;
     /**
-     *
+     * 人员ID
      */
-    private Long userId;
+    private Long personId;
+    /**
+     * 人员名称
+     */
+    private Long personName;
     /**
      * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-支付
      */

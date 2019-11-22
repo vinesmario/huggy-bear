@@ -11,7 +11,17 @@ import lombok.Data;
 @Data
 public class Appointment extends BasePO<Long> {
 
-    private Long oauthUserId;
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
+    /**
+     * 岗位ID
+     */
     private Long positionId;
+    /**
+     * 用户ID
+     */
+    private Long oauthUserId;
 
 }

@@ -3,8 +3,7 @@ package com.vinesmario.microservice.client.device.dto;
 /**
  * 设备
  */
-public class DeviceDTO
-{
+public class DeviceDTO {
     /**
      * 租户ID
      */

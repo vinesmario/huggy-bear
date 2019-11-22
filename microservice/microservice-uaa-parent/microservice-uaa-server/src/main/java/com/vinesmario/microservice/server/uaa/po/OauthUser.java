@@ -12,10 +12,7 @@ import lombok.Data;
 
 @Data
 public class OauthUser extends BasePO<Long> {
-    /**
-     * 租户ID
-     */
-    private Long tenantId;
+
     /**
      * 用户名，唯一行约束，不可修改
      */

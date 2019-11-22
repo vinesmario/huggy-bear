@@ -1,5 +1,6 @@
 package com.vinesmario.microservice.client.attendance.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -77,7 +78,7 @@ public class RotationClockDTO {
      */
     private Integer clockInStatus;
     /**
-     * 上班打卡方式 1-人脸识别；2-门禁卡；3-指纹机
+     * 上班打卡方式 1-人脸；2-芯片卡；3-二维码；4-手环
      */
     private Integer clockInType;
     /**
@@ -97,7 +98,7 @@ public class RotationClockDTO {
      */
     private Integer clockOutStatus;
     /**
-     * 下班打卡方式 1-人脸识别；2-门禁卡；3-指纹机
+     * 下班打卡方式 1-人脸；2-芯片卡；3-二维码；4-手环
      */
     private Integer clockOutType;
     /**
@@ -116,5 +117,32 @@ public class RotationClockDTO {
      * 休假结束时间
      */
     private LocalDateTime leaveEndTime;
-
+    /**
+     * 常班时长（小时）
+     */
+    private BigDecimal rotationDuration;
+    /**
+     * 出勤时长（小时）
+     */
+    private BigDecimal presenceDuration;
+    /**
+     * 缺勤时长（小时）
+     */
+    private BigDecimal absenceDuration;
+    /**
+     * 迟到时长（小时）
+     */
+    private BigDecimal lateDuration;
+    /**
+     * 早退时长（小时）
+     */
+    private BigDecimal earlyDuration;
+    /**
+     * 加班时长（小时）
+     */
+    private BigDecimal overtimeDuration;
+    /**
+     * 休假时长（小时）
+     */
+    private BigDecimal leaveDuration;
 }

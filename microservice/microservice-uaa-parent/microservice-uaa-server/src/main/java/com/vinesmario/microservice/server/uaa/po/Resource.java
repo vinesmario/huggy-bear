@@ -16,6 +16,6 @@ public class Resource extends TreePO<Long> {
     /**
      * 许可
      */
-    private String permission;
+    private String url;
 
 }
