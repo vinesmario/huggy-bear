@@ -19,6 +19,14 @@ public class FaceAccessDTO {
      */
     private Long deviceName;
     /**
+     * 场所ID
+     */
+    private Long facilityId;
+    /**
+     * 场所名称
+     */
+    private String facilityName;
+    /**
      * 应用场景：1-工作打卡；2-会议签到；3-宿舍考勤；4-消费支付（支付模块处理）
      */
     private Integer scenario;
