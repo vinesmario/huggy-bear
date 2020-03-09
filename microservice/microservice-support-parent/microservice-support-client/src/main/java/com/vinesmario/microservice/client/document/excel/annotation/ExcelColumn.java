@@ -20,26 +20,32 @@ import java.lang.annotation.*;
 @Repeatable(ExcelColumns.class)
 public @interface ExcelColumn {
 
-    int DEFAULT_SORT = 9999;
+    int DEFAULT_INDEX = -1;
+
     /**
      * 字段名（默认调用当前字段的“get”方法，如指定导出字段为对象，请填写“对象名.对象属性”，例：“area.name”、“office.name”）
      */
     String name() default "";
 
     /**
-     * 字段排序（升序）
+     * 字段索引
      */
-    int sort() default DEFAULT_SORT;
-
-    /**
-     * 如果是字典类型，根据字典的catalogCode值及列的fieldName取得value
-     */
-    String catalogCode() default "";
+    int index() default DEFAULT_INDEX;
 
     /**
      * 如果是其他反射类型，根据字典的class及fieldName，反射取得value
      */
     Class<?> fieldTypeClass() default Object.class;
+
+    /**
+     * 如果是字典类型，根据字典的catalogCode映射关系取得value
+     */
+    String catalogCode() default "";
+
+    /**
+     * 如果日期类型时，格式化
+     */
+    String dateFormat() default "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 字段类型（0：导出导入；1：仅导出；2：仅导入）
@@ -52,7 +58,7 @@ public @interface ExcelColumn {
     String title() default "";
 
     /**
-     * 字段水平对齐方式
+     * 导出时单元格水平对齐方式
      *
      * @see HorizontalAlignment
      * GENERAL,LEFT,CENTER,RIGHT,FILL,JUSTIFY,CENTER_SELECTION,DISTRIBUTED
@@ -60,7 +66,7 @@ public @interface ExcelColumn {
     HorizontalAlignment horizontalAlignment() default HorizontalAlignment.GENERAL;
 
     /**
-     * 字段垂直对齐方式
+     * 导出时单元格垂直对齐方式
      *
      * @see VerticalAlignment
      * TOP,CENTER,BOTTOM,JUSTIFY,DISTRIBUTED
@@ -68,14 +74,15 @@ public @interface ExcelColumn {
     VerticalAlignment verticalAlignment() default VerticalAlignment.CENTER;
 
     /**
-     * 单元格数据类型
+     * 导出时单元格数据类型
+     *
      * @see CellType
      * _NONE(-1),NUMERIC(0),STRING(1),FORMULA(2),BLANK(3),BOOLEAN(4),ERROR(5);
      */
     CellType cellType() default CellType._NONE;
 
     /**
-     * 宽度
+     * 导出时单元格宽度
      */
     int width() default 100;
 

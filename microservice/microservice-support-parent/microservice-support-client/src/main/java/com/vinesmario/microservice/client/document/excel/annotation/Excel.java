@@ -1,7 +1,5 @@
 package com.vinesmario.microservice.client.document.excel.annotation;
 
-import com.vinesmario.common.constant.DocumentVersion;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,22 +19,30 @@ public @interface Excel {
      * @return
      */
     String id() default "";
+
     /**
-     *
+     * 导出时文件名
      *
      * @return
      */
     String name() default "filename";
 
     /**
-     * Excel版本信息
+     * 导出时Excel版本信息
      *
      * @return
      */
-    String version() default DocumentVersion.EXCEL_2007;
+    ExcelVersion version() default ExcelVersion.EXCEL_2007;
 
     /**
-     * 表单名
+     * 表单索引
+     *
+     * @return
+     */
+    int sheetIndex() default 0;
+
+    /**
+     * 导出时表单名
      *
      * @return
      */
@@ -49,4 +55,20 @@ public @interface Excel {
      */
     String title() default "title";
 
+    String exceptionFieldName() default "";
+
+    enum ExcelVersion {
+        EXCEL_2003("xls"),
+        EXCEL_2007("xlsx");
+
+        private String fileExtension;
+
+        ExcelVersion(String fileExtension) {
+            this.fileExtension = fileExtension;
+        }
+
+        public String getFileExtension() {
+            return fileExtension;
+        }
+    }
 }
