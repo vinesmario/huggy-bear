@@ -1,3 +1,6 @@
+/**
+ * Copyright (c) 2005-2012 springside.org.cn
+ */
 package com.vinesmario.common.kit;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,15 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 反射工具类.
  * 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
- * <p>
- * 开源可用工具类
- * org.reflections.Reflections
- * org.reflections.ReflectionUtils
+ *
+ * @author calvin
+ * @version 2013-01-15
  */
+@SuppressWarnings("rawtypes")
 @Slf4j
 public class ReflectionKit {
 
@@ -29,6 +31,7 @@ public class ReflectionKit {
     private static final String GETTER_PREFIX = "get";
 
     private static final String CGLIB_CLASS_SEPARATOR = "$$";
+
 
     /**
      * 调用Getter方法.
@@ -102,8 +105,7 @@ public class ReflectionKit {
      * 用于一次性调用的情况，否则应使用getAccessibleMethod()函数获得Method后反复调用.
      * 同时匹配方法名+参数类型，
      */
-    public static Object invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes,
-                                      final Object[] args) {
+    public static Object invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes, final Object[] args) {
         Method method = getAccessibleMethod(obj, methodName, parameterTypes);
         if (method == null) {
             throw new IllegalArgumentException("Could not find method [" + methodName + "] on target [" + obj + "]");
@@ -156,18 +158,79 @@ public class ReflectionKit {
     }
 
     /**
+     * 循环向上转型, 获取对象的DeclaredField, 并强制设置为可访问.
+     * <p>
+     * 如向上转型到Object仍无法找到, 返回null.
+     */
+    public static List<Field> getAccessibleFields(final Class<?> clazz) {
+        Validate.notNull(clazz, "clazz can't be null");
+        List<Field> fieldList = new ArrayList<>();
+        for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
+            Field[] fields = superClass.getDeclaredFields();
+            for (Field field : fields) {
+                fieldList.add(field);
+            }
+        }
+        return fieldList;
+    }
+
+    /**
+     * 循环向上转型, 获取对象的DeclaredField, 并强制设置为可访问.
+     * <p>
+     * 如向上转型到Object仍无法找到, 返回null.
+     */
+    public static Field getAccessibleField(final Class<?> clazz, final String fieldName) {
+        Validate.notNull(clazz, "clazz can't be null");
+        Validate.notBlank(fieldName, "fieldName can't be blank");
+        for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
+            try {
+                Field field = superClass.getDeclaredField(fieldName);
+                makeAccessible(field);
+                return field;
+            } catch (NoSuchFieldException e) {//NOSONAR
+                // Field不在当前类定义,继续向上转型
+                continue;// new add
+            }
+        }
+        return null;
+    }
+
+    /**
      * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问.
      * 如向上转型到Object仍无法找到, 返回null.
      * 匹配函数名+参数类型。
      * <p>
      * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
      */
-    public static Method getAccessibleMethod(final Object obj, final String methodName,
-                                             final Class<?>... parameterTypes) {
+    public static Method getAccessibleMethod(final Object obj, final String methodName, final Class<?>... parameterTypes) {
         Validate.notNull(obj, "object can't be null");
         Validate.notBlank(methodName, "methodName can't be blank");
 
         for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
+            try {
+                Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
+                makeAccessible(method);
+                return method;
+            } catch (NoSuchMethodException e) {
+                // Method不在当前类定义,继续向上转型
+                continue;// new add
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问.
+     * 如向上转型到Object仍无法找到, 返回null.
+     * 匹配函数名+参数类型。
+     * <p>
+     * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
+     */
+    public static Method getAccessibleMethod(final Class<?> clazz, final String methodName, final Class<?>... parameterTypes) {
+        Validate.notNull(clazz, "clazz can't be null");
+        Validate.notBlank(methodName, "methodName can't be blank");
+
+        for (Class<?> searchType = clazz; searchType != Object.class; searchType = searchType.getSuperclass()) {
             try {
                 Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
                 makeAccessible(method);
@@ -207,8 +270,7 @@ public class ReflectionKit {
      * 改变private/protected的方法为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
      */
     public static void makeAccessible(Method method) {
-        if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers()))
-                && !method.isAccessible()) {
+        if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers())) && !method.isAccessible()) {
             method.setAccessible(true);
         }
     }
@@ -217,8 +279,7 @@ public class ReflectionKit {
      * 改变private/protected的成员变量为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
      */
     public static void makeAccessible(Field field) {
-        if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers()) || Modifier
-                .isFinal(field.getModifiers())) && !field.isAccessible()) {
+        if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers()) || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
             field.setAccessible(true);
         }
     }
@@ -259,8 +320,7 @@ public class ReflectionKit {
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
         if (index >= params.length || index < 0) {
-            log.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
-                    + params.length);
+            log.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: " + params.length);
             return Object.class;
         }
         if (!(params[index] instanceof Class)) {
@@ -288,9 +348,7 @@ public class ReflectionKit {
      * 将反射时的checked exception转换为unchecked exception.
      */
     public static RuntimeException convertReflectionExceptionToUnchecked(Exception e) {
-        if (e instanceof IllegalAccessException
-                || e instanceof IllegalArgumentException
-                || e instanceof NoSuchMethodException) {
+        if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException || e instanceof NoSuchMethodException) {
             return new IllegalArgumentException(e);
         } else if (e instanceof InvocationTargetException) {
             return new RuntimeException(((InvocationTargetException) e).getTargetException());
