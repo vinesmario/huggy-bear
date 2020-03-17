@@ -34,12 +34,6 @@
             <artifactId>poi-scratchpad</artifactId>
             <version>${poi.version}</version>
         </dependency>
-        <!-- 处理大文件 excel -->
-        <dependency>
-            <groupId>com.monitorjbl</groupId>
-            <artifactId>xlsx-streamer</artifactId>
-            <version>2.1.0</version>
-        </dependency>
 
     </dependencies>
 

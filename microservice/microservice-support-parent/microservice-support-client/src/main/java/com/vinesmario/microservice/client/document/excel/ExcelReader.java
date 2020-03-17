@@ -1,6 +1,5 @@
 package com.vinesmario.microservice.client.document.excel;
 
-import com.monitorjbl.xlsx.StreamingReader;
 import com.vinesmario.common.kit.ReflectionKit;
 import com.vinesmario.microservice.client.common.config.Java8TimeConfig;
 import com.vinesmario.microservice.client.document.excel.annotation.Excel;
@@ -14,6 +13,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -189,10 +189,7 @@ public class ExcelReader {
                 if (StringUtils.equalsIgnoreCase(Excel.ExcelVersion.EXCEL_2003.getFileExtension(), fileExtension)) {
                     this.workbook = new HSSFWorkbook(is);
                 } else if (StringUtils.equalsIgnoreCase(Excel.ExcelVersion.EXCEL_2007.getFileExtension(), fileExtension)) {
-                    this.workbook = StreamingReader.builder()
-                            .rowCacheSize(100)    // 缓存到内存中的行数，默认是10
-                            .bufferSize(4096)     // 读取资源时，缓存到内存的字节大小，默认是1024
-                            .open(is);            // 打开资源，必须，可以是InputStream或者是File，注意：只能打开XLSX格式的文件
+                    this.workbook = new XSSFWorkbook(is);
                 } else {
                     throw new IllegalArgumentException("unsupported file extension: " + fileExtension);
                 }
@@ -272,10 +269,7 @@ public class ExcelReader {
                 if (StringUtils.equalsIgnoreCase(Excel.ExcelVersion.EXCEL_2003.getFileExtension(), fileExtension)) {
                     this.workbook = new HSSFWorkbook(is);
                 } else if (StringUtils.equalsIgnoreCase(Excel.ExcelVersion.EXCEL_2007.getFileExtension(), fileExtension)) {
-                    this.workbook = StreamingReader.builder()
-                            .rowCacheSize(100)    // 缓存到内存中的行数，默认是10
-                            .bufferSize(4096)     // 读取资源时，缓存到内存的字节大小，默认是1024
-                            .open(is);            // 打开资源，必须，可以是InputStream或者是File，注意：只能打开XLSX格式的文件
+                    this.workbook = new XSSFWorkbook(is);
                 } else {
                     throw new IllegalArgumentException("unsupported file extension: " + fileExtension);
                 }
